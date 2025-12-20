@@ -1,5 +1,8 @@
 # Energy use algorithm
 
+GRID_EMISSION_FACTOR = 0.14
+ELECTRICITY_UNIT_RATE = 0.28
+
 class EnergyUse:
     def __init__(self, grid_import_kwh, solar_generation_kwh, grid_export_kwh, ev_energy_kwh, odometer_reading_km):
         self.grid_import_kwh = grid_import_kwh
@@ -26,6 +29,12 @@ class EnergyUse:
     def ev_efficiency(self):
         return (self.ev_energy_kwh * 1000) / self.odometer_reading_km
 
+    def co2_saved(self):
+        return self.solar_generation_kwh * GRID_EMISSION_FACTOR
+
+    def cost_savings(self):
+        return self.solar_generation_kwh * ELECTRICITY_UNIT_RATE
+
     def gather_data(self):
         return {
 
@@ -39,7 +48,9 @@ class EnergyUse:
             "ev_share": round(self.ev_share(), 2),
             "self_consumption": round(self.self_consumption(), 2),
             "solar_coverage": round(self.solar_coverage(), 2),
-            "ev_efficiency": round(self.ev_efficiency(), 2)
+            "ev_efficiency": round(self.ev_efficiency(), 2),
+            "co2_saved": round(self.co2_saved(), 2),
+            "cost_savings": round(self.cost_savings(), 2)
         }
 
 if __name__ == "__main__":
