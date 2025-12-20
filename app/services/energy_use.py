@@ -1,23 +1,54 @@
-"""
-Energy track and use, still in testing
-"""
+# Energy use algorithm
 
-def calculate_energy_use(grid_import_kwh, solar_generation_kwh, grid_export_kwh, ev_energy_kwh, odometer_reading_km):
-    true_consumption_kwh = grid_import_kwh + (solar_generation_kwh - grid_export_kwh)
-    home_usage = true_consumption_kwh - ev_energy_kwh
-    ev_share = (ev_energy_kwh / true_consumption_kwh) * 100
-    self_consumption = (solar_generation_kwh - grid_export_kwh) / solar_generation_kwh * 100
-    solar_coverage = (solar_generation_kwh / true_consumption_kwh) * 100
-    ev_efficiency = (ev_energy_kwh * 1000) / odometer_reading_km
+class EnergyUse:
+    def __init__(self, grid_import_kwh, solar_generation_kwh, grid_export_kwh, ev_energy_kwh, odometer_reading_km):
+        self.grid_import_kwh = grid_import_kwh
+        self.solar_generation_kwh = solar_generation_kwh
+        self.grid_export_kwh = grid_export_kwh
+        self.ev_energy_kwh = ev_energy_kwh
+        self.odometer_reading_km = odometer_reading_km
 
-    output = f'True consumption: {round(true_consumption_kwh, 2)} kWh\n' + \
-             f'Home usage: {round(home_usage, 2)} kWh\n' + \
-             f'EV share: {round(ev_share, 2)}%\n' + \
-             f'Self consumption: {round(self_consumption, 2)}%\n' + \
-             f'Solar coverage: {round(solar_coverage, 2)}%\n' + \
-             f'EV efficiency: {round(ev_efficiency, 2)} kWh/km\n'
+    def total_consumption(self):
+        return self.grid_import_kwh + (self.solar_generation_kwh - self.grid_export_kwh)
 
-    return output
+    def home_consumption(self):
+        return self.total_consumption() - self.ev_energy_kwh
 
-if __name__ == '__main__':
-    print(calculate_energy_use(650.4, 120.5, 5.2, 280.5, 45000))
+    def ev_share(self):
+        return (self.ev_energy_kwh / self.total_consumption()) * 100
+
+    def self_consumption(self):
+        return (self.solar_generation_kwh - self.grid_export_kwh) / self.solar_generation_kwh * 100
+
+    def solar_coverage(self):
+        return (self.solar_generation_kwh / self.total_consumption()) * 100
+
+    def ev_efficiency(self):
+        return (self.ev_energy_kwh * 1000) / self.odometer_reading_km
+
+    def gather_data(self):
+        return {
+
+            "grid_import_kwh": self.grid_import_kwh,
+            "solar_generation_kwh": self.solar_generation_kwh,
+            "grid_export_kwh": self.grid_export_kwh,
+            "ev_energy_kwh": self.ev_energy_kwh,
+            "odometer_reading_km": self.odometer_reading_km,
+            "total_consumption": round(self.total_consumption(), 2),
+            "home_consumption": round(self.home_consumption(), 2),
+            "ev_share": round(self.ev_share(), 2),
+            "self_consumption": round(self.self_consumption(), 2),
+            "solar_coverage": round(self.solar_coverage(), 2),
+            "ev_efficiency": round(self.ev_efficiency(), 2)
+        }
+
+if __name__ == "__main__":
+
+    # Create an instance of your class with that data
+    energy_tester = EnergyUse(650.4, 120.5, 5.2, 280.5, 45000)
+
+    # Use the gather_data method and print the result
+    results = energy_tester.gather_data()
+    print("\n--- Energy Use Results ---")
+    for key, value in results.items():
+        print(f"{key}: {value}")
