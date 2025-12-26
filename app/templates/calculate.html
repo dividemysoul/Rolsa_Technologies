@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Use Calculator</title>
+</head>
+<body>
+    <h1>Energy Use Calculator</h1>
+    
+    {% if submitted_data %}
+        <h2>Submitted Data:</h2>
+        <ul>
+            {% for key, value in submitted_data.items() %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('calculate') }}">Calculate Again</a>
+    {% else %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.grid_import_kwh.label }}<br>
+                {{ form.grid_import_kwh(size=32) }}
+            </div>
+            <div>
+                {{ form.solar_generation_kwh.label }}<br>
+                {{ form.solar_generation_kwh(size=32) }}
+            </div>
+            <div>
+                {{ form.grid_export_kwh.label }}<br>
+                {{ form.grid_export_kwh(size=32) }}
+            </div>
+            <div>
+                {{ form.ev_energy_kwh.label }}<br>
+                {{ form.ev_energy_kwh(size=32) }}
+            </div>
+            <div>
+                {{ form.odometer_reading_km.label }}<br>
+                {{ form.odometer_reading_km(size=32) }}
+            </div>
+            <p>{{ form.submit() }}</p>
+        </form>
+    {% endif %}
+</body>
+</html>

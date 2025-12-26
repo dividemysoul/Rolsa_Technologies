@@ -52,14 +52,3 @@ class EnergyUse:
             "co2_saved": round(self.co2_saved(), 2),
             "cost_savings": round(self.cost_savings(), 2)
         }
-
-if __name__ == "__main__":
-
-    # Create an instance of your class with that data
-    energy_tester = EnergyUse(650.4, 120.5, 5.2, 280.5, 45000)
-
-    # Use the gather_data method and print the result
-    results = energy_tester.gather_data()
-    print("\n--- Energy Use Results ---")
-    for key, value in results.items():
-        print(f"{key}: {value}")
