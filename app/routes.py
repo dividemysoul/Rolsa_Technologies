@@ -22,3 +22,18 @@ def calculate():
         submitted_data = energy_calc.gather_data()
         return render_template('calculate.html', form=form, submitted_data=submitted_data)
     return render_template('calculate.html', form=form)
+
+from app.forms import CarbonFootprintForm
+
+@app.route('/carbon-footprint', methods=['GET', 'POST'])
+def carbon_footprint():
+    form = CarbonFootprintForm()
+    if form.validate_on_submit():
+        submitted_data = form.data
+        if 'Neither' in submitted_data.get('travel_mode', ''):
+            submitted_data.pop('vehicle_type', None)
+            submitted_data.pop('car_hours', None)
+        submitted_data.pop('csrf_token', None)
+        submitted_data.pop('submit_footprint', None)
+        return render_template('carbon_footprint.html', form=form, submitted_data=submitted_data)
+    return render_template('carbon_footprint.html', form=form)
