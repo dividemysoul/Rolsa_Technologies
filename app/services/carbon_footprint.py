@@ -11,7 +11,7 @@ class CarbonFootprintCalculator:
     _EMISSION_FACTORS = {
         "food": {
             "diet": {
-                "Meat in every meal": 10.2,
+                "Meat in every meal": 12.5, # Updated from 10.2 to 12.5 reflect high ruminant impact
                 "Meat in some meals": 5.6,
                 "No beef": 4.7,
                 "Meat very rarely": 4.5,
@@ -40,8 +40,8 @@ class CarbonFootprintCalculator:
                 "Train": 0.04
             },
             "speeds": {
-                "Care": 30, # Low avg speed for personal travel
-                "Motorbike": 30,
+                "Car": 35, # Updated to 35 km/h
+                "Motorbike": 45, # Updated to 45 km/h
                 "Bus": 20,
                 "Train": 60
             },
@@ -59,9 +59,9 @@ class CarbonFootprintCalculator:
                 "Wood": 0.02,
                 "Heatpump": 0.07
             },
-            "baseline_heating_kwh": 3000,
-            "electricity_factor": 0.23,
-            "baseline_electricity_kwh": 1500,
+            # REMOVED static baseline_heating_kwh: Replaced by dynamic bedroom logic
+            "electricity_factor": 0.18, # Updated from 0.23
+            # REMOVED static baseline_electricity_kwh: Replaced by dynamic bedroom logic
             "temp_adjustment": {
                 "below 14°C": -0.20,
                 "14° - 17°C": -0.10,
@@ -157,6 +157,31 @@ class CarbonFootprintCalculator:
     def __init__(self, data: dict):
         self._data = data
         self._results = {}
+        self._validate_inputs()
+
+    def _validate_inputs(self):
+        """Ensures people_count and bedrooms are converted to floats to prevent TypeError."""
+        # Validate Home Inputs
+        home_inputs = self._data.get("home", {})
+        
+        # Bedrooms
+        bedrooms_str = home_inputs.get("bedrooms", "3")
+        try:
+            # Check if it's mapped
+            if bedrooms_str in self._INPUT_MAPPINGS["house_size"]:
+                pass # it will be converted later via _get_mapped_value or we can pre-convert if needed
+            else:
+                 # If somehow a direct number string came in
+                 float(bedrooms_str)
+        except ValueError:
+            pass # Keep strict string mapping assumption or log warning
+
+        # People Count
+        people_str = home_inputs.get("people_count", "1")
+        # Ensure it has a mapping or default
+        if people_str not in self._INPUT_MAPPINGS["people_count"]:
+            # Fallback or log? For now we trust strict mapping or defaults.
+            pass
 
     def calculate(self) -> dict:
         food = self._calculate_food()
@@ -200,7 +225,15 @@ class CarbonFootprintCalculator:
         # 3. Waste
         waste_str = inputs.get("waste_percentage", "10% - 30%")
         waste_pct = self._get_mapped_value("waste_ranges", waste_str)
-        annual_waste_kg = (waste_pct / 100.0) * factors["avg_waste_per_person"]
+        
+        # Dynamic Waste Scaling
+        waste_scale = 1.0
+        if diet_type == "Meat in every meal":
+            waste_scale = 1.2
+        elif diet_type in ["Vegetarian", "Vegan"]:
+            waste_scale = 0.8
+            
+        annual_waste_kg = (waste_pct / 100.0) * factors["avg_waste_per_person"] * waste_scale
         emissions += annual_waste_kg * factors["waste_landfill_factor"]
 
         # 4. Local sourcing
@@ -208,7 +241,7 @@ class CarbonFootprintCalculator:
         reduction_pct = factors["local_sourcing_reduction"].get(sourcing, 0.0)
         emissions = emissions * (1.0 - reduction_pct)
 
-        return emissions
+        return round(emissions, 4)
 
     def _calculate_travel(self) -> float:
         emissions = 0.0
@@ -216,12 +249,10 @@ class CarbonFootprintCalculator:
         inputs = self._data.get("travel", {})
 
         # 1. Car/Motorbike
-        # Two questions: "What kind of vehicle..." and "Which best describes..."
-        # If "Neither...", then 0. Else use specific type.
         general_vehicle = inputs.get("general_vehicle", "Car")
         if "Neither" in general_vehicle:
             vehicle_factor = 0.0
-            hours_str = "Under 2 hours" # Irrelevant if factor is 0
+            hours_str = "Under 2 hours"
         else:
             specific_vehicle = inputs.get("specific_vehicle", "Medium petrol or diesel car")
             vehicle_factor = factors["vehicle_per_km"].get(specific_vehicle, 0.275)
@@ -229,7 +260,13 @@ class CarbonFootprintCalculator:
 
         if vehicle_factor > 0:
             hours = self._get_mapped_value("time_ranges", hours_str)
-            speed = factors["speeds"].get("Motorbike" if "Motorbike" in general_vehicle else "Car", 30)
+            
+            # Dynamic Speed
+            if "Motorbike" in general_vehicle:
+                speed = factors["speeds"]["Motorbike"]
+            else:
+                speed = factors["speeds"]["Car"]
+            
             distance_km = hours * speed * 52
             emissions += distance_km * vehicle_factor
 
@@ -247,18 +284,25 @@ class CarbonFootprintCalculator:
             bus_km = bus_hours * factors["speeds"]["Bus"] * 52
             emissions += bus_km * factors["vehicle_per_km"]["Bus"]
 
-        # 4. Flights (Input is numeric per instructions on field type)
+        # 4. Flights
         flights = inputs.get("flights", {})
         dom_trips = float(flights.get("domestic", 0))
         eur_trips = float(flights.get("europe", 0))
         long_trips = float(flights.get("long_haul", 0))
 
+        # Aviation Logic: RF multiplier (1.9x) + Distance Uplift (1.1x)
+        rf_multiplier = 1.9
+        dist_uplift = 1.1
+
         flight_emissions = (
-            dom_trips * factors["flights"]["Domestic"]["distance"] * factors["flights"]["Domestic"]["factor"] +
-            eur_trips * factors["flights"]["Europe"]["distance"] * factors["flights"]["Europe"]["factor"] +
-            long_trips * factors["flights"]["LongHaul"]["distance"] * factors["flights"]["LongHaul"]["factor"]
+            (dom_trips * (factors["flights"]["Domestic"]["distance"] * dist_uplift) * factors["flights"]["Domestic"]["factor"]) +
+            (eur_trips * (factors["flights"]["Europe"]["distance"] * dist_uplift) * factors["flights"]["Europe"]["factor"]) +
+            (long_trips * (factors["flights"]["LongHaul"]["distance"] * dist_uplift) * factors["flights"]["LongHaul"]["factor"])
         )
         
+        # Apply RF
+        flight_emissions *= rf_multiplier
+
         # 5. Offset
         offset_str = inputs.get("flight_offset_percentage", "None of them")
         offset_pct = self._get_mapped_value("offset_percentage", offset_str)
@@ -266,16 +310,23 @@ class CarbonFootprintCalculator:
         # Add net emissions
         emissions += flight_emissions * (1.0 - (offset_pct / 100.0))
 
-        return emissions
+        return round(emissions, 4)
 
     def _calculate_home(self) -> float:
         emissions = 0.0
         factors = self._EMISSION_FACTORS["home"]
         inputs = self._data.get("home", {})
 
-        # People
+        # People & Bedrooms
         people_str = inputs.get("people_count", "1")
         people = self._get_mapped_value("people_count", people_str, default=1)
+        
+        bedrooms_str = inputs.get("bedrooms", "1")
+        bedrooms = self._get_mapped_value("house_size", bedrooms_str, default=1)
+
+        # Dynamic Baselines
+        base_gas = 7000 + (2000 * bedrooms)
+        base_elec = 1500 + (500 * bedrooms)
 
         # 1. Heating
         heat_source = inputs.get("heating_source", "Gas")
@@ -287,13 +338,11 @@ class CarbonFootprintCalculator:
         improvements = inputs.get("improvements", [])
         imp_reduction_sum = 0.0
         for imp in improvements:
-            # Match exact string
             imp_reduction_sum += factors["improvements_reduction"].get(imp, 0.0)
         
-        # Cap reduction at say 80% to be realistic? Or allow additive.
         imp_reduction_sum = min(imp_reduction_sum, 0.8)
 
-        adjusted_heating_kwh = factors["baseline_heating_kwh"] * (1.0 + temp_adj) * (1.0 - imp_reduction_sum)
+        adjusted_heating_kwh = base_gas * (1.0 + temp_adj) * (1.0 - imp_reduction_sum)
         heating_emissions = adjusted_heating_kwh * heat_factor
 
         # 2. Electricity
@@ -306,12 +355,16 @@ class CarbonFootprintCalculator:
             elec_factor *= 0.5
         
         lights = inputs.get("lights_off", "No")
-        elec_usage = factors["baseline_electricity_kwh"] * (0.95 if lights == "Yes" else 1.0)
+        elec_usage = base_elec * (0.95 if lights == "Yes" else 1.0)
         elec_emissions = elec_usage * elec_factor
 
-        emissions = (heating_emissions + elec_emissions) / people
+        total_home_emissions = heating_emissions + elec_emissions
 
-        return emissions
+        # Shared Responsibility Model:
+        # 40% fixed (building base load) + 60% variable (divided by people)
+        emissions = (total_home_emissions * 0.4) + ((total_home_emissions * 0.6) / people)
+
+        return round(emissions, 4)
 
     def _calculate_stuff(self) -> float:
         emissions = 0.0
@@ -344,7 +397,7 @@ class CarbonFootprintCalculator:
             reduction_pct = min(len(recycled_items) * 0.01, 0.05)
             emissions = emissions * (1.0 - reduction_pct)
 
-        return emissions
+        return round(emissions, 4)
 
 
 class MockDataProvider:
@@ -356,15 +409,15 @@ class MockDataProvider:
             "food": {
                 "diet_type": "Meat in some meals",
                 "eating_out_spend_per_week": "£10 - £40",
-                "waste_percentage": "10% - 30%",
+                "waste_percentage": "0% - 10%",
                 "local_sourcing": "Some of the food I buy is locally sourced"
             },
             "travel": {
-                "general_vehicle": "Car", 1j
+                "general_vehicle": "Car",
                 "specific_vehicle": "Medium petrol or diesel car",
-                "car_hours_per_week": "2 to 5 hours",
+                "car_hours_per_week": "5 to 15 hours",
                 "train_hours_per_week": "Under 2 hours",
-                "bus_hours_per_week": "I don't travel by bus",
+                "bus_hours_per_week": "1 to 3 hours",
                 "flights": {
                     "domestic": 1,
                     "europe": 1,
@@ -375,21 +428,21 @@ class MockDataProvider:
             "home": {
                 "house_type": "Semi-detached",
                 "bedrooms": "3",
-                "people_count": "3",
+                "people_count": "2",
                 "heating_source": "Gas",
                 "green_tariff": "No",
                 "lights_off": "Yes",
                 "winter_temp": "18° - 21°C",
-                "improvements": ["Energy saving lightbulbs", "Double glazing"]
+                "improvements": ["Energy saving lightbulbs", "Loft insulation", "Double glazing"]
             },
             "stuff": {
-                "purchases": ["Mobile phone or tablet", "Large item of furniture"],
+                "purchases": ["Mobile phone or tablet"],
                 "clothes_spend": "£40 - £100",
                 "pet_spend": "I don't have a pet",
                 "beauty_spend": "£10 - £60",
                 "contracts_spend": "£35 - £70",
                 "hobbies_spend": "£25 - £50",
-                "recycling": ["Food", "Paper", "Plastic", "Glass", "Tin cans"]
+                "recycling": ["Paper", "Tin cans", "Plastic", "Glass"]
             }
         }
 

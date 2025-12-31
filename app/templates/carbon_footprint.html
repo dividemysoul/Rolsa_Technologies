@@ -10,6 +10,20 @@
     <h1>Carbon Footprint Calculator</h1>
 
     {% if submitted_data %}
+    {% if footprint_results %}
+    <h2>Your Carbon Footprint Results</h2>
+    <p><strong>Total:</strong> {{ footprint_results.total }} kg CO2e / year</p>
+
+    <h3>Breakdown:</h3>
+    <ul>
+        <li><strong>Food:</strong> {{ footprint_results.breakdown.food }} kg CO2e</li>
+        <li><strong>Travel:</strong> {{ footprint_results.breakdown.travel }} kg CO2e</li>
+        <li><strong>Home:</strong> {{ footprint_results.breakdown.home }} kg CO2e</li>
+        <li><strong>Stuff:</strong> {{ footprint_results.breakdown.stuff }} kg CO2e</li>
+    </ul>
+    <hr>
+    {% endif %}
+
     <h2>Your Answers:</h2>
     <ul>
         {% for key, value in submitted_data.items() %}
