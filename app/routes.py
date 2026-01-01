@@ -6,10 +6,10 @@ from app.services.energy_use import EnergyUse
 
 @app.route('/')
 def index():
-    return 'Home'
+    return render_template('index.html')
 
-@app.route('/calculate', methods=['GET', 'POST'])
-def calculate():
+@app.route('/energy-use', methods=['GET', 'POST'])
+def energy_use():
     form = EnergyUseForm()
     if form.validate_on_submit():
         energy_calc = EnergyUse(
@@ -20,8 +20,8 @@ def calculate():
             odometer_reading_km=form.odometer_reading_km.data
         )
         submitted_data = energy_calc.gather_data()
-        return render_template('calculate.html', form=form, submitted_data=submitted_data)
-    return render_template('calculate.html', form=form)
+        return render_template('energy-use.html', form=form, submitted_data=submitted_data)
+    return render_template('energy-use.html', form=form)
 
 from app.forms import CarbonFootprintForm
 
