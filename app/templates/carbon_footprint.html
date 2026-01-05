@@ -3,191 +3,207 @@
 {% block title %}Carbon Footprint Calculator{% endblock %}
 
 {% block content %}
-<h1>Carbon Footprint Calculator</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="display-6 fw-bold mb-4">Carbon Footprint Calculator</h1>
 
-{% if submitted_data %}
-{% if footprint_results %}
-<h2>Your Carbon Footprint Results</h2>
-<p><strong>Total:</strong> {{ footprint_results.total }} kg CO2e / year</p>
+            {% if submitted_data %}
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    {% if footprint_results %}
+                    <div class="text-center mb-5">
+                        <h2 class="h4 text-secondary mb-2">Your Annual Carbon Footprint</h2>
+                        <div class="display-4 fw-bold text-success">{{ footprint_results.total }} <small
+                                class="fs-4 text-muted">kg CO2e</small></div>
+                    </div>
 
-<h3>Breakdown:</h3>
-<ul>
-    <li><strong>Food:</strong> {{ footprint_results.breakdown.food }} kg CO2e</li>
-    <li><strong>Travel:</strong> {{ footprint_results.breakdown.travel }} kg CO2e</li>
-    <li><strong>Home:</strong> {{ footprint_results.breakdown.home }} kg CO2e</li>
-    <li><strong>Stuff:</strong> {{ footprint_results.breakdown.stuff }} kg CO2e</li>
-</ul>
-<hr>
-{% endif %}
+                    <h3 class="h5 fw-bold mb-3">Impact Breakdown</h3>
+                    <div class="row g-3 mb-4">
+                        {% for item, val in footprint_results.breakdown.items() %}
+                        <div class="col-6 col-md-3 text-center">
+                            <div class="p-3 bg-light rounded-3">
+                                <div class="text-secondary small text-uppercase fw-bold mb-1">{{ item }}</div>
+                                <div class="fw-bold fs-5">{{ val }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <hr class="my-4">
+                    {% endif %}
 
-<h2>Your Answers:</h2>
-<ul>
-    {% for key, value in submitted_data.items() %}
-    <li><strong>{{ key }}:</strong> {{ value }}</li>
-    {% endfor %}
-</ul>
-<a href="{{ url_for('carbon_footprint') }}">Calculate Again</a>
-{% else %}
-<form method="POST" action="">
-    {{ form.hidden_tag() }}
+                    <h2 class="h5 fw-bold mb-3">Your Answers:</h2>
+                    <div class="row g-2">
+                        {% for key, value in submitted_data.items() %}
+                        <div class="col-md-6 border-bottom py-2">
+                            <span class="text-secondary small d-block">{{ key }}</span>
+                            <span class="fw-medium">{{ value }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
 
-    <h2>Food</h2>
-    <div>
-        {{ form.diet.label }}<br>
-        {{ form.diet() }}
-    </div>
-    <div>
-        {{ form.food_spend.label }}<br>
-        {{ form.food_spend() }}
-    </div>
-    <div>
-        {{ form.food_waste.label }}<br>
-        {{ form.food_waste() }}
-    </div>
-    <div>
-        {{ form.local_food.label }}<br>
-        {{ form.local_food() }}
-    </div>
+                    <div class="mt-4 text-center">
+                        <a href="{{ url_for('carbon_footprint') }}"
+                            class="btn btn-outline-success px-4 py-2 rounded-pill">Calculate Again</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
 
-    <h2>Travel</h2>
-    <div>
-        {{ form.travel_mode.label }}<br>
-        {{ form.travel_mode(id="travel_mode") }}
-    </div>
-    <div id="vehicle_type_div">
-        {{ form.vehicle_type.label }}<br>
-        {{ form.vehicle_type() }}
-    </div>
-    <div id="car_hours_div">
-        {{ form.car_hours.label }}<br>
-        {{ form.car_hours() }}
-    </div>
-    <div>
-        {{ form.train_hours.label }}<br>
-        {{ form.train_hours() }}
-    </div>
-    <div>
-        {{ form.bus_hours.label }}<br>
-        {{ form.bus_hours() }}
-    </div>
+                        <!-- Food Section -->
+                        <section class="mb-5">
+                            <h2 class="h4 fw-bold mb-4 border-start border-success border-4 ps-3 text-success">Food</h2>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    {{ form.diet.label(class="form-label fw-semibold") }}
+                                    {{ form.diet(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.food_spend.label(class="form-label fw-semibold") }}
+                                    {{ form.food_spend(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.food_waste.label(class="form-label fw-semibold") }}
+                                    {{ form.food_waste(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.local_food.label(class="form-label fw-semibold") }}
+                                    {{ form.local_food(class="form-select") }}
+                                </div>
+                            </div>
+                        </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var travelModeSelect = document.getElementById('travel_mode');
-            var vehicleTypeDiv = document.getElementById('vehicle_type_div');
-            var carHoursDiv = document.getElementById('car_hours_div');
+                        <!-- Travel Section -->
+                        <section class="mb-5">
+                            <h2 class="h4 fw-bold mb-4 border-start border-primary border-4 ps-3 text-primary">Travel
+                            </h2>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    {{ form.travel_mode.label(class="form-label fw-semibold") }}
+                                    {{ form.travel_mode(id="travel_mode", class="form-select") }}
+                                </div>
+                                <div class="col-md-6" id="vehicle_type_div">
+                                    {{ form.vehicle_type.label(class="form-label fw-semibold") }}
+                                    {{ form.vehicle_type(class="form-select") }}
+                                </div>
+                                <div class="col-md-6" id="car_hours_div">
+                                    {{ form.car_hours.label(class="form-label fw-semibold") }}
+                                    {{ form.car_hours(class="form-control", type="number") }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.train_hours.label(class="form-label fw-semibold") }}
+                                    {{ form.train_hours(class="form-control", type="number") }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.bus_hours.label(class="form-label fw-semibold") }}
+                                    {{ form.bus_hours(class="form-control", type="number") }}
+                                </div>
+                            </div>
 
-            function toggleVehicleFields() {
-                var selectedValue = travelModeSelect.value;
-                if (selectedValue.includes('Neither')) {
-                    vehicleTypeDiv.style.display = 'none';
-                    carHoursDiv.style.display = 'none';
-                } else {
-                    vehicleTypeDiv.style.display = 'block';
-                    carHoursDiv.style.display = 'block';
-                }
+                            <h3 class="h6 fw-bold mt-4 mb-3">Flights (Annual)</h3>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    {{ form.flight_domestic.label(class="form-label small") }}
+                                    {{ form.flight_domestic(class="form-control", type="number") }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form.flight_europe.label(class="form-label small") }}
+                                    {{ form.flight_europe(class="form-control", type="number") }}
+                                </div>
+                                <div class="col-md-4">
+                                    {{ form.flight_outside_europe.label(class="form-label small") }}
+                                    {{ form.flight_outside_europe(class="form-control", type="number") }}
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check form-switch mt-2">
+                                        {{ form.flight_offset(class="form-check-input") }}
+                                        {{ form.flight_offset.label(class="form-check-label") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Home Section -->
+                        <section class="mb-5">
+                            <h2 class="h4 fw-bold mb-4 border-start border-info border-4 ps-3 text-info">Home</h2>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    {{ form.house_type.label(class="form-label fw-semibold") }}
+                                    {{ form.house_type(class="form-select") }}
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form.bedrooms.label(class="form-label fw-semibold") }}
+                                    {{ form.bedrooms(class="form-control", type="number") }}
+                                </div>
+                                <div class="col-md-3">
+                                    {{ form.occupants.label(class="form-label fw-semibold") }}
+                                    {{ form.occupants(class="form-control", type="number") }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.heating_type.label(class="form-label fw-semibold") }}
+                                    {{ form.heating_type(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch mt-md-4">
+                                        {{ form.green_tariff(class="form-check-input") }}
+                                        {{ form.green_tariff.label(class="form-check-label") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Stuff Section -->
+                        <section class="mb-5">
+                            <h2 class="h4 fw-bold mb-4 border-start border-warning border-4 ps-3 text-warning">Stuff &
+                                Lifestyle</h2>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    {{ form.clothes_spend.label(class="form-label fw-semibold") }}
+                                    {{ form.clothes_spend(class="form-select") }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.recycling.label(class="form-label fw-semibold") }}
+                                    {{ form.recycling(class="form-select") }}
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="text-center pt-4">
+                            {{ form.submit_footprint(class="btn btn-success btn-lg px-5 py-3 rounded-pill fw-bold
+                            shadow") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var travelModeSelect = document.getElementById('travel_mode');
+        var vehicleTypeDiv = document.getElementById('vehicle_type_div');
+        var carHoursDiv = document.getElementById('car_hours_div');
+
+        function toggleVehicleFields() {
+            if (!travelModeSelect) return;
+            var selectedValue = travelModeSelect.value;
+            if (selectedValue.includes('Neither')) {
+                vehicleTypeDiv.classList.add('d-none');
+                carHoursDiv.classList.add('d-none');
+            } else {
+                vehicleTypeDiv.classList.remove('d-none');
+                carHoursDiv.classList.remove('d-none');
             }
+        }
 
-            toggleVehicleFields(); // Run on load
-            travelModeSelect.addEventListener('change', toggleVehicleFields); // Run on change
-        });
-    </script>
-    <div>
-        {{ form.flight_domestic.label }}<br>
-        {{ form.flight_domestic() }}
-    </div>
-    <div>
-        {{ form.flight_europe.label }}<br>
-        {{ form.flight_europe() }}
-    </div>
-    <div>
-        {{ form.flight_outside_europe.label }}<br>
-        {{ form.flight_outside_europe() }}
-    </div>
-    <div>
-        {{ form.flight_offset.label }}<br>
-        {{ form.flight_offset() }}
-    </div>
-
-    <h2>Home</h2>
-    <div>
-        {{ form.house_type.label }}<br>
-        {{ form.house_type() }}
-    </div>
-    <div>
-        {{ form.bedrooms.label }}<br>
-        {{ form.bedrooms() }}
-    </div>
-    <div>
-        {{ form.occupants.label }}<br>
-        {{ form.occupants() }}
-    </div>
-    <div>
-        {{ form.heating_type.label }}<br>
-        {{ form.heating_type() }}
-    </div>
-    <div>
-        {{ form.green_tariff.label }}<br>
-        {{ form.green_tariff() }}
-    </div>
-    <div>
-        {{ form.regular_turn_off.label }}<br>
-        {{ form.regular_turn_off() }}
-    </div>
-    <div>
-        {{ form.winter_temp.label }}<br>
-        {{ form.winter_temp() }}
-    </div>
-    <div>
-        {{ form.efficiency_improvements.label }}<br>
-        {{ form.efficiency_improvements() }}
-    </div>
-
-    <h2>Stuff</h2>
-    <div>
-        {{ form.new_household_items.label }}<br>
-        {{ form.new_household_items() }}
-    </div>
-    <div>
-        {{ form.clothes_spend.label }}<br>
-        {{ form.clothes_spend() }}
-    </div>
-    <div>
-        {{ form.pet_spend.label }}<br>
-        {{ form.pet_spend() }}
-    </div>
-    <div>
-        {{ form.health_spend.label }}<br>
-        {{ form.health_spend() }}
-    </div>
-    <div>
-        {{ form.contract_spend.label }}<br>
-        {{ form.contract_spend() }}
-    </div>
-    <div>
-        {{ form.entertainment_spend.label }}<br>
-        {{ form.entertainment_spend() }}
-    </div>
-    <div>
-        {{ form.recycling.label }}<br>
-        {{ form.recycling() }}
-    </div>
-
-    <h2>Personal</h2>
-    <div>
-        {{ form.location.label }}<br>
-        {{ form.location() }}
-    </div>
-    <div>
-        {{ form.postcode.label }}<br>
-        {{ form.postcode() }}
-    </div>
-    <div>
-        {{ form.age.label }}<br>
-        {{ form.age() }}
-    </div>
-
-    <p>{{ form.submit_footprint() }}</p>
-</form>
-{% endif %}
+        toggleVehicleFields();
+        if (travelModeSelect) travelModeSelect.addEventListener('change', toggleVehicleFields);
+    });
+</script>
 {% endblock %}
