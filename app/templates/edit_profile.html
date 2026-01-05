@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="app-container">
+    <div class="page-header">
+        <div class="page-title">
+            <h1>Edit Profile</h1>
+            <p>Update your personal information</p>
+        </div>
+    </div>
+
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+
+            <div style="margin-bottom: 1.5rem;">
+                {{ form.full_name.label(style="display: block; font-weight: 600; margin-bottom: 0.5rem; color:
+                var(--text-primary);") }}
+                {{ form.full_name(style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color);
+                border-radius: 8px; font-family: inherit;") }}
+                {% for error in form.full_name.errors %}
+                <span style="color: red; font-size: 0.8rem;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                {{ form.phone_number.label(style="display: block; font-weight: 600; margin-bottom: 0.5rem; color:
+                var(--text-primary);") }}
+                {{ form.phone_number(style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color);
+                border-radius: 8px; font-family: inherit;") }}
+                {% for error in form.phone_number.errors %}
+                <span style="color: red; font-size: 0.8rem;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                {{ form.address.label(style="display: block; font-weight: 600; margin-bottom: 0.5rem; color:
+                var(--text-primary);") }}
+                {{ form.address(style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color);
+                border-radius: 8px; font-family: inherit;") }}
+                {% for error in form.address.errors %}
+                <span style="color: red; font-size: 0.8rem;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                {{ form.submit(class="hero-cta", style="border: none; cursor: pointer; font-family: inherit; font-size:
+                1rem;") }}
+                <a href="{{ url_for('profile') }}"
+                    style="color: var(--text-secondary); text-decoration: none; font-weight: 500;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

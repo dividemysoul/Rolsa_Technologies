@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="app-container">
+    <div class="page-header">
+        <div class="page-title">
+            <h1>
+                Hello,
+                {% if current_user.full_name %}
+                {{ current_user.full_name.split()[0] }}
+                {% else %}
+                User
+                {% endif %}
+            </h1>
+            <p>Welcome to your personal profile</p>
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="{{ url_for('edit_profile') }}" class="contact-btn">Edit Profile</a>
+            <a href="{{ url_for('logout') }}" class="contact-btn"
+                style="background: #dc2626; background: linear-gradient(to bottom right, #ef4444, #dc2626);">Logout</a>
+        </div>
+    </div>
+
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <div class="section-header">
+            <h3 class="section-title">Personal Information</h3>
+        </div>
+
+        <div style="display: grid; gap: 1.5rem;">
+            <div>
+                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Full Name</h4>
+                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.full_name or 'Not set' }}</p>
+            </div>
+
+            <div>
+                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Phone Number</h4>
+                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.phone_number or 'Not set' }}</p>
+            </div>
+
+            <div>
+                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Address</h4>
+                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.address or 'Not set' }}</p>
+            </div>
+
+            <div>
+                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Email</h4>
+                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.email }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
