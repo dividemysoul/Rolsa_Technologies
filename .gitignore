@@ -1,0 +1,8 @@
+*pyc
+*pycache*
+/app/models/
+/app/static/js/
+/app/templates/dashboard.html
+/app/app.py
+/app/config.py
+/app/__init__.py
