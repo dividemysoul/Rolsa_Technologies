@@ -1,6 +1,6 @@
 from flask import render_template, request, flash, redirect, url_for
 from app import app, db
-from app.forms import EnergyUseForm, LoginForm, RegistrationForm, BookingForm
+from app.forms import EnergyUseForm, LoginForm, RegistrationForm, BookingForm, ProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Booking
 from urllib.parse import urlparse
@@ -66,6 +66,28 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', title='Your Profile')
+
+@app.route('/profile/edit', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = ProfileForm()
+    if form.validate_on_submit():
+        current_user.full_name = form.full_name.data
+        current_user.phone_number = form.phone_number.data
+        current_user.address = form.address.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('profile'))
+    elif request.method == 'GET':
+        form.full_name.data = current_user.full_name
+        form.phone_number.data = current_user.phone_number
+        form.address.data = current_user.address
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
 
 @app.route('/energy-use', methods=['GET', 'POST'])
 def energy_use():

@@ -2,11 +2,11 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-section d-flex align-items-center justify-content-center px-3 py-5">
-    <div class="hero-content-box p-4 p-md-5">
-        <span class="hero-subtitle text-uppercase tracking-wider mb-2 d-block">100% renewable energy</span>
-        <h1 class="hero-title fw-bolder mb-4">Make your home a<br><span class="text-green">powerhouse</span></h1>
-        <a href="#" class="hero-cta btn-lg">Get a quote</a>
+<section class="hero-section">
+    <div class="hero-content-box">
+        <span class="hero-subtitle">100% renewable energy</span>
+        <h1 class="hero-title">Make your home a<br><span class="text-green">powerhouse</span></h1>
+        <a href="{{ url_for('book') }}" class="hero-cta">Get a quote</a>
     </div>
     <div class="hero-scroll-down d-none d-md-flex">
         <i class="fa-solid fa-arrow-down"></i>

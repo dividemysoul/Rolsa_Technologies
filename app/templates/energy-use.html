@@ -3,40 +3,46 @@
 {% block title %}Energy Use Calculator{% endblock %}
 
 {% block content %}
-<h1>Energy Use Calculator</h1>
+<div class="app-container">
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <h1>Energy Use Calculator</h1>
 
-{% if submitted_data %}
-<h2>Data:</h2>
-<ul>
-    {% for key, value in submitted_data.items() %}
-    <li><strong>{{ key }}:</strong> {{ value }}</li>
-    {% endfor %}
-</ul>
-<a href="{{ url_for('energy_use') }}">Calculate Again</a>
-{% else %}
-<form method="POST" action="">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.grid_import_kwh.label }}<br>
-        {{ form.grid_import_kwh(size=32) }}
+        {% if submitted_data %}
+        <h2>Data:</h2>
+        <ul>
+            {% for key, value in submitted_data.items() %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('energy_use') }}">Calculate Again</a>
+        {% else %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.grid_import_kwh.label(class="form-label") }}
+                {{ form.grid_import_kwh(class="form-control", size=32) }}
+            </div>
+            <div class="form-group">
+                {{ form.solar_generation_kwh.label(class="form-label") }}
+                {{ form.solar_generation_kwh(class="form-control", size=32) }}
+            </div>
+            <div class="form-group">
+                {{ form.grid_export_kwh.label(class="form-label") }}
+                {{ form.grid_export_kwh(class="form-control", size=32) }}
+            </div>
+            <div class="form-group">
+                {{ form.ev_energy_kwh.label(class="form-label") }}
+                {{ form.ev_energy_kwh(class="form-control", size=32) }}
+            </div>
+            <div class="form-group">
+                {{ form.odometer_reading_km.label(class="form-label") }}
+                {{ form.odometer_reading_km(class="form-control", size=32) }}
+            </div>
+            <div class="form-actions">
+                {{ form.submit(class="hero-cta-button") }}
+            </div>
+        </form>
+        {% endif %}
     </div>
-    <div>
-        {{ form.solar_generation_kwh.label }}<br>
-        {{ form.solar_generation_kwh(size=32) }}
-    </div>
-    <div>
-        {{ form.grid_export_kwh.label }}<br>
-        {{ form.grid_export_kwh(size=32) }}
-    </div>
-    <div>
-        {{ form.ev_energy_kwh.label }}<br>
-        {{ form.ev_energy_kwh(size=32) }}
-    </div>
-    <div>
-        {{ form.odometer_reading_km.label }}<br>
-        {{ form.odometer_reading_km(size=32) }}
-    </div>
-    <p>{{ form.submit() }}</p>
-</form>
-{% endif %}
+</div>
 {% endblock %}

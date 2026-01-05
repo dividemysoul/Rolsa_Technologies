@@ -58,8 +58,20 @@
                     <a href="#" class="nav-link p-0 text-white-50"><i class="fa-regular fa-user-circle fs-5"></i></a>
                     <a href="#" class="contact-btn text-decoration-none">Contact</a>
                 </div>
-            </div>
-        </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link">Solutions <i class="fa-solid fa-caret-down"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="{{ url_for('book') }}" class="dropdown-item">Booking</a>
+                    </div>
+                </div>
+                <a href="#" class="nav-link">Resources <i class="fa-solid fa-caret-down"></i></a>
+    </nav>
+
+    <div class="header-right">
+        <a href="{{ url_for('profile') }}" class="nav-link">Account <i class="fa-regular fa-user-circle"></i></a>
+        <a href="{{ url_for('book') }}" class="contact-btn">Contact</a>
+    </div>
+    </div>
     </nav>
 
     <main>

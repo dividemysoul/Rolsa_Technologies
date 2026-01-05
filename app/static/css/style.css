@@ -224,3 +224,64 @@ main {
     width: 100% !important;
     height: 100% !important;
 }
+
+/* Form Styling Standard */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+}
+
+.form-error {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.hero-cta-button {
+    background-color: #84cc16;
+    color: #0f172a;
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.hero-cta-button:hover {
+    background-color: #a3e635;
+    transform: translateY(-1px);
+}
