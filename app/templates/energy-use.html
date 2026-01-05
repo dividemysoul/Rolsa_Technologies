@@ -8,13 +8,21 @@
         <h1>Energy Use Calculator</h1>
 
         {% if submitted_data %}
-        <h2>Data:</h2>
-        <ul>
+        <div class="metrics-row" style="margin-top: 2rem;">
             {% for key, value in submitted_data.items() %}
-            <li><strong>{{ key }}:</strong> {{ value }}</li>
+            <div class="card metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">{{ key|replace('_', ' ')|title }}</span>
+                    <i class="fas fa-bolt metric-icon"></i>
+                </div>
+                <div class="metric-value">{{ value }}</div>
+            </div>
             {% endfor %}
-        </ul>
-        <a href="{{ url_for('energy_use') }}">Calculate Again</a>
+        </div>
+
+        <div style="margin-top: 2rem; text-align: center;">
+            <a href="{{ url_for('energy_use') }}" class="hero-cta-button">Calculate Again</a>
+        </div>
         {% else %}
         <form method="POST" action="">
             {{ form.hidden_tag() }}
