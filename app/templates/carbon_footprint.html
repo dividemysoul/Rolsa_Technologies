@@ -3,191 +3,197 @@
 {% block title %}Carbon Footprint Calculator{% endblock %}
 
 {% block content %}
-<h1>Carbon Footprint Calculator</h1>
+<div class="app-container">
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <h1>Carbon Footprint Calculator</h1>
 
-{% if submitted_data %}
-{% if footprint_results %}
-<h2>Your Carbon Footprint Results</h2>
-<p><strong>Total:</strong> {{ footprint_results.total }} kg CO2e / year</p>
+        {% if submitted_data %}
+        {% if footprint_results %}
+        <h2>Your Carbon Footprint Results</h2>
+        <p><strong>Total:</strong> {{ footprint_results.total }} kg CO2e / year</p>
 
-<h3>Breakdown:</h3>
-<ul>
-    <li><strong>Food:</strong> {{ footprint_results.breakdown.food }} kg CO2e</li>
-    <li><strong>Travel:</strong> {{ footprint_results.breakdown.travel }} kg CO2e</li>
-    <li><strong>Home:</strong> {{ footprint_results.breakdown.home }} kg CO2e</li>
-    <li><strong>Stuff:</strong> {{ footprint_results.breakdown.stuff }} kg CO2e</li>
-</ul>
-<hr>
-{% endif %}
+        <h3>Breakdown:</h3>
+        <ul>
+            <li><strong>Food:</strong> {{ footprint_results.breakdown.food }} kg CO2e</li>
+            <li><strong>Travel:</strong> {{ footprint_results.breakdown.travel }} kg CO2e</li>
+            <li><strong>Home:</strong> {{ footprint_results.breakdown.home }} kg CO2e</li>
+            <li><strong>Stuff:</strong> {{ footprint_results.breakdown.stuff }} kg CO2e</li>
+        </ul>
+        <hr>
+        {% endif %}
 
-<h2>Your Answers:</h2>
-<ul>
-    {% for key, value in submitted_data.items() %}
-    <li><strong>{{ key }}:</strong> {{ value }}</li>
-    {% endfor %}
-</ul>
-<a href="{{ url_for('carbon_footprint') }}">Calculate Again</a>
-{% else %}
-<form method="POST" action="">
-    {{ form.hidden_tag() }}
+        <h2>Your Answers:</h2>
+        <ul>
+            {% for key, value in submitted_data.items() %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('carbon_footprint') }}">Calculate Again</a>
+        {% else %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
 
-    <h2>Food</h2>
-    <div>
-        {{ form.diet.label }}<br>
-        {{ form.diet() }}
-    </div>
-    <div>
-        {{ form.food_spend.label }}<br>
-        {{ form.food_spend() }}
-    </div>
-    <div>
-        {{ form.food_waste.label }}<br>
-        {{ form.food_waste() }}
-    </div>
-    <div>
-        {{ form.local_food.label }}<br>
-        {{ form.local_food() }}
-    </div>
+            <h2>Food</h2>
+            <div class="form-group">
+                {{ form.diet.label(class="form-label") }}
+                {{ form.diet(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.food_spend.label(class="form-label") }}
+                {{ form.food_spend(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.food_waste.label(class="form-label") }}
+                {{ form.food_waste(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.local_food.label(class="form-label") }}
+                {{ form.local_food(class="form-control") }}
+            </div>
 
-    <h2>Travel</h2>
-    <div>
-        {{ form.travel_mode.label }}<br>
-        {{ form.travel_mode(id="travel_mode") }}
-    </div>
-    <div id="vehicle_type_div">
-        {{ form.vehicle_type.label }}<br>
-        {{ form.vehicle_type() }}
-    </div>
-    <div id="car_hours_div">
-        {{ form.car_hours.label }}<br>
-        {{ form.car_hours() }}
-    </div>
-    <div>
-        {{ form.train_hours.label }}<br>
-        {{ form.train_hours() }}
-    </div>
-    <div>
-        {{ form.bus_hours.label }}<br>
-        {{ form.bus_hours() }}
-    </div>
+            <h2>Travel</h2>
+            <div class="form-group">
+                {{ form.travel_mode.label(class="form-label") }}
+                {{ form.travel_mode(id="travel_mode", class="form-control") }}
+            </div>
+            <div id="vehicle_type_div" class="form-group">
+                {{ form.vehicle_type.label(class="form-label") }}
+                {{ form.vehicle_type(class="form-control") }}
+            </div>
+            <div id="car_hours_div" class="form-group">
+                {{ form.car_hours.label(class="form-label") }}
+                {{ form.car_hours(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.train_hours.label(class="form-label") }}
+                {{ form.train_hours(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.bus_hours.label(class="form-label") }}
+                {{ form.bus_hours(class="form-control") }}
+            </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var travelModeSelect = document.getElementById('travel_mode');
-            var vehicleTypeDiv = document.getElementById('vehicle_type_div');
-            var carHoursDiv = document.getElementById('car_hours_div');
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var travelModeSelect = document.getElementById('travel_mode');
+                    var vehicleTypeDiv = document.getElementById('vehicle_type_div');
+                    var carHoursDiv = document.getElementById('car_hours_div');
 
-            function toggleVehicleFields() {
-                var selectedValue = travelModeSelect.value;
-                if (selectedValue.includes('Neither')) {
-                    vehicleTypeDiv.style.display = 'none';
-                    carHoursDiv.style.display = 'none';
-                } else {
-                    vehicleTypeDiv.style.display = 'block';
-                    carHoursDiv.style.display = 'block';
-                }
-            }
+                    function toggleVehicleFields() {
+                        var selectedValue = travelModeSelect.value;
+                        if (selectedValue.includes('Neither')) {
+                            vehicleTypeDiv.style.display = 'none';
+                            carHoursDiv.style.display = 'none';
+                        } else {
+                            vehicleTypeDiv.style.display = 'block';
+                            carHoursDiv.style.display = 'block';
+                        }
+                    }
 
-            toggleVehicleFields(); // Run on load
-            travelModeSelect.addEventListener('change', toggleVehicleFields); // Run on change
-        });
-    </script>
-    <div>
-        {{ form.flight_domestic.label }}<br>
-        {{ form.flight_domestic() }}
-    </div>
-    <div>
-        {{ form.flight_europe.label }}<br>
-        {{ form.flight_europe() }}
-    </div>
-    <div>
-        {{ form.flight_outside_europe.label }}<br>
-        {{ form.flight_outside_europe() }}
-    </div>
-    <div>
-        {{ form.flight_offset.label }}<br>
-        {{ form.flight_offset() }}
-    </div>
+                    toggleVehicleFields(); // Run on load
+                    travelModeSelect.addEventListener('change', toggleVehicleFields); // Run on change
+                });
+            </script>
+            <div class="form-group">
+                {{ form.flight_domestic.label(class="form-label") }}
+                {{ form.flight_domestic(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.flight_europe.label(class="form-label") }}
+                {{ form.flight_europe(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.flight_outside_europe.label(class="form-label") }}
+                {{ form.flight_outside_europe(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.flight_offset.label(class="form-label") }}
+                {{ form.flight_offset(class="form-control") }}
+            </div>
 
-    <h2>Home</h2>
-    <div>
-        {{ form.house_type.label }}<br>
-        {{ form.house_type() }}
-    </div>
-    <div>
-        {{ form.bedrooms.label }}<br>
-        {{ form.bedrooms() }}
-    </div>
-    <div>
-        {{ form.occupants.label }}<br>
-        {{ form.occupants() }}
-    </div>
-    <div>
-        {{ form.heating_type.label }}<br>
-        {{ form.heating_type() }}
-    </div>
-    <div>
-        {{ form.green_tariff.label }}<br>
-        {{ form.green_tariff() }}
-    </div>
-    <div>
-        {{ form.regular_turn_off.label }}<br>
-        {{ form.regular_turn_off() }}
-    </div>
-    <div>
-        {{ form.winter_temp.label }}<br>
-        {{ form.winter_temp() }}
-    </div>
-    <div>
-        {{ form.efficiency_improvements.label }}<br>
-        {{ form.efficiency_improvements() }}
-    </div>
+            <h2>Home</h2>
+            <div class="form-group">
+                {{ form.house_type.label(class="form-label") }}
+                {{ form.house_type(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.bedrooms.label(class="form-label") }}
+                {{ form.bedrooms(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.occupants.label(class="form-label") }}
+                {{ form.occupants(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.heating_type.label(class="form-label") }}
+                {{ form.heating_type(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.green_tariff.label(class="form-label") }}
+                {{ form.green_tariff(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.regular_turn_off.label(class="form-label") }}
+                {{ form.regular_turn_off(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.winter_temp.label(class="form-label") }}
+                {{ form.winter_temp(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.efficiency_improvements.label(class="form-label") }}
+                {{ form.efficiency_improvements(class="form-control") }}
+            </div>
 
-    <h2>Stuff</h2>
-    <div>
-        {{ form.new_household_items.label }}<br>
-        {{ form.new_household_items() }}
-    </div>
-    <div>
-        {{ form.clothes_spend.label }}<br>
-        {{ form.clothes_spend() }}
-    </div>
-    <div>
-        {{ form.pet_spend.label }}<br>
-        {{ form.pet_spend() }}
-    </div>
-    <div>
-        {{ form.health_spend.label }}<br>
-        {{ form.health_spend() }}
-    </div>
-    <div>
-        {{ form.contract_spend.label }}<br>
-        {{ form.contract_spend() }}
-    </div>
-    <div>
-        {{ form.entertainment_spend.label }}<br>
-        {{ form.entertainment_spend() }}
-    </div>
-    <div>
-        {{ form.recycling.label }}<br>
-        {{ form.recycling() }}
-    </div>
+            <h2>Stuff</h2>
+            <div class="form-group">
+                {{ form.new_household_items.label(class="form-label") }}
+                {{ form.new_household_items(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.clothes_spend.label(class="form-label") }}
+                {{ form.clothes_spend(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.pet_spend.label(class="form-label") }}
+                {{ form.pet_spend(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.health_spend.label(class="form-label") }}
+                {{ form.health_spend(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.contract_spend.label(class="form-label") }}
+                {{ form.contract_spend(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.entertainment_spend.label(class="form-label") }}
+                {{ form.entertainment_spend(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.recycling.label(class="form-label") }}
+                {{ form.recycling(class="form-control") }}
+            </div>
 
-    <h2>Personal</h2>
-    <div>
-        {{ form.location.label }}<br>
-        {{ form.location() }}
-    </div>
-    <div>
-        {{ form.postcode.label }}<br>
-        {{ form.postcode() }}
-    </div>
-    <div>
-        {{ form.age.label }}<br>
-        {{ form.age() }}
-    </div>
+            <h2>Personal</h2>
+            <div class="form-group">
+                {{ form.location.label(class="form-label") }}
+                {{ form.location(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.postcode.label(class="form-label") }}
+                {{ form.postcode(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.age.label(class="form-label") }}
+                {{ form.age(class="form-control") }}
+            </div>
 
-    <p>{{ form.submit_footprint() }}</p>
-</form>
-{% endif %}
+            <div class="form-actions">
+                {{ form.submit_footprint(class="hero-cta-button") }}
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
