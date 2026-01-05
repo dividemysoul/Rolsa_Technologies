@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, SubmitField, StringField, PasswordField, BooleanField
+from wtforms import FloatField, SubmitField, StringField, PasswordField, BooleanField, DateField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from app.models import User
 
@@ -27,6 +27,16 @@ class EnergyUseForm(FlaskForm):
     ev_energy_kwh = FloatField('EV Energy (kWh)', validators=[DataRequired()])
     odometer_reading_km = FloatField('Odometer Reading (km)', validators=[DataRequired()])
     submit = SubmitField('Calculate')
+
+class BookingForm(FlaskForm):
+    booking_type = SelectField('Consultation Type', choices=[
+        ('Solar Panels', 'Solar Panels'),
+        ('EV Charger', 'EV Charger'),
+        ('Smart Home', 'Smart Home')
+    ], validators=[DataRequired()])
+    booking_date = DateField('Preferred Date', format='%Y-%m-%d', validators=[DataRequired()], render_kw={"type": "date"})
+    address = StringField('Address', validators=[DataRequired()])
+    submit = SubmitField('Book Now')
 
 from wtforms import SelectField, IntegerField, StringField, SelectMultipleField, widgets
 

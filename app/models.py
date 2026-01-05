@@ -15,6 +15,21 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+class Booking(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    booking_type = db.Column(db.String(50), nullable=False)
+    booking_date = db.Column(db.Date, nullable=False)
+    address = db.Column(db.String(200), nullable=False)
+    booking_number = db.Column(db.String(20), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('bookings', lazy=True))
+
+    def __repr__(self):
+        return f'<Booking {self.booking_number}>'

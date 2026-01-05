@@ -440,22 +440,3 @@ class MockDataProvider:
                 "recycling": ["Paper", "Tin cans", "Plastic", "Glass"]
             }
         }
-
-if __name__ == "__main__":
-    # 1. Get mock data
-    mock_data = MockDataProvider.get_mock_data()
-    print("----------------------------------------------------------------")
-    print("MOCK INPUT DATA:")
-    print(json.dumps(mock_data, indent=2))
-    print("----------------------------------------------------------------")
-
-    # 2. Instantiate Calculator
-    calculator = CarbonFootprintCalculator(mock_data)
-
-    # 3. Calculate
-    result = calculator.calculate()
-
-    # 4. Output Results
-    print("\nCALCULATION RESULTS (kg CO2e / year):")
-    print(json.dumps(result, indent=2))
-    print("----------------------------------------------------------------")

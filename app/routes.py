@@ -1,11 +1,31 @@
 from flask import render_template, request, flash, redirect, url_for
 from app import app, db
-from app.forms import EnergyUseForm, LoginForm, RegistrationForm
+from app.forms import EnergyUseForm, LoginForm, RegistrationForm, BookingForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Booking
 from urllib.parse import urlparse
+import uuid
 
 from app.services.energy_use import EnergyUse
+
+@app.route('/book', methods=['GET', 'POST'])
+@login_required
+def book():
+    form = BookingForm()
+    if form.validate_on_submit():
+        booking_number = str(uuid.uuid4().hex[:8].upper())
+        booking = Booking(
+            user_id=current_user.id,
+            booking_type=form.booking_type.data,
+            booking_date=form.booking_date.data,
+            address=form.address.data,
+            booking_number=booking_number
+        )
+        db.session.add(booking)
+        db.session.commit()
+        flash(f'Booking confirmed! Your booking number is {booking_number}')
+        return redirect(url_for('index'))
+    return render_template('book.html', title='Book Consultation', form=form)
 
 @app.route('/')
 def index():

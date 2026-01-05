@@ -14,6 +14,7 @@
         <div class="nav-right">
             <a href="/energy-use">Energy Use</a>
             <a href="/carbon-footprint">Carbon Footprint</a>
+            <a href="{{ url_for('book') }}">Book Consultation</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Login</a>
             {% else %}
