@@ -1,11 +1,6 @@
 import json
 
 class CarbonFootprintCalculator:
-    """
-    Calculates carbon footprint based on user input data using specific emission factors.
-    Strict OOP implementation.
-    Answers are mapped from strict string inputs as defined in the question set.
-    """
 
     # Emission Factors (approximations based on UK data)
     _EMISSION_FACTORS = {
