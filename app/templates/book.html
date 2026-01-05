@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Book Consultation</h1>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.booking_type.label }}<br>
+        {{ form.booking_type() }}
+    </p>
+    <p>
+        {{ form.booking_date.label }}<br>
+        {{ form.booking_date() }}
+    </p>
+    <p>
+        {{ form.address.label }}<br>
+        {{ form.address(size=64) }}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
