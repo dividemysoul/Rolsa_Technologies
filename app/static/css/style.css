@@ -106,9 +106,8 @@ main {
 .hero-section {
     position: relative;
     width: 100%;
-    /* Flex grow to fill main container's space */
-    flex: 1;
-    min-height: 500px;
+    /* Fill the viewport minus the approximate header height */
+    min-height: calc(100vh - 80px);
     background-image: url('../images/hero_bg.png');
     background-size: cover;
     background-position: center;
@@ -116,12 +115,32 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1rem;
 }
 
-/* Remove aspect-ratio height lock to prevent gaps */
+/* Form Styling Standard */
+/* Move media queries to unified block or keep close to component */
 @media (max-width: 768px) {
     .hero-section {
-        min-height: 400px;
+        min-height: calc(100vh - 70px);
+        background-position: center;
+    }
+
+    .hero-content-box {
+        padding: 2rem 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 16px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-cta {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
     }
 }
 
@@ -132,53 +151,73 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
     pointer-events: none;
 }
 
 .hero-content-box {
-    background: rgba(30, 40, 35, 0.85);
-    backdrop-filter: blur(7px);
-    padding: 3rem;
+    background: rgba(30, 40, 35, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 3.5rem;
     border-radius: 24px;
     text-align: center;
     color: white;
-    max-width: 600px;
+    max-width: 700px;
     width: 90%;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .hero-subtitle {
-    font-size: 0.85rem;
-    color: #d1d5db;
-    letter-spacing: 2px;
+    font-size: 0.9rem;
+    color: #e5e7eb;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: block;
 }
 
 .hero-title {
-    font-size: clamp(2.25rem, 8vw, 3.5rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     line-height: 1.1;
     font-weight: 800;
+    margin-bottom: 2rem;
 }
 
 .text-green {
     color: #84cc16 !important;
+    background: linear-gradient(to right, #84cc16, #a3e635);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .hero-cta {
     display: inline-block;
-    background-color: #84cc16;
-    color: #0f172a;
-    font-weight: 700;
-    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+    color: white;
+    font-weight: 600;
+    padding: 1rem 3rem;
     border-radius: 50px;
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    letter-spacing: 0.5px;
+    border: 2px solid transparent;
 }
 
 .hero-cta:hover {
-    background-color: #a3e635;
     transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(132, 204, 22, 0.4);
+    background: linear-gradient(135deg, #a3e635 0%, #84cc16 100%);
+    color: white;
+}
+
+.hero-cta:active {
+    transform: translateY(0);
 }
 
 .hero-scroll-down {
@@ -186,16 +225,22 @@ main {
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(30, 40, 35, 0.8);
-    width: 40px;
-    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-scroll-down:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 
