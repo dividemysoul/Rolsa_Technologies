@@ -21,7 +21,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-header shadow-sm">
         <div class="header-container container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="/">
                 <div class="brand-logo">
                     <i class="fa-solid fa-leaf"></i>
                 </div>
@@ -37,7 +37,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="calcDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,22 +48,24 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Solutions</a>
+                        <a class="nav-link" href="{{ url_for('index', _anchor='solutions') }}">Solutions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Resources</a>
+                        <a class="nav-link" href="{{ url_for('index', _anchor='resources') }}">Resources</a>
                     </li>
                 </ul>
                 <!-- Mobile Only Actions -->
                 <div class="d-flex align-items-center gap-3 d-lg-none mt-3 mt-lg-0">
-                    <a href="{{ url_for('profile') }}" class="nav-link p-0 text-white-50"><i class="fa-regular fa-user-circle fs-5"></i></a>
+                    <a href="{{ url_for('profile') }}" class="nav-link p-0 text-white-50"><i
+                            class="fa-regular fa-user-circle fs-5"></i></a>
                     <a href="{{ url_for('book') }}" class="contact-btn text-decoration-none">Contact</a>
                 </div>
             </div>
 
             <!-- Desktop Only Actions -->
-            <div class="header-right d-none d-lg-flex align-items-center gap-3">
-                <a href="{{ url_for('profile') }}" class="nav-link">Account <i class="fa-regular fa-user-circle"></i></a>
+            <div class="header-right d-none d-lg-flex align-items-center gap-4">
+                <a href="{{ url_for('profile') }}" class="nav-link">Account <i
+                        class="fa-regular fa-user-circle"></i></a>
                 <a href="{{ url_for('book') }}" class="contact-btn text-decoration-none">Contact</a>
             </div>
         </div>
