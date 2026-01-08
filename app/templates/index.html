@@ -8,8 +8,35 @@
         <h1 class="hero-title">Make your home a<br><span class="text-green">powerhouse</span></h1>
         <a href="{{ url_for('book') }}" class="hero-cta">Get a quote</a>
     </div>
-    <div class="hero-scroll-down">
-        <i class="fa-solid fa-arrow-down"></i>
+    <div class="hero-scroll-down d-none d-md-flex">
+        <a href="#features" class="text-white"><i class="fa-solid fa-arrow-down"></i></a>
+    </div>
+</section>
+
+<!-- Features Section (The content revealed on scroll) -->
+<section id="features" class="container py-5 my-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card h-100 p-4 shadow-sm border-0">
+                <div class="mb-3 text-success"><i class="fa-solid fa-leaf fa-3x"></i></div>
+                <h3 class="h5 fw-bold">100% Renewable</h3>
+                <p class="text-secondary">Sourced purely from wind, solar, and hydro power.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-4 shadow-sm border-0">
+                <div class="mb-3 text-success"><i class="fa-solid fa-bolt fa-3x"></i></div>
+                <h3 class="h5 fw-bold">Reliable Energy</h3>
+                <p class="text-secondary">Consistent power supply with zero downtime.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-4 shadow-sm border-0">
+                <div class="mb-3 text-success"><i class="fa-solid fa-piggy-bank fa-3x"></i></div>
+                <h3 class="h5 fw-bold">Cost Effective</h3>
+                <p class="text-secondary">Save money while saving the planet.</p>
+            </div>
+        </div>
     </div>
 </section>
 
