@@ -114,7 +114,7 @@ main {
     /* Important for flex containers to allow shrinking */
 
     background-image: url('../images/hero_bg.png');
-    background-size: 100% 100%;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     align-items: center;
