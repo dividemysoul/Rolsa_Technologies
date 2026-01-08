@@ -106,28 +106,28 @@ main {
 .hero-section {
     position: relative;
     width: 100%;
-    /* Dynamically fill the available space in 'main' */
-    flex: 1;
+    /* Maintain aspect ratio to show the full image without cropping on wide screens */
+    aspect-ratio: 16 / 7;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
-    min-height: 0;
-    /* Important for flex containers to allow shrinking */
 
     background-image: url('../images/hero_bg.png');
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: var(--bg-header);
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 2rem 1rem;
 }
 
 /* Form Styling Standard */
 /* Move media queries to unified block or keep close to component */
 @media (max-width: 768px) {
     .hero-section {
-        /* On mobile, ensure enough height for content, but flex usually handles it */
-        min-height: auto;
+        aspect-ratio: auto;
+        min-height: 500px;
         background-position: center;
     }
 
