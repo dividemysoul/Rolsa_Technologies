@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --primary-green: #1a4d2e;
     --accent-green: #4ade80;
@@ -106,50 +110,22 @@ main {
 .hero-section {
     position: relative;
     width: 100%;
-    /* Maintain aspect ratio to show the full image without cropping on wide screens */
-    aspect-ratio: 16 / 7;
-    min-height: 600px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 1rem;
 
     background-image: url('../images/hero_bg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-color: var(--bg-header);
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1rem;
 }
 
-/* Form Styling Standard */
-/* Move media queries to unified block or keep close to component */
-@media (max-width: 768px) {
-    .hero-section {
-        aspect-ratio: auto;
-        min-height: 500px;
-        background-position: center;
-    }
-
-    .hero-content-box {
-        padding: 2rem 1.5rem;
-        width: 100%;
-        max-width: 100%;
-        border-radius: 16px;
-    }
-
-    .hero-title {
-        font-size: 2rem;
-    }
-
-    .hero-cta {
-        width: 100%;
-        text-align: center;
-        padding: 1rem;
-    }
-}
-
-.hero-overlay::before {
+.hero-section::before {
     content: '';
     position: absolute;
     top: 0;
@@ -158,6 +134,7 @@ main {
     bottom: 0;
     background: rgba(0, 0, 0, 0.2);
     pointer-events: none;
+    z-index: 1;
 }
 
 .hero-content-box {
@@ -227,13 +204,13 @@ main {
 
 .hero-scroll-down {
     position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 5rem;
+    right: 3rem;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(4px);
-    width: 44px;
-    height: 44px;
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -246,6 +223,27 @@ main {
 
 .hero-scroll-down:hover {
     background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+
+    .hero-content-box {
+        padding: 2rem 1.5rem;
+        width: 95%;
+        border-radius: 16px;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-cta {
+        width: 100%;
+        padding: 0.8rem 1.5rem;
+    }
 }
 
 
