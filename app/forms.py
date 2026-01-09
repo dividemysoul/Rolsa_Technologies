@@ -20,6 +20,13 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('Please use a different email address.')
 
+class ProfileForm(FlaskForm):
+    full_name = StringField('Full Name', validators=[DataRequired()])
+    phone_number = StringField('Phone Number', validators=[DataRequired()])
+    address = StringField('Address', validators=[DataRequired()])
+    submit = SubmitField('Update Profile')
+
+
 class EnergyUseForm(FlaskForm):
     grid_import_kwh = FloatField('Grid Import (kWh)', validators=[DataRequired()])
     solar_generation_kwh = FloatField('Solar Generation (kWh)', validators=[DataRequired()])
