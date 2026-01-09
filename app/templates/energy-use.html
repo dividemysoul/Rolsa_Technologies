@@ -29,22 +29,37 @@
             <div class="form-group">
                 {{ form.grid_import_kwh.label(class="form-label") }}
                 {{ form.grid_import_kwh(class="form-control", size=32) }}
+                {% for error in form.grid_import_kwh.errors %}
+                <span class="form-error">[{{ error }}]</span>
+                {% endfor %}
             </div>
             <div class="form-group">
                 {{ form.solar_generation_kwh.label(class="form-label") }}
                 {{ form.solar_generation_kwh(class="form-control", size=32) }}
+                {% for error in form.solar_generation_kwh.errors %}
+                <span class="form-error">[{{ error }}]</span>
+                {% endfor %}
             </div>
             <div class="form-group">
                 {{ form.grid_export_kwh.label(class="form-label") }}
                 {{ form.grid_export_kwh(class="form-control", size=32) }}
+                {% for error in form.grid_export_kwh.errors %}
+                <span class="form-error">[{{ error }}]</span>
+                {% endfor %}
             </div>
             <div class="form-group">
                 {{ form.ev_energy_kwh.label(class="form-label") }}
                 {{ form.ev_energy_kwh(class="form-control", size=32) }}
+                {% for error in form.ev_energy_kwh.errors %}
+                <span class="text-danger">[{{ error }}]</span>
+                {% endfor %}
             </div>
             <div class="form-group">
                 {{ form.odometer_reading_km.label(class="form-label") }}
                 {{ form.odometer_reading_km(class="form-control", size=32) }}
+                {% for error in form.odometer_reading_km.errors %}
+                <span class="text-danger">[{{ error }}]</span>
+                {% endfor %}
             </div>
             <div class="form-actions">
                 {{ form.submit(class="hero-cta-button") }}
