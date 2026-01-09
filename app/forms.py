@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import FloatField, SubmitField, StringField, PasswordField, BooleanField, DateField, SelectField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -28,11 +28,11 @@ class ProfileForm(FlaskForm):
 
 
 class EnergyUseForm(FlaskForm):
-    grid_import_kwh = FloatField('Grid Import (kWh)', validators=[DataRequired()])
-    solar_generation_kwh = FloatField('Solar Generation (kWh)', validators=[DataRequired()])
-    grid_export_kwh = FloatField('Grid Export (kWh)', validators=[DataRequired()])
-    ev_energy_kwh = FloatField('EV Energy (kWh)', validators=[DataRequired()])
-    odometer_reading_km = FloatField('Odometer Reading (km)', validators=[DataRequired()])
+    grid_import_kwh = FloatField('Grid Import (kWh)', validators=[DataRequired(message="This field is required"), NumberRange(min=0, message="Value must be positive")])
+    solar_generation_kwh = FloatField('Solar Generation (kWh)', validators=[DataRequired(message="This field is required"), NumberRange(min=0, message="Value must be positive")])
+    grid_export_kwh = FloatField('Grid Export (kWh)', validators=[DataRequired(message="This field is required"), NumberRange(min=0, message="Value must be positive")])
+    ev_energy_kwh = FloatField('EV Energy (kWh)', validators=[DataRequired(message="This field is required"), NumberRange(min=0, message="Value must be positive")])
+    odometer_reading_km = FloatField('Odometer Reading (km)', validators=[DataRequired(message="This field is required"), NumberRange(min=0, message="Value must be positive")])
     submit = SubmitField('Calculate')
 
 class BookingForm(FlaskForm):
