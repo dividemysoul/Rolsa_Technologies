@@ -23,8 +23,9 @@ def book():
         )
         db.session.add(booking)
         db.session.commit()
-        flash(f'Booking confirmed! Your booking number is {booking_number}')
-        return redirect(url_for('index'))
+        # flash(f'Booking confirmed! Your booking number is {booking_number}')
+        # return redirect(url_for('index'))
+        return render_template('book.html', title='Book Consultation', form=form, booking_number=booking_number)
     return render_template('book.html', title='Book Consultation', form=form)
 
 @app.route('/')

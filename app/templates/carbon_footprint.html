@@ -9,26 +9,70 @@
 
         {% if submitted_data %}
         {% if footprint_results %}
-        <h2>Your Carbon Footprint Results</h2>
-        <p><strong>Total:</strong> {{ footprint_results.total }} kg CO2e / year</p>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <div class="card" style="display: inline-block; padding: 2rem 3rem; border: 2px solid var(--accent-green);">
+                <h2 style="margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 1rem;">Total Carbon Footprint
+                </h2>
+                <div style="font-size: 3rem; font-weight: 800; color: var(--primary-green);">
+                    {{ footprint_results.total }}
+                    <span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">kg CO2e / year</span>
+                </div>
+            </div>
+        </div>
 
-        <h3>Breakdown:</h3>
-        <ul>
-            <li><strong>Food:</strong> {{ footprint_results.breakdown.food }} kg CO2e</li>
-            <li><strong>Travel:</strong> {{ footprint_results.breakdown.travel }} kg CO2e</li>
-            <li><strong>Home:</strong> {{ footprint_results.breakdown.home }} kg CO2e</li>
-            <li><strong>Stuff:</strong> {{ footprint_results.breakdown.stuff }} kg CO2e</li>
-        </ul>
-        <hr>
+        <h3 class="section-title">Breakdown</h3>
+        <div class="metrics-row">
+            <div class="card metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Food</span>
+                    <i class="fas fa-utensils metric-icon" style="color: var(--accent-green);"></i>
+                </div>
+                <div class="metric-value">{{ footprint_results.breakdown.food }} <span
+                        style="font-size: 0.5em; color: var(--text-secondary);">kg</span></div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Travel</span>
+                    <i class="fas fa-plane metric-icon" style="color: var(--accent-blue);"></i>
+                </div>
+                <div class="metric-value">{{ footprint_results.breakdown.travel }} <span
+                        style="font-size: 0.5em; color: var(--text-secondary);">kg</span></div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Home</span>
+                    <i class="fas fa-home metric-icon" style="color: var(--accent-purple);"></i>
+                </div>
+                <div class="metric-value">{{ footprint_results.breakdown.home }} <span
+                        style="font-size: 0.5em; color: var(--text-secondary);">kg</span></div>
+            </div>
+            <div class="card metric-card">
+                <div class="metric-header">
+                    <span class="metric-label">Stuff</span>
+                    <i class="fas fa-shopping-bag metric-icon" style="color: var(--accent-pink);"></i>
+                </div>
+                <div class="metric-value">{{ footprint_results.breakdown.stuff }} <span
+                        style="font-size: 0.5em; color: var(--text-secondary);">kg</span></div>
+            </div>
+        </div>
         {% endif %}
 
-        <h2>Your Answers:</h2>
-        <ul>
-            {% for key, value in submitted_data.items() %}
-            <li><strong>{{ key }}:</strong> {{ value }}</li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('carbon_footprint') }}">Calculate Again</a>
+        <div class="card" style="margin-top: 2rem;">
+            <h3 class="section-title" style="margin-bottom: 1rem;">Your Inputs</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                {% for key, value in submitted_data.items() %}
+                <div style="background: var(--bg-body); padding: 0.75rem; border-radius: 8px;">
+                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">{{
+                        key|replace('_', ' ')|title }}</div>
+                    <div style="font-weight: 600;">{{ value }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; text-align: center;">
+            <a href="{{ url_for('carbon_footprint') }}" class="hero-cta-button">Calculate Again</a>
+        </div>
         {% else %}
         <form method="POST" action="">
             {{ form.hidden_tag() }}
