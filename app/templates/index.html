@@ -8,10 +8,294 @@
         <h1 class="hero-title">Make your home a<br><span class="text-green">powerhouse</span></h1>
         <a href="{{ url_for('book') }}" class="hero-cta">Get a quote</a>
     </div>
-    <div class="hero-scroll-down">
-        <i class="fa-solid fa-arrow-down"></i>
+    <a href="#features" class="hero-scroll-down">
+        <i class="fa-solid fa-arrow-down text-green"></i>
+    </a>
+</section>
+
+<!-- Features Section (The content revealed on scroll) -->
+<section id="features" class="container py-5 my-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card h-100 p-4 shadow-sm border-0">
+                <div class="mb-3 text-success"><i class="fa-solid fa-leaf fa-3x"></i></div>
+                <h3 class="h5 fw-bold">100% Renewable</h3>
+                <p class="text-secondary">Sourced purely from wind, solar, and hydro power.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-4 shadow-sm border-0">
+                <div class="mb-3 text-success"><i class="fa-solid fa-bolt fa-3x"></i></div>
+                <h3 class="h5 fw-bold">Reliable Energy</h3>
+                <p class="text-secondary">Consistent power supply with zero downtime.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 p-4 shadow-sm border-0">
+                <div class="mb-3 text-success"><i class="fa-solid fa-piggy-bank fa-3x"></i></div>
+                <h3 class="h5 fw-bold">Cost Effective</h3>
+                <p class="text-secondary">Save money while saving the planet.</p>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- Solutions Section -->
+<section id="solutions" class="container py-5 mb-5">
+    <div class="section-title-center">
+        <h2 class="section-title">Green Solutions Overview</h2>
+        <p class="section-desc">Discover how our integrated technologies can transform your home into a sustainable
+            powerhouse, reducing costs and your carbon footprint.</p>
+    </div>
+
+    <!-- Hero Card -->
+    <div class="solution-hero-card">
+        <div class="solution-hero-bg"></div>
+        <div class="solution-hero-content">
+            <span class="label-pill">Integrated Ecosystem</span>
+            <h3 class="h2 fw-bold mb-0">Powering a Sustainable Future</h3>
+        </div>
+    </div>
+
+    <!-- Solution Row 1: Solar -->
+    <div class="solution-row">
+        <div class="solution-img-col position-relative">
+            <div class="img-overlay-icon">
+                <i class="fa-solid fa-solar-panel"></i>
+            </div>
+            <img src="https://placehold.co/600x400/1e293b/FFF?text=Solar+Panels" alt="Solar Panels"
+                class="solution-card-img">
+        </div>
+        <div class="solution-text-col">
+            <h3 class="h3 fw-bold mb-3 text-success">Solar Installation & Maintenance</h3>
+            <p class="text-secondary mb-4">Harness the sun's power with our top-tier PV systems. From initial site
+                assessment to lifelong maintenance, we ensure your transition to renewable energy is seamless and
+                efficient.</p>
+            <div class="solution-btn-group">
+                <a href="{{ url_for('book') }}" class="btn-primary-dark">Get a Quote</a>
+                <a href="#" class="btn-outline-dark">Learn More <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solution Row 2: EV Charging -->
+    <div class="solution-row">
+        <div class="solution-img-col position-relative">
+            <div class="img-overlay-icon">
+                <i class="fa-solid fa-charging-station"></i>
+            </div>
+            <img src="https://placehold.co/600x400/1e293b/FFF?text=EV+Charger" alt="EV Charging"
+                class="solution-card-img">
+        </div>
+        <div class="solution-text-col">
+            <h3 class="h3 fw-bold mb-3 text-success">EV Charging Stations</h3>
+            <p class="text-secondary mb-4">Future-proof your home or business with fast, reliable electric vehicle
+                charging infrastructure. Our smart chargers integrate seamlessly with your home energy system.</p>
+            <div class="solution-btn-group">
+                <a href="#find-chargers" class="btn-primary-dark">Find Chargers</a>
+                <a href="#details" class="btn-outline-dark">Details <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solution Row 3: Smart Energy -->
+    <div class="solution-row">
+        <div class="solution-img-col position-relative">
+            <div class="img-overlay-icon">
+                <i class="fa-solid fa-plug"></i>
+            </div>
+            <img src="https://placehold.co/600x400/1e293b/FFF?text=Smart+Thermostat" alt="Smart Energy"
+                class="solution-card-img">
+        </div>
+        <div class="solution-text-col">
+            <h3 class="h3 fw-bold mb-3 text-success">Smart Energy Management</h3>
+            <p class="text-secondary mb-4">Take full control. Our intelligent systems track usage in real-time and
+                automate efficiency, reducing waste and saving you money without lifting a finger.</p>
+            <div class="solution-btn-group">
+                <a href="#automate" class="btn-primary-dark">Automate Home</a>
+                <a href="#explore" class="btn-outline-dark">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Resources Section -->
+<section id="resources" class="resources-hero">
+    <div class="container pb-5">
+        <h2 class="display-4 fw-bold mb-3">Informational Resources Hub</h2>
+        <p class="fs-5 opacity-75 mb-5" style="max-width: 700px; margin: 0 auto;">Empower your sustainable journey with
+            expert guides, latest industry insights, and practical tips for a greener lifestyle.</p>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search for articles, guides, or keywords...">
+            <button class="search-btn">Search</button>
+        </div>
+        <div class="popular-links">
+            Popular: <a href="#">Solar Rebates</a> • <a href="#">EV Installation Cost</a> • <a href="#">Smart
+                Thermostats</a>
+        </div>
+    </div>
+</section>
+
+<div class="container" style="position: relative; z-index: 10;">
+    <!-- Category Cards (overlapping hero) -->
+    <div class="row g-4 resource-cats-row">
+        <div class="col-md-4">
+            <div class="resource-cat-card">
+                <i class="fa-solid fa-solar-panel cat-bg-icon"></i>
+                <div class="cat-icon"><i class="fa-solid fa-solar-panel"></i></div>
+                <h3 class="h5 fw-bold mb-2">Solar Energy</h3>
+                <p class="text-secondary small mb-0">Installation guides, cost breakdowns, and efficiency tips.</p>
+                <a href="#" class="cat-link">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="resource-cat-card">
+                <i class="fa-solid fa-car cat-bg-icon"></i>
+                <div class="cat-icon"><i class="fa-solid fa-car"></i></div>
+                <h3 class="h5 fw-bold mb-2">EV Charging</h3>
+                <p class="text-secondary small mb-0">Home charging solutions, connector types, and station maps.</p>
+                <a href="#" class="cat-link">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="resource-cat-card">
+                <i class="fa-solid fa-leaf cat-bg-icon"></i>
+                <div class="cat-icon"><i class="fa-solid fa-leaf"></i></div>
+                <h3 class="h5 fw-bold mb-2">Sustainable Living</h3>
+                <p class="text-secondary small mb-0">Carbon footprint reduction, smart home tech, and recycling.</p>
+                <a href="#" class="cat-link">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5 mb-5">
+        <!-- Main Content Column -->
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="h4 fw-bold mb-0">Latest Resources</h3>
+                <div class="btn-group">
+                    <button class="btn btn-dark btn-sm rounded-pill px-3">All</button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Guides</button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0"> নিউজ</button>
+                </div>
+            </div>
+
+            <!-- Article 1 -->
+            <div class="article-card mb-4 d-flex flex-column flex-md-row" style="height: auto;">
+                <img src="https://placehold.co/400x300/1e293b/FFF?text=Solar+Checklist" class="article-img"
+                    style="width: 100%; max-width: 300px; height: auto;" alt="Solar Roof">
+                <div class="article-body d-flex flex-column justify-content-center">
+                    <div>
+                        <span class="article-tag">Guide</span>
+                        <div class="article-meta">Oct 24, 2025 • 5 min read</div>
+                        <h4 class="article-title text-dark">Is Your Roof Ready for Solar Panels? A Comprehensive
+                            Checklist</h4>
+                        <p class="text-secondary small mb-3">Before investing in solar, evaluate your home's structural
+                            integrity, sun exposure, and local regulations with our expert guide.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <div class="article-author">
+                            <div class="author-avatar"></div>
+                            <span>Sarah Jenkins</span>
+                        </div>
+                        <a href="#" class="text-success fw-bold text-decoration-none small">Read Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="article-card mb-4 d-flex flex-column flex-md-row" style="height: auto;">
+                <img src="https://placehold.co/400x300/1e293b/FFF?text=EV+Charging+Levels" class="article-img"
+                    style="width: 100%; max-width: 300px; height: auto;" alt="EV Charging">
+                <div class="article-body d-flex flex-column justify-content-center">
+                    <div>
+                        <span class="article-tag">Comparison</span>
+                        <div class="article-meta">Oct 20, 2025 • 7 min read</div>
+                        <h4 class="article-title text-dark">Level 1 vs. Level 2 Charging: What You Need for Your Home
+                        </h4>
+                        <p class="text-secondary small mb-3">Deciding between a standard outlet and a dedicated charging
+                            station? We break down the costs, speeds, and installation requirements.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <div class="article-author">
+                            <div class="author-avatar"></div>
+                            <span>David Chen</span>
+                        </div>
+                        <a href="#" class="text-success fw-bold text-decoration-none small">Read Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="article-card mb-4 d-flex flex-column flex-md-row" style="height: auto;">
+                <img src="https://placehold.co/400x300/1e293b/FFF?text=Smart+Home+Tips" class="article-img"
+                    style="width: 100%; max-width: 300px; height: auto;" alt="Smart Home">
+                <div class="article-body d-flex flex-column justify-content-center">
+                    <div>
+                        <span class="article-tag" style="color: #ea580c; background-color: #ffedd5;">Tips</span>
+                        <div class="article-meta">Oct 15, 2025 • 4 min read</div>
+                        <h4 class="article-title text-dark">Automating Efficiency: Top Smart Home Devices to Save Energy
+                        </h4>
+                        <p class="text-secondary small mb-3">From smart thermostats to automated blinds, discover the
+                            gadgets that reduce your bills and your carbon footprint without compromising comfort.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <div class="article-author">
+                            <div class="author-avatar"></div>
+                            <span>Elena Rodriguez</span>
+                        </div>
+                        <a href="#" class="text-success fw-bold text-decoration-none small">Read Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-secondary rounded-pill px-4 py-2">Load More Articles</button>
+            </div>
+        </div>
+
+        <!-- Sidebar Column -->
+        <div class="col-lg-4">
+            <!-- CTA Widget -->
+            <div class="sidebar-widget widget-green text-center">
+                <div class="mb-3 text-warning"><i class="fa-solid fa-calculator fa-2x"></i></div>
+                <h4 class="h5 fw-bold mb-2">Ready to go green?</h4>
+                <p class="small opacity-75 mb-4">Use our advanced calculator to see exactly how much you could save by
+                    switching to solar energy today.</p>
+                <a href="{{ url_for('energy_use') }}"
+                    class="btn btn-light text-success fw-bold w-100 rounded-pill">Calculate Savings <i
+                        class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+
+            <!-- FAQs Widget -->
+            <div class="sidebar-widget">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <i class="fa-solid fa-circle-question text-success"></i>
+                    <h4 class="h6 fw-bold mb-0 text-dark">Popular FAQs</h4>
+                </div>
+                <ul class="faq-list p-0 m-0">
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> How long do solar batteries last?</li>
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> Is there a tax credit for EV chargers?</li>
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> What is net metering?</li>
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> Can I charge my EV with solar panels?</li>
+                </ul>
+                <div class="text-end mt-2">
+                    <a href="#" class="text-success small fw-bold text-decoration-none">Visit Help Center</a>
+                </div>
+            </div>
+
+            <!-- Newsletter Widget -->
+            <div class="sidebar-widget widget-dark">
+                <h4 class="h6 fw-bold mb-2 text-white">Stay Updated</h4>
+                <p class="small opacity-75 mb-3 text-white">Get the latest green tech news delivered to your inbox
+                    weekly.</p>
+                <input type="email" class="input-dark" placeholder="Your email address">
+                <button class="btn-block-green">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- No Main JS needed for just the landing page, but kept if we add interactions later -->
 <!-- <script src="{{ url_for('static', filename='js/main.js') }}"></script> -->
