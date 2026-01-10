@@ -63,7 +63,7 @@
             <div class="img-overlay-icon">
                 <i class="fa-solid fa-solar-panel"></i>
             </div>
-            <img src="https://placehold.co/600x400/1e293b/FFF?text=Solar+Panels" alt="Solar Panels"
+            <img src=" {{ url_for('static', filename='images/solarpanels.png') }}" alt="Solar Panels"
                 class="solution-card-img">
         </div>
         <div class="solution-text-col">
@@ -84,7 +84,7 @@
             <div class="img-overlay-icon">
                 <i class="fa-solid fa-charging-station"></i>
             </div>
-            <img src="https://placehold.co/600x400/1e293b/FFF?text=EV+Charger" alt="EV Charging"
+            <img src=" {{ url_for('static', filename='images/charger.png') }}" alt="EV Charging"
                 class="solution-card-img">
         </div>
         <div class="solution-text-col">
@@ -104,7 +104,7 @@
             <div class="img-overlay-icon">
                 <i class="fa-solid fa-plug"></i>
             </div>
-            <img src="https://placehold.co/600x400/1e293b/FFF?text=Smart+Thermostat" alt="Smart Energy"
+            <img src=" {{ url_for('static', filename='images/thermostat.png') }}" alt="Smart Energy"
                 class="solution-card-img">
         </div>
         <div class="solution-text-col">
@@ -122,7 +122,7 @@
 <!-- Resources Section -->
 <section id="resources" class="resources-hero">
     <div class="container pb-5">
-        <h2 class="display-4 fw-bold mb-3">Informational Resources Hub</h2>
+        <h2 class="display-4 fw-bold mb-3">Informational Resources</h2>
         <p class="fs-5 opacity-75 mb-5" style="max-width: 700px; margin: 0 auto;">Empower your sustainable journey with
             expert guides, latest industry insights, and practical tips for a greener lifestyle.</p>
 
@@ -177,7 +177,8 @@
                 <div class="btn-group">
                     <button class="btn btn-dark btn-sm rounded-pill px-3">All</button>
                     <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Guides</button>
-                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0"> নিউজ</button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Comparisons</button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Tips</button>
                 </div>
             </div>
 
@@ -296,6 +297,24 @@
         </div>
     </div>
 </div>
+
+
+<!-- Final CTA Section -->
+<section class="container mb-5">
+    <div class="cta-banner">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to make the switch?</h2>
+            <p class="cta-desc">Join thousands of homeowners in the green revolution. Calculate your potential savings
+                or schedule a consultation with our experts today.</p>
+            <div class="cta-actions">
+                <a href="{{ url_for('energy_use') }}" class="btn-cta-primary"><i
+                        class="fa-solid fa-calculator me-2"></i> Calculate Footprint</a>
+                <a href="{{ url_for('book') }}" class="btn-cta-outline"><i class="fa-regular fa-calendar me-2"></i>
+                    Schedule Consultation</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- No Main JS needed for just the landing page, but kept if we add interactions later -->
 <!-- <script src="{{ url_for('static', filename='js/main.js') }}"></script> -->

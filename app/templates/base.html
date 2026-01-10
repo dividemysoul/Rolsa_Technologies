@@ -44,7 +44,9 @@
                             Calculate & Track
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="calcDropdown">
-                            <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                            <li><a class="dropdown-item" href=" {{ url_for('energy_use')}}">Energy Use</a></li>
+                            <li><a class="dropdown-item" href=" {{ url_for('carbon_footprint')}}">Carbon Footprint</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item">
