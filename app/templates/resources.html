@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Resources Hero -->
+<section id="resources" class="resources-hero">
+    <div class="container pb-5">
+        <h2 class="display-4 fw-bold mb-3">Informational Resources</h2>
+        <p class="fs-5 opacity-75 mb-5" style="max-width: 700px; margin: 0 auto;">Discover the latest green energy
+            products and technologies, including solar panels, EV chargers, and sustainable living solutions.</p>
+
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search for articles, guides, or keywords...">
+            <button class="search-btn">Search</button>
+        </div>
+        <div class="popular-links">
+            Popular: <a href="#">Solar Rebates</a> • <a href="#">EV Installation Cost</a> • <a href="#">Smart
+                Thermostats</a>
+        </div>
+    </div>
+</section>
+
+<div class="container" style="position: relative; z-index: 10;">
+    <!-- Category Cards (overlapping hero) -->
+    <div class="row g-4 resource-cats-row">
+        <div class="col-md-4">
+            <a href="{{ url_for('article', slug='solar-roof-checklist') }}" class="text-decoration-none h-100">
+                <div class="resource-cat-card">
+                    <i class="fa-solid fa-solar-panel cat-bg-icon"></i>
+                    <div class="cat-icon"><i class="fa-solid fa-solar-panel"></i></div>
+                    <h3 class="h5 fw-bold mb-2">Solar Energy</h3>
+                    <p class="text-secondary small mb-0">Installation guides, cost breakdowns, and efficiency tips.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ url_for('article', slug='ev-charging-levels') }}" class="text-decoration-none h-100">
+                <div class="resource-cat-card">
+                    <i class="fa-solid fa-car cat-bg-icon"></i>
+                    <div class="cat-icon"><i class="fa-solid fa-car"></i></div>
+                    <h3 class="h5 fw-bold mb-2">EV Charging</h3>
+                    <p class="text-secondary small mb-0">Home charging solutions, connector types, and station maps.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ url_for('article', slug='smart-home-energy-devices') }}" class="text-decoration-none h-100">
+                <div class="resource-cat-card">
+                    <i class="fa-solid fa-leaf cat-bg-icon"></i>
+                    <div class="cat-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <h3 class="h5 fw-bold mb-2">Sustainable Living</h3>
+                    <p class="text-secondary small mb-0">Carbon footprint reduction, smart home tech, and recycling.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Articles Grid -->
+    <div class="row g-5 mb-5">
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="h4 fw-bold mb-0">All Resources</h3>
+                <div class="btn-group">
+                    <button class="btn btn-dark btn-sm rounded-pill px-3">All</button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Guides</button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Comparisons</button>
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Tips</button>
+                </div>
+            </div>
+
+            {% for article in articles %}
+            <!-- Article Card -->
+            <div class="article-card mb-4 d-flex flex-column flex-md-row" style="height: auto;">
+                <img src="{{ article.image }}" class="article-img" style="width: 100%; max-width: 300px; height: auto;"
+                    alt="{{ article.title }}">
+                <div class="article-body d-flex flex-column justify-content-center">
+                    <div>
+                        {% if article.category == 'Tips' %}
+                        <span class="article-tag" style="color: #ea580c; background-color: #ffedd5;">{{ article.category
+                            }}</span>
+                        {% else %}
+                        <span class="article-tag">{{ article.category }}</span>
+                        {% endif %}
+                        <div class="article-meta">{{ article.date }} • {{ article.read_time }}</div>
+                        <h4 class="article-title text-dark">{{ article.title }}</h4>
+                        <p class="text-secondary small mb-3">{{ article.excerpt }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <div class="article-author d-flex align-items-center">
+                            <img src="{{ url_for('static', filename=article.author_image) }}" alt="{{ article.author }}"
+                                class="rounded-circle me-2" style="width: 24px; height: 24px; object-fit: cover;">
+                            <span>By {{ article.author }}</span>
+                        </div>
+                        <a href="{{ url_for('article', slug=article.slug) }}"
+                            class="text-success fw-bold text-decoration-none small">Read Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- CTA Widget -->
+            <div class="sidebar-widget widget-green text-center">
+                <div class="mb-3 text-warning"><i class="fa-solid fa-calculator fa-2x"></i></div>
+                <h4 class="h5 fw-bold mb-2 text-white">Calculate Your Savings</h4>
+                <p class="small opacity-75 mb-4">Use our advanced calculator to see exactly how much you could save by
+                    switching to solar energy today.</p>
+                <a href="{{ url_for('energy_use') }}"
+                    class="btn btn-light text-success fw-bold w-100 rounded-pill">Calculate Savings <i
+                        class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+
+            <!-- FAQs Widget -->
+            <div class="sidebar-widget">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <i class="fa-solid fa-circle-question text-success"></i>
+                    <h4 class="h6 fw-bold mb-0 text-dark">Popular FAQs</h4>
+                </div>
+                <ul class="faq-list p-0 m-0">
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> How long do solar batteries last?</li>
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> Is there a tax credit for EV chargers?</li>
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> What is net metering?</li>
+                    <li><i class="fa-solid fa-circle-plus faq-icon"></i> Can I charge my EV with solar panels?</li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Widget -->
+            <div class="sidebar-widget widget-dark">
+                <h4 class="h6 fw-bold mb-2 text-white">Stay Updated</h4>
+                <p class="small opacity-75 mb-3 text-white">Get the latest green tech news delivered to your inbox
+                    weekly.</p>
+                <input type="email" class="input-dark" placeholder="Your email address">
+                <button class="btn-block-green">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Banner -->
+<section class="container mb-5">
+    <div class="cta-banner">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to make the switch?</h2>
+            <p class="cta-desc">Join thousands of homeowners in the green revolution. Calculate your potential savings
+                or schedule a consultation with our experts today.</p>
+            <div class="cta-actions">
+                <a href="{{ url_for('energy_use') }}" class="btn-cta-primary"><i
+                        class="fa-solid fa-calculator me-2"></i> Calculate Footprint</a>
+                <a href="{{ url_for('book') }}" class="btn-cta-outline"><i class="fa-regular fa-calendar me-2"></i>
+                    Schedule Consultation</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
