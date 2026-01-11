@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Article Hero -->
+<section class="article-hero">
+    <div class="container">
+        <a href="{{ url_for('resources') }}" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Resources
+        </a>
+        <span class="article-tag-lg">{{ article.category }}</span>
+        <h1 class="article-hero-title">{{ article.title }}</h1>
+        <div class="article-hero-meta">
+            <span><i class="fa-regular fa-calendar"></i> {{ article.date }}</span>
+            <span><i class="fa-regular fa-clock"></i> {{ article.read_time }}</span>
+        </div>
+    </div>
+</section>
+
+<!-- Article Content -->
+<section class="container py-5">
+    <div class="row g-5">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <div class="article-featured-img mb-4">
+                <img src="{{ article.image }}" alt="{{ article.title }}" class="img-fluid rounded-3">
+            </div>
+
+            <div class="article-content">
+                {{ article.content|safe }}
+            </div>
+
+            <!-- Share Section -->
+            <div class="article-share mt-5 pt-4 border-top">
+                <span class="fw-bold me-3">Share this article:</span>
+                <a href="#" class="share-btn"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="share-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#" class="share-btn"><i class="fa-solid fa-link"></i></a>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Author Card -->
+            <div class="sidebar-widget author-card">
+                <div class="author-avatar-lg">
+                    <img src="{{ url_for('static', filename=article.author_image) }}" alt="{{ article.author }}"
+                        class="img-fluid rounded-circle">
+                </div>
+                <h4 class="fw-bold mb-1">{{ article.author }}</h4>
+                <p class="text-secondary small mb-3">{{ article.author_role }}</p>
+                <p class="small text-secondary">Passionate about sustainable technology and helping homeowners make the
+                    switch to renewable energy.</p>
+            </div>
+
+            <!-- Related Articles -->
+            {% if related_articles %}
+            <div class="sidebar-widget">
+                <h4 class="h6 fw-bold mb-3">Related Articles</h4>
+                {% for related in related_articles %}
+                <a href="{{ url_for('article', slug=related.slug) }}" class="related-article-link">
+                    <div class="related-article-item">
+                        <span class="related-tag">{{ related.category }}</span>
+                        <h5 class="related-title">{{ related.title }}</h5>
+                        <span class="related-meta">{{ related.read_time }}</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- CTA Widget -->
+            <div class="sidebar-widget widget-green text-center">
+                <div class="mb-3 text-warning"><i class="fa-solid fa-calculator fa-2x"></i></div>
+                <h4 class="h5 fw-bold mb-2">Calculate Your Savings</h4>
+                <p class="small opacity-75 mb-4">See how much you could save by switching to renewable energy.</p>
+                <a href="{{ url_for('energy_use') }}" class="btn btn-light text-success fw-bold w-100 rounded-pill">Get
+                    Started <i class="fa-solid fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- More Articles Section -->
+<section class="container mb-5">
+    <div class="text-center">
+        <a href="{{ url_for('resources') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+            <i class="fa-solid fa-book-open me-2"></i> Explore More Resources
+        </a>
+    </div>
+</section>
+{% endblock %}

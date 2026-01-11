@@ -73,7 +73,8 @@
                 efficient.</p>
             <div class="solution-btn-group">
                 <a href="{{ url_for('book') }}" class="btn-primary-dark">Get a Quote</a>
-                <a href="#" class="btn-outline-dark">Learn More <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                <a href="{{ url_for('article', slug='solar-roof-checklist') }}" class="btn-outline-dark">Learn More <i
+                        class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -92,8 +93,9 @@
             <p class="text-secondary mb-4">Future-proof your home or business with fast, reliable electric vehicle
                 charging infrastructure. Our smart chargers integrate seamlessly with your home energy system.</p>
             <div class="solution-btn-group">
-                <a href="#find-chargers" class="btn-primary-dark">Find Chargers</a>
-                <a href="#details" class="btn-outline-dark">Details <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                <a href="{{ url_for('book') }}" class="btn-primary-dark">Get a Quote</a>
+                <a href="{{ url_for('article', slug='ev-charging-levels') }}" class="btn-outline-dark">Details <i
+                        class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -112,8 +114,9 @@
             <p class="text-secondary mb-4">Take full control. Our intelligent systems track usage in real-time and
                 automate efficiency, reducing waste and saving you money without lifting a finger.</p>
             <div class="solution-btn-group">
-                <a href="#automate" class="btn-primary-dark">Automate Home</a>
-                <a href="#explore" class="btn-outline-dark">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
+                <a href="{{ url_for('book') }}" class="btn-primary-dark">Get a Quote</a>
+                <a href="{{ url_for('article', slug='smart-home-energy-devices') }}" class="btn-outline-dark">Explore <i
+                        class="fa-solid fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -123,8 +126,8 @@
 <section id="resources" class="resources-hero">
     <div class="container pb-5">
         <h2 class="display-4 fw-bold mb-3">Informational Resources</h2>
-        <p class="fs-5 opacity-75 mb-5" style="max-width: 700px; margin: 0 auto;">Empower your sustainable journey with
-            expert guides, latest industry insights, and practical tips for a greener lifestyle.</p>
+        <p class="fs-5 opacity-75 mb-5" style="max-width: 700px; margin: 0 auto;">Discover the latest green energy
+            products and technologies, including solar panels, EV chargers, and sustainable living solutions.</p>
 
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Search for articles, guides, or keywords...">
@@ -141,31 +144,40 @@
     <!-- Category Cards (overlapping hero) -->
     <div class="row g-4 resource-cats-row">
         <div class="col-md-4">
-            <div class="resource-cat-card">
-                <i class="fa-solid fa-solar-panel cat-bg-icon"></i>
-                <div class="cat-icon"><i class="fa-solid fa-solar-panel"></i></div>
-                <h3 class="h5 fw-bold mb-2">Solar Energy</h3>
-                <p class="text-secondary small mb-0">Installation guides, cost breakdowns, and efficiency tips.</p>
-                <a href="#" class="cat-link">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
-            </div>
+            <a href="{{ url_for('article', slug='solar-roof-checklist') }}" class="text-decoration-none h-100">
+                <div class="resource-cat-card">
+                    <i class="fa-solid fa-solar-panel cat-bg-icon"></i>
+                    <div class="cat-icon"><i class="fa-solid fa-solar-panel"></i></div>
+                    <h3 class="h5 fw-bold mb-2">Solar Energy</h3>
+                    <p class="text-secondary small mb-0">Installation guides, cost breakdowns, and efficiency tips.</p>
+                    <span class="cat-link mt-3 d-inline-block">Explore <i
+                            class="fa-solid fa-arrow-right ms-2"></i></span>
+                </div>
+            </a>
         </div>
         <div class="col-md-4">
-            <div class="resource-cat-card">
-                <i class="fa-solid fa-car cat-bg-icon"></i>
-                <div class="cat-icon"><i class="fa-solid fa-car"></i></div>
-                <h3 class="h5 fw-bold mb-2">EV Charging</h3>
-                <p class="text-secondary small mb-0">Home charging solutions, connector types, and station maps.</p>
-                <a href="#" class="cat-link">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
-            </div>
+            <a href="{{ url_for('article', slug='ev-charging-levels') }}" class="text-decoration-none h-100">
+                <div class="resource-cat-card">
+                    <i class="fa-solid fa-car cat-bg-icon"></i>
+                    <div class="cat-icon"><i class="fa-solid fa-car"></i></div>
+                    <h3 class="h5 fw-bold mb-2">EV Charging</h3>
+                    <p class="text-secondary small mb-0">Home charging solutions, connector types, and station maps.</p>
+                    <span class="cat-link mt-3 d-inline-block">Explore <i
+                            class="fa-solid fa-arrow-right ms-2"></i></span>
+                </div>
+            </a>
         </div>
         <div class="col-md-4">
-            <div class="resource-cat-card">
-                <i class="fa-solid fa-leaf cat-bg-icon"></i>
-                <div class="cat-icon"><i class="fa-solid fa-leaf"></i></div>
-                <h3 class="h5 fw-bold mb-2">Sustainable Living</h3>
-                <p class="text-secondary small mb-0">Carbon footprint reduction, smart home tech, and recycling.</p>
-                <a href="#" class="cat-link">Explore <i class="fa-solid fa-arrow-right ms-2"></i></a>
-            </div>
+            <a href="{{ url_for('article', slug='smart-home-energy-devices') }}" class="text-decoration-none h-100">
+                <div class="resource-cat-card">
+                    <i class="fa-solid fa-leaf cat-bg-icon"></i>
+                    <div class="cat-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <h3 class="h5 fw-bold mb-2">Sustainable Living</h3>
+                    <p class="text-secondary small mb-0">Carbon footprint reduction, smart home tech, and recycling.</p>
+                    <span class="cat-link mt-3 d-inline-block">Explore <i
+                            class="fa-solid fa-arrow-right ms-2"></i></span>
+                </div>
+            </a>
         </div>
     </div>
 
@@ -173,7 +185,7 @@
         <!-- Main Content Column -->
         <div class="col-lg-8">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="h4 fw-bold mb-0">Latest Resources</h3>
+                <h3 class="h4 fw-bold mb-0">Recent green energy articles</h3>
                 <div class="btn-group">
                     <button class="btn btn-dark btn-sm rounded-pill px-3">All</button>
                     <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 border-0">Guides</button>
@@ -184,8 +196,8 @@
 
             <!-- Article 1 -->
             <div class="article-card mb-4 d-flex flex-column flex-md-row" style="height: auto;">
-                <img src="https://placehold.co/400x300/1e293b/FFF?text=Solar+Checklist" class="article-img"
-                    style="width: 100%; max-width: 300px; height: auto;" alt="Solar Roof">
+                <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=300&fit=crop"
+                    class="article-img" style="width: 100%; max-width: 300px; height: auto;" alt="Solar Roof">
                 <div class="article-body d-flex flex-column justify-content-center">
                     <div>
                         <span class="article-tag">Guide</span>
@@ -196,19 +208,21 @@
                             integrity, sun exposure, and local regulations with our expert guide.</p>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <div class="article-author">
-                            <div class="author-avatar"></div>
-                            <span>Sarah Jenkins</span>
+                        <div class="article-author d-flex align-items-center">
+                            <img src="{{ url_for('static', filename='images/authors/sarah.png') }}" alt="Sarah Jenkins"
+                                class="rounded-circle me-2" style="width: 24px; height: 24px; object-fit: cover;">
+                            <span>By Sarah Jenkins</span>
                         </div>
-                        <a href="#" class="text-success fw-bold text-decoration-none small">Read Now</a>
+                        <a href="{{ url_for('article', slug='solar-roof-checklist') }}"
+                            class="text-success fw-bold text-decoration-none small">Read Now</a>
                     </div>
                 </div>
             </div>
 
             <!-- Article 2 -->
             <div class="article-card mb-4 d-flex flex-column flex-md-row" style="height: auto;">
-                <img src="https://placehold.co/400x300/1e293b/FFF?text=EV+Charging+Levels" class="article-img"
-                    style="width: 100%; max-width: 300px; height: auto;" alt="EV Charging">
+                <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=400&h=300&fit=crop"
+                    class="article-img" style="width: 100%; max-width: 300px; height: auto;" alt="EV Charging">
                 <div class="article-body d-flex flex-column justify-content-center">
                     <div>
                         <span class="article-tag">Comparison</span>
@@ -219,19 +233,21 @@
                             station? We break down the costs, speeds, and installation requirements.</p>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <div class="article-author">
-                            <div class="author-avatar"></div>
-                            <span>David Chen</span>
+                        <div class="article-author d-flex align-items-center">
+                            <img src="{{ url_for('static', filename='images/authors/david.png') }}" alt="David Chen"
+                                class="rounded-circle me-2" style="width: 24px; height: 24px; object-fit: cover;">
+                            <span>By David Chen</span>
                         </div>
-                        <a href="#" class="text-success fw-bold text-decoration-none small">Read Now</a>
+                        <a href="{{ url_for('article', slug='ev-charging-levels') }}"
+                            class="text-success fw-bold text-decoration-none small">Read Now</a>
                     </div>
                 </div>
             </div>
 
             <!-- Article 3 -->
             <div class="article-card mb-4 d-flex flex-column flex-md-row" style="height: auto;">
-                <img src="https://placehold.co/400x300/1e293b/FFF?text=Smart+Home+Tips" class="article-img"
-                    style="width: 100%; max-width: 300px; height: auto;" alt="Smart Home">
+                <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=400&h=300&fit=crop"
+                    class="article-img" style="width: 100%; max-width: 300px; height: auto;" alt="Smart Home">
                 <div class="article-body d-flex flex-column justify-content-center">
                     <div>
                         <span class="article-tag" style="color: #ea580c; background-color: #ffedd5;">Tips</span>
@@ -242,17 +258,21 @@
                             gadgets that reduce your bills and your carbon footprint without compromising comfort.</p>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                        <div class="article-author">
-                            <div class="author-avatar"></div>
-                            <span>Elena Rodriguez</span>
+                        <div class="article-author d-flex align-items-center">
+                            <img src="{{ url_for('static', filename='images/authors/elena.png') }}"
+                                alt="Elena Rodriguez" class="rounded-circle me-2"
+                                style="width: 24px; height: 100%; object-fit: cover;">
+                            <span>By Elena Rodriguez</span>
                         </div>
-                        <a href="#" class="text-success fw-bold text-decoration-none small">Read Now</a>
+                        <a href="{{ url_for('article', slug='smart-home-energy-devices') }}"
+                            class="text-success fw-bold text-decoration-none small">Read Now</a>
                     </div>
                 </div>
             </div>
 
             <div class="text-center mt-4">
-                <button class="btn btn-outline-secondary rounded-pill px-4 py-2">Load More Articles</button>
+                <a href="{{ url_for('resources') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2">View All
+                    Articles</a>
             </div>
         </div>
 
@@ -261,7 +281,7 @@
             <!-- CTA Widget -->
             <div class="sidebar-widget widget-green text-center">
                 <div class="mb-3 text-warning"><i class="fa-solid fa-calculator fa-2x"></i></div>
-                <h4 class="h5 fw-bold mb-2">Ready to go green?</h4>
+                <h4 class="h5 fw-bold mb-2">Save with us</h4>
                 <p class="small opacity-75 mb-4">Use our advanced calculator to see exactly how much you could save by
                     switching to solar energy today.</p>
                 <a href="{{ url_for('energy_use') }}"

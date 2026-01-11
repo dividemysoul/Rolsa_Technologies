@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 import uuid
 
 from app.services.energy_use import EnergyUse
+from app.services.articles import get_all_articles, get_article_by_slug, get_related_articles
 
 @app.route('/book', methods=['GET', 'POST'])
 @login_required
@@ -177,3 +178,17 @@ def carbon_footprint():
         
         return render_template('carbon_footprint.html', form=form, submitted_data=submitted_data, footprint_results=footprint_results)
     return render_template('carbon_footprint.html', form=form)
+
+@app.route('/resources')
+def resources():
+    articles = get_all_articles()
+    return render_template('resources.html', title='Resources', articles=articles)
+
+@app.route('/resources/<slug>')
+def article(slug):
+    article = get_article_by_slug(slug)
+    if not article:
+        flash('Article not found', 'error')
+        return redirect(url_for('resources'))
+    related = get_related_articles(slug)
+    return render_template('article.html', title=article['title'], article=article, related_articles=related)
