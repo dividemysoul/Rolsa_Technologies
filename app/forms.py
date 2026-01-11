@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, SubmitField, StringField, PasswordField, BooleanField, DateField, SelectField
+from wtforms import FloatField, SubmitField, StringField, PasswordField, BooleanField, DateField, SelectField, HiddenField, TextAreaField, TimeField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
 from app.models import User
 
@@ -36,11 +36,26 @@ class EnergyUseForm(FlaskForm):
     submit = SubmitField('Calculate')
 
 class BookingForm(FlaskForm):
-    booking_type = SelectField('Consultation Type', choices=[
-        ('Solar Panels', 'Solar Panels'),
-        ('EV Charger', 'EV Charger'),
-        ('Smart Home', 'Smart Home')
-    ], validators=[DataRequired()])
+    service_category = HiddenField('Service Category', default='Consultation')
+    # Consultation Fields
+    booking_type = SelectField('Consultation Topic', choices=[
+        ('Solar Advice', 'Solar Advice'),
+        ('EV Charger Info', 'EV Charger Info'),
+        ('Smart Home Planning', 'Smart Home Planning')
+    ], validators=[]) # Optional logic handled in route
+
+    additional_info = TextAreaField('Additional Information', validators=[])
+
+    # Installation Fields
+    installation_product = SelectField('Product to Install', choices=[
+        ('Solar Panels 4kW System', 'Solar Panels 4kW System'),
+        ('Home EV Charger 7kW', 'Home EV Charger 7kW'),
+        ('Battery Storage 5kWh', 'Battery Storage 5kWh')
+    ], validators=[])
+
+    booking_time = TimeField('Preferred Time', format='%H:%M', validators=[])
+
+    # Common
     booking_date = DateField('Preferred Date', format='%Y-%m-%d', validators=[DataRequired()], render_kw={"type": "date"})
     address = StringField('Address', validators=[DataRequired()])
     submit = SubmitField('Book Now')

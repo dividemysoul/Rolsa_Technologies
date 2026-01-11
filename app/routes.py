@@ -14,10 +14,27 @@ def book():
     form = BookingForm()
     if form.validate_on_submit():
         booking_number = str(uuid.uuid4().hex[:8].upper())
+        # Determine Booking Type and Metadata based on Category
+        if form.service_category.data == 'Consultation':
+            # Consultation: Type is the topic, also save info
+            final_type = f"Consultation - {form.booking_type.data}"
+            product_installed = None
+            booking_time = None
+            additional_info = form.additional_info.data
+        else:
+            # Installation: Type is Installation, product is separate
+            final_type = "Installation"
+            product_installed = form.installation_product.data
+            booking_time = form.booking_time.data
+            additional_info = None
+
         booking = Booking(
             user_id=current_user.id,
-            booking_type=form.booking_type.data,
+            booking_type=final_type,
             booking_date=form.booking_date.data,
+            booking_time=booking_time,
+            product_installed=product_installed,
+            additional_info=additional_info,
             address=form.address.data,
             booking_number=booking_number
         )
