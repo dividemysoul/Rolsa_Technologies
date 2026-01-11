@@ -38,6 +38,12 @@
 
             <div class="collapse navbar-collapse" id="navContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index', _anchor='solutions') }}">Solutions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index', _anchor='resources') }}">Resources</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="calcDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,12 +54,6 @@
                             <li><a class="dropdown-item" href=" {{ url_for('carbon_footprint')}}">Carbon Footprint</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index', _anchor='solutions') }}">Solutions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index', _anchor='resources') }}">Resources</a>
                     </li>
                 </ul>
                 <!-- Mobile Only Actions -->

@@ -1,106 +1,111 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="app-container">
-    <div class="page-header">
-        <div class="page-title">
-            <h1>
-                Hello,
-                {% if current_user.full_name %}
-                {{ current_user.full_name.split()[0] }}
-                {% else %}
-                User
-                {% endif %}
-            </h1>
-            <p>Welcome to your personal profile</p>
-        </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-            <a href="{{ url_for('edit_profile') }}" class="contact-btn">Edit Profile</a>
-            <a href="{{ url_for('logout') }}" class="contact-btn"
-                style="background: #dc2626; background: linear-gradient(to bottom right, #ef4444, #dc2626);">Logout</a>
-        </div>
+<!-- Profile Hero -->
+<div class="app-hero">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">
+            Hello, {{ current_user.full_name.split()[0] if current_user.full_name else 'User' }}
+        </h1>
+        <p class="fs-5 opacity-75">Welcome to your personal profile</p>
     </div>
+</div>
 
-    <div class="card" style="max-width: 600px; margin: 0 auto;">
-        <div class="section-header">
-            <h3 class="section-title">Personal Information</h3>
-        </div>
+<!-- Main Content (Overlapping) -->
+<div class="app-container-overlap pb-5">
+    <div class="d-flex justify-content-center">
+        <div class="col-lg-10">
+            <div class="calc-card mb-5">
+                <div class="calc-header">
+                    <h2 class="h4 fw-bold mb-0 text-dark">Personal Information</h2>
+                </div>
 
-        <div style="display: grid; gap: 1.5rem;">
-            <div>
-                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Full Name</h4>
-                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.full_name or 'Not set' }}</p>
-            </div>
+                <div class="p-4">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <h4 class="small text-secondary text-uppercase fw-bold mb-1">Full Name</h4>
+                            <p class="fs-5 fw-medium mb-0">{{ current_user.full_name or 'Not set' }}</p>
+                        </div>
 
-            <div>
-                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Phone Number</h4>
-                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.phone_number or 'Not set' }}</p>
-            </div>
+                        <div class="col-md-6">
+                            <h4 class="small text-secondary text-uppercase fw-bold mb-1">Phone Number</h4>
+                            <p class="fs-5 fw-medium mb-0">{{ current_user.phone_number or 'Not set' }}</p>
+                        </div>
 
-            <div>
-                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Address</h4>
-                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.address or 'Not set' }}</p>
-            </div>
+                        <div class="col-12">
+                            <h4 class="small text-secondary text-uppercase fw-bold mb-1">Address</h4>
+                            <p class="fs-5 fw-medium mb-0">{{ current_user.address or 'Not set' }}</p>
+                        </div>
 
-            <div>
-                <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Email</h4>
-                <p style="font-size: 1.1rem; font-weight: 500;">{{ current_user.email }}</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bookings Section -->
-    <div class="card" style="max-width: 600px; margin: 2rem auto 0;">
-        <div class="section-header" style="margin-bottom: 1.5rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                <h3 class="section-title">Your Bookings</h3>
-                <a href="{{ url_for('book') }}"
-                    style="background: #e5e7eb; color: var(--text-primary); padding: 0.4rem 1rem; border-radius: 20px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.2s;">
-                    <i class="fas fa-plus" style="font-size: 0.8em; margin-right: 0.3rem;"></i>New Booking
-                </a>
-            </div>
-        </div>
-
-        {% if current_user.bookings %}
-        <div style="display: grid; gap: 1rem;">
-            {% for booking in current_user.bookings|sort(attribute='booking_date', reverse=True) %}
-            <div
-                style="padding: 1.25rem; background: #f9fafb; border-radius: 12px; border: 1px solid var(--border-color); transition: transform 0.2s;">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
-                    <div>
-                        <span
-                            style="display: inline-block; font-size: 0.75rem; font-weight: 700; color: #166534; background: #dcfce7; padding: 0.25rem 0.75rem; border-radius: 12px; text-transform: uppercase; margin-bottom: 0.5rem;">
-                            {{ booking.booking_type }}
-                        </span>
-                        <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary);">
-                            {{ booking.booking_date.strftime('%A, %d %B %Y') }}
-                        </h4>
-                    </div>
-                    <div style="text-align: right;">
-                        <span
-                            style="font-family: monospace; background: #e5e7eb; color: var(--text-secondary); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.85rem;">
-                            #{{ booking.booking_number }}
-                        </span>
+                        <div class="col-12">
+                            <h4 class="small text-secondary text-uppercase fw-bold mb-1">Email</h4>
+                            <p class="fs-5 fw-medium mb-0">{{ current_user.email }}</p>
+                        </div>
                     </div>
                 </div>
 
-                <div
-                    style="display: flex; gap: 0.75rem; color: var(--text-secondary); font-size: 0.95rem; align-items: flex-start;">
-                    <i class="fas fa-map-marker-alt" style="margin-top: 0.25rem; color: #9ca3af;"></i>
-                    <p style="line-height: 1.4;">{{ booking.address }}</p>
+                <!-- Action Buttons at Bottom -->
+                <div class="p-4 bg-light rounded-bottom border-top d-flex justify-content-between align-items-center">
+                    <a href="{{ url_for('edit_profile') }}" class="hero-cta-button shadow-sm text-decoration-none">
+                        <i class="fas fa-edit me-2"></i>Edit Profile
+                    </a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline-danger rounded-pill px-4 py-2 fw-bold">
+                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    </a>
                 </div>
             </div>
-            {% endfor %}
+
+            <!-- Bookings Section -->
+            <div class="calc-card">
+                <div class="calc-header d-flex justify-content-between align-items-center">
+                    <h2 class="h4 fw-bold mb-0 text-dark">Your Bookings</h2>
+                    <a href="{{ url_for('book') }}" class="btn btn-sm btn-primary rounded-pill px-3">
+                        <i class="fas fa-plus me-1"></i> New Booking
+                    </a>
+                </div>
+
+                <div class="p-4">
+                    {% if current_user.bookings %}
+                    <div class="d-grid gap-3">
+                        {% for booking in current_user.bookings|sort(attribute='booking_date', reverse=True) %}
+                        <div class="p-3 bg-light border rounded-3 transition-hover">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span
+                                        class="badge bg-success bg-opacity-10 text-success mb-2 px-3 py-2 rounded-pill text-uppercase"
+                                        style="font-size: 0.75rem;">
+                                        {{ booking.booking_type }}
+                                    </span>
+                                    <h4 class="h5 fw-bold text-dark mb-0">
+                                        {{ booking.booking_date.strftime('%A, %d %B %Y') }}
+                                    </h4>
+                                </div>
+                                <span class="font-monospace text-muted bg-white border px-2 py-1 rounded small">
+                                    #{{ booking.booking_number }}
+                                </span>
+                            </div>
+
+                            <div class="d-flex gap-2 text-secondary small align-items-start">
+                                <i class="fas fa-map-marker-alt mt-1"></i>
+                                <p class="mb-0">{{ booking.address }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <div class="mb-3 text-secondary opacity-50">
+                            <i class="fas fa-calendar-alt fa-3x"></i>
+                        </div>
+                        <p class="text-secondary mb-4">You haven't made any bookings yet.</p>
+                        <a href="{{ url_for('book') }}" class="btn btn-outline-primary rounded-pill px-4">
+                            Book a Consultation
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        {% else %}
-        <div
-            style="text-align: center; padding: 3rem 1rem; color: var(--text-secondary); background: #f9fafb; border-radius: 12px; border: 1px dashed var(--border-color);">
-            <i class="fas fa-calendar-alt" style="font-size: 2.5rem; margin-bottom: 1rem; color: #d1d5db;"></i>
-            <p style="font-size: 1rem; margin-bottom: 1.5rem;">You haven't made any bookings yet.</p>
-            <a href="{{ url_for('book') }}" class="contact-btn">Book a Consultation</a>
-        </div>
-        {% endif %}
     </div>
 </div>
 {% endblock %}

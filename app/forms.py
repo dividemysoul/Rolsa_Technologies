@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import FloatField, SubmitField, StringField, PasswordField, BooleanField, DateField, SelectField, HiddenField, TextAreaField, TimeField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, NumberRange, Optional
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -21,9 +21,9 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 class ProfileForm(FlaskForm):
-    full_name = StringField('Full Name', validators=[DataRequired()])
-    phone_number = StringField('Phone Number', validators=[DataRequired()])
-    address = StringField('Address', validators=[DataRequired()])
+    full_name = StringField('Full Name', validators=[Optional()])
+    phone_number = StringField('Phone Number', validators=[Optional()])
+    address = StringField('Address', validators=[Optional()])
     submit = SubmitField('Update Profile')
 
 
@@ -53,7 +53,7 @@ class BookingForm(FlaskForm):
         ('Battery Storage 5kWh', 'Battery Storage 5kWh')
     ], validators=[])
 
-    booking_time = TimeField('Preferred Time', format='%H:%M', validators=[])
+    booking_time = TimeField('Preferred Time', format='%H:%M', validators=[Optional()])
 
     # Common
     booking_date = DateField('Preferred Date', format='%Y-%m-%d', validators=[DataRequired()], render_kw={"type": "date"})

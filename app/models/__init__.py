@@ -8,6 +8,9 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    full_name = db.Column(db.String(100))
+    phone_number = db.Column(db.String(20))
+    address = db.Column(db.String(200))
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -24,6 +27,9 @@ class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     booking_type = db.Column(db.String(50), nullable=False)
     booking_date = db.Column(db.Date, nullable=False)
+    booking_time = db.Column(db.Time, nullable=True)
+    product_installed = db.Column(db.String(100), nullable=True)
+    additional_info = db.Column(db.Text, nullable=True)
     address = db.Column(db.String(200), nullable=False)
     booking_number = db.Column(db.String(20), unique=True, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
