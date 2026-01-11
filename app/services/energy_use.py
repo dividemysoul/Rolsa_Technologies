@@ -18,15 +18,25 @@ class EnergyUse:
         return self.total_consumption() - self.ev_energy_kwh
 
     def ev_share(self):
-        return (self.ev_energy_kwh / self.total_consumption()) * 100
+        total = self.total_consumption()
+        if total == 0:
+            return 0.0
+        return (self.ev_energy_kwh / total) * 100
 
     def self_consumption(self):
+        if self.solar_generation_kwh == 0:
+            return 0.0
         return (self.solar_generation_kwh - self.grid_export_kwh) / self.solar_generation_kwh * 100
 
     def solar_coverage(self):
-        return (self.solar_generation_kwh / self.total_consumption()) * 100
+        total = self.total_consumption()
+        if total == 0:
+            return 0.0
+        return (self.solar_generation_kwh / total) * 100
 
     def ev_efficiency(self):
+        if self.odometer_reading_km == 0:
+            return 0.0
         return (self.ev_energy_kwh * 1000) / self.odometer_reading_km
 
     def co2_saved(self):

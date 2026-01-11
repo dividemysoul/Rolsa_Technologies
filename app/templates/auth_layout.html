@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Rolsa Technologies{% endblock %}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+        <!-- Left Side: Marketing / Brand -->
+        <div class="auth-left">
+            <!-- Back to Home Button -->
+            <a href="/" class="auth-back-btn" title="Back to Home">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
+            <div class="auth-brand-overlay">
+                <div class="auth-logo mt-5 mb-5">
+                    <a href="/" class="d-flex align-items-center gap-3 text-decoration-none text-white">
+                        <i class="fa-solid fa-leaf display-6"></i>
+                        <span class="fw-bold h4 mb-0">Rolsa Technologies</span>
+                    </a>
+                </div>
+
+                <div class="auth-content">
+                    <h1 class="display-4 fw-bolder mb-4">Make your home a <span
+                            class="text-brand-primary">powerhouse.</span></h1>
+                    <p class="lead mb-5 text-white-50">Join Rolsa to track your energy usage, calculate your carbon
+                        footprint, and schedule expert consultations for a greener future.</p>
+
+                    <div class="auth-features">
+                        <div class="auth-feature-item">
+                            <div class="feature-icon"><i class="fa-solid fa-solar-panel"></i></div>
+                            <span>Solar panel management</span>
+                        </div>
+                        <div class="auth-feature-item">
+                            <div class="feature-icon"><i class="fa-solid fa-charging-station"></i></div>
+                            <span>EV charging stations</span>
+                        </div>
+                        <div class="auth-feature-item">
+                            <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <span>Carbon footprint analytics</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-footer mt-auto">
+                    <p class="small text-white-50">&copy; 2026 Rolsa Technologies</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Form -->
+        <div class="auth-right">
+
+            <div class="auth-form-wrapper">
+                {% block auth_form %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

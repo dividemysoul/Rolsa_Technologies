@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, session
 from app import app, db
 from app.forms import EnergyUseForm, LoginForm, RegistrationForm, BookingForm, ProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -102,8 +102,17 @@ def energy_use():
             odometer_reading_km=form.odometer_reading_km.data
         )
         submitted_data = energy_calc.gather_data()
+        session['energy_data'] = submitted_data
         return render_template('energy-use.html', form=form, submitted_data=submitted_data)
     return render_template('energy-use.html', form=form)
+
+@app.route('/dashboard')
+def dashboard():
+    data = session.get('energy_data')
+    if not data:
+        flash('Please calculate your energy use first.', 'info')
+        return redirect(url_for('energy_use'))
+    return render_template('dashboard.html', data=data)
 
 from app.forms import CarbonFootprintForm
 

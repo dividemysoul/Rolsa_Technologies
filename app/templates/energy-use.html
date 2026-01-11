@@ -3,69 +3,186 @@
 {% block title %}Energy Use Calculator{% endblock %}
 
 {% block content %}
-<div class="app-container">
-    <div class="card" style="max-width: 800px; margin: 0 auto;">
-        <h1>Energy Use Calculator</h1>
+<!-- Calculator Hero -->
+<div class="app-hero">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">Energy Calculator</h1>
+        <p class="fs-5 opacity-75">Enter your energy data to generate a personalized dashboard.</p>
+    </div>
+</div>
 
-        {% if submitted_data %}
-        <div class="metrics-row" style="margin-top: 2rem;">
-            {% for key, value in submitted_data.items() %}
-            <div class="card metric-card">
-                <div class="metric-header">
-                    <span class="metric-label">{{ key|replace('_', ' ')|title }}</span>
-                    <i class="fas fa-bolt metric-icon"></i>
+<!-- Main Content (Overlapping) -->
+<div class="app-container-overlap pb-5">
+
+    <div class="d-flex justify-content-center">
+        <div class="col-lg-10">
+            <div class="calc-card">
+
+                {% if submitted_data %}
+                <!-- Success State -->
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 rounded-circle"
+                            style="width: 100px; height: 100px;">
+                            <i class="fas fa-check fa-4x text-success"></i>
+                        </div>
+                    </div>
+                    <h2 class="h2 fw-bold text-dark mb-3">Calculation Complete!</h2>
+                    <p class="text-secondary fs-5 mb-5">Your energy profile has been analyzed. Visit your dashboard to
+                        see the insights.</p>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ url_for('dashboard') }}" class="hero-cta-button shadow-lg">
+                            <i class="fas fa-chart-line me-2"></i> View Dashboard
+                        </a>
+                        <a href="{{ url_for('energy_use') }}"
+                            class="btn btn-outline-secondary rounded-pill px-4 py-3 fw-bold d-flex align-items-center">
+                            <i class="fas fa-redo me-2"></i> Recalculate
+                        </a>
+                    </div>
                 </div>
-                <div class="metric-value">{{ value }}</div>
-            </div>
-            {% endfor %}
-        </div>
+                {% else %}
 
-        <div style="margin-top: 2rem; text-align: center;">
-            <a href="{{ url_for('energy_use') }}" class="hero-cta-button">Calculate Again</a>
+                <div class="calc-header">
+                    <h2 class="h4 fw-bold mb-0 text-dark">Data Input</h2>
+                </div>
+
+                <div class="calc-form-container">
+
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mb-4 border-0 shadow-sm" role="alert">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-info-circle me-2"></i> {{ message }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
+                    <!-- Form Errors -->
+                    {% if form.errors %}
+                    <div class="alert alert-danger mb-4 border-0 shadow-sm" role="alert">
+                        <div class="d-flex">
+                            <i class="fas fa-exclamation-triangle mt-1 me-2"></i>
+                            <div>
+                                <strong>Please check the form for errors:</strong>
+                                <ul class="mb-0 mt-1 ps-3">
+                                    {% for field, errors in form.errors.items() %}
+                                    {% for error in errors %}
+                                    <li class="small">{{ field|replace('_', ' ')|title }}: {{ error }}</li>
+                                    {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+
+                        <h5 class="fw-bold text-success mb-4"><i class="fas fa-bolt me-2"></i>Home Energy</h5>
+
+                        <div class="row g-4">
+                            <!-- Grid Import -->
+                            <div class="col-md-4">
+                                <div class="form-group mb-0">
+                                    {{ form.grid_import_kwh.label(class="form-label text-secondary small text-uppercase
+                                    ls-1 fw-bold") }}
+                                    <div class="input-icon-wrapper">
+                                        <i class="fas fa-plug"></i>
+                                        {{ form.grid_import_kwh(class="form-control custom-input" + (" is-invalid" if
+                                        form.grid_import_kwh.errors else ""), placeholder="0.0") }}
+                                    </div>
+                                    {% if form.grid_import_kwh.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.grid_import_kwh.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Solar Generation -->
+                            <div class="col-md-4">
+                                <div class="form-group mb-0">
+                                    {{ form.solar_generation_kwh.label(class="form-label text-secondary small
+                                    text-uppercase ls-1 fw-bold") }}
+                                    <div class="input-icon-wrapper">
+                                        <i class="fas fa-sun"></i>
+                                        {{ form.solar_generation_kwh(class="form-control custom-input" + (" is-invalid"
+                                        if form.solar_generation_kwh.errors else ""), placeholder="0.0") }}
+                                    </div>
+                                    {% if form.solar_generation_kwh.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.solar_generation_kwh.errors[0] }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Grid Export -->
+                            <div class="col-md-4">
+                                <div class="form-group mb-0">
+                                    {{ form.grid_export_kwh.label(class="form-label text-secondary small text-uppercase
+                                    ls-1 fw-bold") }}
+                                    <div class="input-icon-wrapper">
+                                        <i class="fas fa-upload"></i>
+                                        {{ form.grid_export_kwh(class="form-control custom-input" + (" is-invalid" if
+                                        form.grid_export_kwh.errors else ""), placeholder="0.0") }}
+                                    </div>
+                                    {% if form.grid_export_kwh.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.grid_export_kwh.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="calc-divider"></div>
+
+                        <h5 class="fw-bold text-success mb-4"><i class="fas fa-car me-2"></i>EV Usage</h5>
+
+                        <div class="row g-4">
+                            <!-- EV Energy -->
+                            <div class="col-md-6">
+                                <div class="form-group mb-0">
+                                    {{ form.ev_energy_kwh.label(class="form-label text-secondary small text-uppercase
+                                    ls-1 fw-bold") }}
+                                    <div class="input-icon-wrapper">
+                                        <i class="fas fa-charging-station"></i>
+                                        {{ form.ev_energy_kwh(class="form-control custom-input" + (" is-invalid" if
+                                        form.ev_energy_kwh.errors else ""), placeholder="0.0") }}
+                                    </div>
+                                    {% if form.ev_energy_kwh.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.ev_energy_kwh.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Odometer -->
+                            <div class="col-md-6">
+                                <div class="form-group mb-0">
+                                    {{ form.odometer_reading_km.label(class="form-label text-secondary small
+                                    text-uppercase ls-1 fw-bold") }}
+                                    <div class="input-icon-wrapper">
+                                        <i class="fas fa-tachometer-alt"></i>
+                                        {{ form.odometer_reading_km(class="form-control custom-input" + (" is-invalid"
+                                        if form.odometer_reading_km.errors else ""), placeholder="0") }}
+                                    </div>
+                                    {% if form.odometer_reading_km.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.odometer_reading_km.errors[0] }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 text-end">
+                            {{ form.submit(class="hero-cta-button w-100 py-3 shadow-md", style="max-width: 300px;") }}
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        {% else %}
-        <form method="POST" action="">
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.grid_import_kwh.label(class="form-label") }}
-                {{ form.grid_import_kwh(class="form-control", size=32) }}
-                {% for error in form.grid_import_kwh.errors %}
-                <span class="form-error">[{{ error }}]</span>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                {{ form.solar_generation_kwh.label(class="form-label") }}
-                {{ form.solar_generation_kwh(class="form-control", size=32) }}
-                {% for error in form.solar_generation_kwh.errors %}
-                <span class="form-error">[{{ error }}]</span>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                {{ form.grid_export_kwh.label(class="form-label") }}
-                {{ form.grid_export_kwh(class="form-control", size=32) }}
-                {% for error in form.grid_export_kwh.errors %}
-                <span class="form-error">[{{ error }}]</span>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                {{ form.ev_energy_kwh.label(class="form-label") }}
-                {{ form.ev_energy_kwh(class="form-control", size=32) }}
-                {% for error in form.ev_energy_kwh.errors %}
-                <span class="text-danger">[{{ error }}]</span>
-                {% endfor %}
-            </div>
-            <div class="form-group">
-                {{ form.odometer_reading_km.label(class="form-label") }}
-                {{ form.odometer_reading_km(class="form-control", size=32) }}
-                {% for error in form.odometer_reading_km.errors %}
-                <span class="text-danger">[{{ error }}]</span>
-                {% endfor %}
-            </div>
-            <div class="form-actions">
-                {{ form.submit(class="hero-cta-button") }}
-            </div>
-        </form>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
