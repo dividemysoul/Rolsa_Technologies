@@ -54,6 +54,7 @@ class MultiCheckboxField(SelectMultipleField):
 class CarbonFootprintForm(FlaskForm):
     # Food
     diet = SelectField('How would you best describe your diet?', choices=[
+        ('', 'Select...'),
         ('Meat in every meal', 'Meat in every meal'),
         ('Meat in some meals', 'Meat in some meals'),
         ('No beef', 'No beef'),
@@ -63,6 +64,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
     
     food_spend = SelectField('In a week, how much do you spend on food from restaurants, canteens and takeaways?', choices=[
+        ('', 'Select...'),
         ('£0', '£0'),
         ('£1 - £10', '£1 - £10'),
         ('£10 - £40', '£10 - £40'),
@@ -70,6 +72,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     food_waste = SelectField('Of the food you buy how much is wasted and thrown away?', choices=[
+        ('', 'Select...'),
         ('None', 'None'),
         ('0% - 10%', '0% - 10%'),
         ('10% - 30%', '10% - 30%'),
@@ -77,6 +80,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
     
     local_food = SelectField('How often do you buy locally produced food that is not imported to the UK?', choices=[
+        ('', 'Select...'),
         ('A lot of the food I buy is locally sourced', 'A lot of the food I buy is locally sourced'),
         ('Some of the food I buy is locally sourced', 'Some of the food I buy is locally sourced'),
         ('I don\'t worry about where my food comes from', 'I don\'t worry about where my food comes from')
@@ -84,12 +88,14 @@ class CarbonFootprintForm(FlaskForm):
 
     # Travel
     travel_mode = SelectField('What kind of vehicle do you travel in most often as driver or passenger? (if any)', choices=[
+        ('', 'Select...'),
         ('Car', 'Car'),
         ('Motorbike', 'Motorbike'),
         ('Neither - I walk, cycle or use public transport for all my journeys', 'Neither - I walk, cycle or use public transport for all my journeys')
     ], validators=[DataRequired()])
     
     vehicle_type = SelectField('Which of these best describes the vehicle you use most?', choices=[
+        ('', 'Select...'),
         ('Electric car', 'Electric car'),
         ('Plug-in hybrid car', 'Plug-in hybrid car'),
         ('Hybrid car', 'Hybrid car'),
@@ -99,6 +105,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[]) # Optional depending on previous answer
 
     car_hours = SelectField('How many hours a week do you spend in your car or on your motorbike for personal use including commuting?', choices=[
+        ('', 'Select...'),
         ('Under 2 hours', 'Under 2 hours'),
         ('2 to 5 hours', '2 to 5 hours'),
         ('5 to 15 hours', '5 to 15 hours'),
@@ -107,6 +114,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[])
 
     train_hours = SelectField('How many hours a week do you spend on the train for personal use including commuting?', choices=[
+        ('', 'Select...'),
         ('I don\'t travel by train', 'I don\'t travel by train'),
         ('Under 2 hours', 'Under 2 hours'),
         ('2 to 5 hours', '2 to 5 hours'),
@@ -116,6 +124,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     bus_hours = SelectField('How many hours a week do you spend on the bus for personal use including commuting?', choices=[
+        ('', 'Select...'),
         ('I don\'t travel by bus', 'I don\'t travel by bus'),
         ('Under 1 hour', 'Under 1 hour'),
         ('1 to 3 hours', '1 to 3 hours'),
@@ -129,6 +138,7 @@ class CarbonFootprintForm(FlaskForm):
     flight_outside_europe = IntegerField('To/from outside Europe return flights', validators=[])
     
     flight_offset = SelectField('What percentage of your flights do you offset?', choices=[
+        ('', 'Select...'),
         ('None of them', 'None of them'),
         ('25%', '25%'),
         ('50%', '50%'),
@@ -139,6 +149,7 @@ class CarbonFootprintForm(FlaskForm):
 
     # Home
     house_type = SelectField('What kind of house do you live in?', choices=[
+        ('', 'Select...'),
         ('Detached', 'Detached'),
         ('Semi-detached', 'Semi-detached'),
         ('Terrace', 'Terrace'),
@@ -146,6 +157,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     bedrooms = SelectField('How many bedrooms does your house have?', choices=[
+        ('', 'Select...'),
         ('1', '1'),
         ('2', '2'),
         ('3', '3'),
@@ -153,6 +165,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     occupants = SelectField('How many people (aged 17 and over) live in your house?', choices=[
+        ('', 'Select...'),
         ('1', '1'),
         ('2', '2'),
         ('3', '3'),
@@ -161,6 +174,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     heating_type = SelectField('How do you heat your home?', choices=[
+        ('', 'Select...'),
         ('Gas', 'Gas'),
         ('Oil', 'Oil'),
         ('Electricity', 'Electricity'),
@@ -169,6 +183,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     green_tariff = SelectField('Is your electricity on a green tariff?', choices=[
+        ('', 'Select...'),
         ('I don\'t know', 'I don\'t know'),
         ('No', 'No'),
         ('Yes but the tariff is less than 100% renewables', 'Yes but the tariff is less than 100% renewables'),
@@ -176,11 +191,13 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     regular_turn_off = SelectField('Do you regularly turn off lights and not leave your appliances on standby?', choices=[
+        ('', 'Select...'),
         ('Yes', 'Yes'),
         ('No', 'No')
     ], validators=[DataRequired()])
 
     winter_temp = SelectField('How warm do you keep your home in winter?', choices=[
+        ('', 'Select...'),
         ('below 14°C', 'below 14°C'),
         ('14° - 17°C', '14° - 17°C'),
         ('18° - 21°C', '18° - 21°C'),
@@ -207,6 +224,7 @@ class CarbonFootprintForm(FlaskForm):
     ])
 
     clothes_spend = SelectField('In a typical month, how much do you spend on clothes and footwear?', choices=[
+        ('', 'Select...'),
         ('£0', '£0'),
         ('£1 - £40', '£1 - £40'),
         ('£40 - £100', '£40 - £100'),
@@ -214,6 +232,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     pet_spend = SelectField('In a typical month, how much do you spend on your pets and pet food?', choices=[
+        ('', 'Select...'),
         ('I don\'t have a pet', 'I don\'t have a pet'),
         ('£1 - £10', '£1 - £10'),
         ('£10 - £35', '£10 - £35'),
@@ -221,12 +240,14 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     health_spend = SelectField('In a typical month, how much do you spend on health, beauty and grooming products?', choices=[
+        ('', 'Select...'),
         ('£0 - £10', '£0 - £10'),
         ('£10 - £60', '£10 - £60'),
         ('£60+', '£60+')
     ], validators=[DataRequired()])
 
     contract_spend = SelectField('In a typical month, how much do you spend on phone, internet and TV contracts?', choices=[
+        ('', 'Select...'),
         ('£0', '£0'),
         ('£1 - £35', '£1 - £35'),
         ('£35 - £70', '£35 - £70'),
@@ -234,6 +255,7 @@ class CarbonFootprintForm(FlaskForm):
     ], validators=[DataRequired()])
 
     entertainment_spend = SelectField('In a typical month, how much do you spend on entertainment and hobbies?', choices=[
+        ('', 'Select...'),
         ('£0 - £25', '£0 - £25'),
         ('£25 - £50', '£25 - £50'),
         ('£50 - £75', '£50 - £75'),
@@ -250,6 +272,7 @@ class CarbonFootprintForm(FlaskForm):
 
     # Personal
     location = SelectField('Where are you based?', choices=[
+        ('', 'Select...'),
         ('I\'m in the UK', 'I\'m in the UK'),
         ('I\'m based outside of the UK', 'I\'m based outside of the UK')
     ], validators=[DataRequired()])
@@ -257,6 +280,7 @@ class CarbonFootprintForm(FlaskForm):
     postcode = StringField('First half of your postcode (e.g. SW1A)')
 
     age = SelectField('How old are you?', choices=[
+        ('', 'Select...'),
         ('Under 13', 'Under 13'),
         ('13-17', '13-17'),
         ('18+', '18+')

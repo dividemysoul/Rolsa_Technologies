@@ -3,189 +3,571 @@
 {% block title %}Carbon Footprint Calculator{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <h1 class="display-6 fw-bold mb-4">Carbon Footprint Calculator</h1>
+<!-- Page Hero -->
+<div class="app-hero">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">Carbon Footprint</h1>
+        <p class="fs-5 opacity-75">Estimate your annual carbon emissions by answering a few questions about your
+            lifestyle.</p>
+    </div>
+</div>
 
-            {% if submitted_data %}
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body p-4">
-                    {% if footprint_results %}
-                    <div class="text-center mb-5">
-                        <h2 class="h4 text-secondary mb-2">Your Annual Carbon Footprint</h2>
-                        <div class="display-4 fw-bold text-success">{{ footprint_results.total }} <small
-                                class="fs-4 text-muted">kg CO2e</small></div>
-                    </div>
+<!-- Main Content (Overlap) -->
+<div class="app-container-overlap pb-5">
+    <div class="d-flex justify-content-center">
+        <div class="col-lg-10">
+            <div class="calc-card">
 
-                    <h3 class="h5 fw-bold mb-3">Impact Breakdown</h3>
-                    <div class="row g-3 mb-4">
-                        {% for item, val in footprint_results.breakdown.items() %}
-                        <div class="col-6 col-md-3 text-center">
-                            <div class="p-3 bg-light rounded-3">
-                                <div class="text-secondary small text-uppercase fw-bold mb-1">{{ item }}</div>
-                                <div class="fw-bold fs-5">{{ val }}</div>
+                {% if submitted_data %}
+                <!-- Results View -->
+                <div class="text-center py-5 slide-up-animation">
+                    <div class="mb-4">
+                        <div class="results-doughnut-container position-relative mx-auto"
+                            style="width: 280px; height: 280px;">
+                            <canvas id="resultsChart"></canvas>
+                            <div
+                                class="chart-center-icon position-absolute top-50 start-50 translate-middle text-success opacity-75">
+                                <i class="fa-solid fa-leaf fa-3x"></i>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
-                    <hr class="my-4">
-                    {% endif %}
 
-                    <h2 class="h5 fw-bold mb-3">Your Answers:</h2>
-                    <div class="row g-2">
-                        {% for key, value in submitted_data.items() %}
-                        <div class="col-md-6 border-bottom py-2">
-                            <span class="text-secondary small d-block">{{ key }}</span>
-                            <span class="fw-medium">{{ value }}</span>
+                    <h2 class="h4 text-secondary mb-2">Your Annual Footprint</h2>
+                    <div class="d-flex align-items-baseline justify-content-center gap-2 mb-4">
+                        <span class="display-3 fw-bold text-success">{{ footprint_results.total }}</span>
+                        <span class="fs-4 text-muted fw-medium">kg CO₂e</span>
+                    </div>
+
+                    <div class="row justify-content-center mb-5">
+                        <div class="col-12 px-4 px-md-5">
+                            <div class="row g-3">
+                                {% for item, val in footprint_results.breakdown.items() %}
+                                <div class="col-6 col-md-3">
+                                    <div class="p-3 bg-light rounded-3 h-100 d-flex flex-column justify-content-center">
+                                        <div class="text-secondary small text-uppercase fw-bold mb-1">{{ item }}</div>
+                                        <div class="fw-bold fs-5">{{ val }}</div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
                         </div>
-                        {% endfor %}
                     </div>
 
-                    <div class="mt-4 text-center">
+                    <div class="d-flex justify-content-center gap-3">
                         <a href="{{ url_for('carbon_footprint') }}"
-                            class="btn btn-outline-success px-4 py-2 rounded-pill">Calculate Again</a>
+                            class="hero-cta-button shadow-lg text-decoration-none">
+                            <i class="fas fa-redo me-2"></i> Recalculate
+                        </a>
                     </div>
                 </div>
-            </div>
-            {% else %}
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-4 p-md-5">
-                    <form method="POST" action="">
-                        {{ form.hidden_tag() }}
+
+                <!-- Chart JSON Data -->
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const ctx = document.getElementById('resultsChart').getContext('2d');
+                        const data = {
+                            labels: [{% for item in footprint_results.breakdown.keys() %}'{{ item }}', {% endfor %}],
+                        datasets: [{
+                            data: [{% for val in footprint_results.breakdown.values() %}{{ val }}, {% endfor %}],
+                        backgroundColor: [
+                        '#84cc16', // Food - Lime
+                        '#0f3f29', // Travel - Forest
+                        '#06b6d4', // Home - Cyan/Teal
+                        '#f59e0b'  // Lifestyle - Amber
+                    ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                            }]
+                        };
+
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: data,
+                        options: {
+                            cutout: '75%',
+                            plugins: {
+                                legend: { display: false }
+                            }
+                        }
+                    });
+                    });
+                </script>
+
+                {% else %}
+                <!-- Calculator Form -->
+                <form method="POST" action="" id="footprintForm">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Tabs Header -->
+                    <div class="calc-nav-tabs">
+                        <div class="calc-nav-item active" onclick="switchTab('food')">
+                            <i class="fa-solid fa-utensils me-2"></i> Food
+                        </div>
+                        <div class="calc-nav-item" onclick="switchTab('travel')">
+                            <i class="fa-solid fa-plane me-2"></i> Travel
+                        </div>
+                        <div class="calc-nav-item" onclick="switchTab('home')">
+                            <i class="fa-solid fa-house me-2"></i> Home
+                        </div>
+                        <div class="calc-nav-item" onclick="switchTab('lifestyle')">
+                            <i class="fa-solid fa-shirt me-2"></i> Lifestyle
+                        </div>
+                    </div>
+
+                    <div class="calc-form-container p-4 p-md-5">
 
                         <!-- Food Section -->
-                        <section class="mb-5">
-                            <h2 class="h4 fw-bold mb-4 border-start border-success border-4 ps-3 text-success">Food</h2>
-                            <div class="row g-3">
+                        <div id="tab-food" class="calc-tab-content active">
+                            <h4 class="fw-bold text-success mb-4"><i class="fas fa-utensils me-2"></i>Food & Diet</h4>
+                            <div class="row g-5"> <!-- Increased gap for visibility -->
                                 <div class="col-md-6">
-                                    {{ form.diet.label(class="form-label fw-semibold") }}
-                                    {{ form.diet(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.diet.label(class="form-label text-secondary small text-uppercase ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-carrot"></i>
+                                            {{ form.diet(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    {{ form.food_spend.label(class="form-label fw-semibold") }}
-                                    {{ form.food_spend(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.food_spend.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-coins"></i>
+                                            {{ form.food_spend(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    {{ form.food_waste.label(class="form-label fw-semibold") }}
-                                    {{ form.food_waste(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.food_waste.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-trash-alt"></i>
+                                            {{ form.food_waste(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    {{ form.local_food.label(class="form-label fw-semibold") }}
-                                    {{ form.local_food(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.local_food.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-tractor"></i>
+                                            {{ form.local_food(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </section>
+                            <div class="mt-5 text-end">
+                                <button type="button" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold"
+                                    onclick="switchTab('travel')">Next <i
+                                        class="fa-solid fa-arrow-right ms-2"></i></button>
+                            </div>
+                        </div>
 
                         <!-- Travel Section -->
-                        <section class="mb-5">
-                            <h2 class="h4 fw-bold mb-4 border-start border-primary border-4 ps-3 text-primary">Travel
-                            </h2>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    {{ form.travel_mode.label(class="form-label fw-semibold") }}
-                                    {{ form.travel_mode(id="travel_mode", class="form-select") }}
+                        <div id="tab-travel" class="calc-tab-content">
+                            <h4 class="fw-bold text-success mb-4"><i class="fas fa-plane me-2"></i>Travel & Transport
+                            </h4>
+                            <div class="row g-5">
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
+                                        {{ form.travel_mode.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-route"></i>
+                                            {{ form.travel_mode(id="travel_mode", class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6" id="vehicle_type_div">
-                                    {{ form.vehicle_type.label(class="form-label fw-semibold") }}
-                                    {{ form.vehicle_type(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.vehicle_type.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-car-side"></i>
+                                            {{ form.vehicle_type(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6" id="car_hours_div">
-                                    {{ form.car_hours.label(class="form-label fw-semibold") }}
-                                    {{ form.car_hours(class="form-control", type="number") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.car_hours.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="far fa-clock"></i>
+                                            {{ form.car_hours(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    {{ form.train_hours.label(class="form-label fw-semibold") }}
-                                    {{ form.train_hours(class="form-control", type="number") }}
-                                </div>
-                                <div class="col-md-6">
-                                    {{ form.bus_hours.label(class="form-label fw-semibold") }}
-                                    {{ form.bus_hours(class="form-control", type="number") }}
-                                </div>
-                            </div>
 
-                            <h3 class="h6 fw-bold mt-4 mb-3">Flights (Annual)</h3>
-                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.train_hours.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-train"></i>
+                                            {{ form.train_hours(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.bus_hours.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-bus"></i>
+                                            {{ form.bus_hours(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <hr class="my-2 opacity-10">
+                                </div>
+
+                                <div class="col-12">
+                                    <h5 class="h6 fw-bold text-secondary text-uppercase ls-1 mb-3">Annual Flights</h5>
+                                </div>
+
                                 <div class="col-md-4">
-                                    {{ form.flight_domestic.label(class="form-label small") }}
-                                    {{ form.flight_domestic(class="form-control", type="number") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.flight_domestic.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-plane-departure"></i>
+                                            {{ form.flight_domestic(class="form-control custom-input", type="number",
+                                            placeholder="0", min="0") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
-                                    {{ form.flight_europe.label(class="form-label small") }}
-                                    {{ form.flight_europe(class="form-control", type="number") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.flight_europe.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-globe-europe"></i>
+                                            {{ form.flight_europe(class="form-control custom-input", type="number",
+                                            placeholder="0", min="0") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
-                                    {{ form.flight_outside_europe.label(class="form-label small") }}
-                                    {{ form.flight_outside_europe(class="form-control", type="number") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.flight_outside_europe.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-globe-americas"></i>
+                                            {{ form.flight_outside_europe(class="form-control custom-input",
+                                            type="number", placeholder="0", min="0") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-check form-switch mt-2">
-                                        {{ form.flight_offset(class="form-check-input") }}
-                                        {{ form.flight_offset.label(class="form-check-label") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.flight_offset.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-award"></i>
+                                            {{ form.flight_offset(class="form-select custom-input") }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                            <div class="mt-5 text-end">
+                                <button type="button" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold"
+                                    onclick="switchTab('home')">Next <i
+                                        class="fa-solid fa-arrow-right ms-2"></i></button>
+                            </div>
+                        </div>
 
                         <!-- Home Section -->
-                        <section class="mb-5">
-                            <h2 class="h4 fw-bold mb-4 border-start border-info border-4 ps-3 text-info">Home</h2>
-                            <div class="row g-3">
+                        <div id="tab-home" class="calc-tab-content">
+                            <h4 class="fw-bold text-success mb-4"><i class="fas fa-home me-2"></i>Home Energy</h4>
+                            <div class="row g-5">
                                 <div class="col-md-6">
-                                    {{ form.house_type.label(class="form-label fw-semibold") }}
-                                    {{ form.house_type(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.house_type.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-building"></i>
+                                            {{ form.house_type(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
-                                    {{ form.bedrooms.label(class="form-label fw-semibold") }}
-                                    {{ form.bedrooms(class="form-control", type="number") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.bedrooms.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-bed"></i>
+                                            {{ form.bedrooms(class="form-control custom-input", type="number") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
-                                    {{ form.occupants.label(class="form-label fw-semibold") }}
-                                    {{ form.occupants(class="form-control", type="number") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.occupants.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-users"></i>
+                                            {{ form.occupants(class="form-control custom-input", type="number") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    {{ form.heating_type.label(class="form-label fw-semibold") }}
-                                    {{ form.heating_type(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.heating_type.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-fire"></i>
+                                            {{ form.heating_type(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-check form-switch mt-md-4">
-                                        {{ form.green_tariff(class="form-check-input") }}
-                                        {{ form.green_tariff.label(class="form-check-label") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.green_tariff.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-leaf"></i>
+                                            {{ form.green_tariff(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.regular_turn_off.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-power-off"></i>
+                                            {{ form.regular_turn_off(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.winter_temp.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-thermometer-half"></i>
+                                            {{ form.winter_temp(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Efficiency Items (Checkbox) -->
+                                <div class="col-12">
+                                    <label
+                                        class="form-label text-secondary small text-uppercase ls-1 fw-bold d-block mb-3">Energy
+                                        Efficiency Improvements</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        {% for subfield in form.efficiency_improvements %}
+                                        <div class="form-check custom-checkbox">
+                                            {{ subfield(class="form-check-input") }}
+                                            {{ subfield.label(class="form-check-label") }}
+                                        </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                            <div class="mt-5 text-end">
+                                <button type="button" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-bold"
+                                    onclick="switchTab('lifestyle')">Next <i
+                                        class="fa-solid fa-arrow-right ms-2"></i></button>
+                            </div>
+                        </div>
 
-                        <!-- Stuff Section -->
-                        <section class="mb-5">
-                            <h2 class="h4 fw-bold mb-4 border-start border-warning border-4 ps-3 text-warning">Stuff &
-                                Lifestyle</h2>
-                            <div class="row g-3">
+                        <!-- Lifestyle Section & Action -->
+                        <div id="tab-lifestyle" class="calc-tab-content">
+                            <h4 class="fw-bold text-success mb-4"><i class="fas fa-shopping-bag me-2"></i>Lifestyle &
+                                Personal</h4>
+                            <div class="row g-5">
                                 <div class="col-md-6">
-                                    {{ form.clothes_spend.label(class="form-label fw-semibold") }}
-                                    {{ form.clothes_spend(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.clothes_spend.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-tshirt"></i>
+                                            {{ form.clothes_spend(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    {{ form.recycling.label(class="form-label fw-semibold") }}
-                                    {{ form.recycling(class="form-select") }}
+                                    <div class="form-group mb-0">
+                                        {{ form.pet_spend.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-paw"></i>
+                                            {{ form.pet_spend(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.health_spend.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-heartbeat"></i>
+                                            {{ form.health_spend(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.contract_spend.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-file-contract"></i>
+                                            {{ form.contract_spend(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.entertainment_spend.label(class="form-label text-secondary small
+                                        text-uppercase ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-gamepad"></i>
+                                            {{ form.entertainment_spend(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.recycling.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-recycle"></i>
+                                            {{ form.recycling(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <hr class="my-2 opacity-10">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.location.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{ form.location(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.postcode.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-envelope"></i>
+                                            {{ form.postcode(class="form-control custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.age.label(class="form-label text-secondary small text-uppercase ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-user-clock"></i>
+                                            {{ form.age(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- New Household Items -->
+                                <div class="col-12">
+                                    <label
+                                        class="form-label text-secondary small text-uppercase ls-1 fw-bold d-block mb-3">New
+                                        Household Items (Last 12 Months)</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        {% for subfield in form.new_household_items %}
+                                        <div class="form-check custom-checkbox">
+                                            {{ subfield(class="form-check-input") }}
+                                            {{ subfield.label(class="form-check-label") }}
+                                        </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
-                        </section>
 
-                        <div class="text-center pt-4">
-                            {{ form.submit_footprint(class="btn btn-success btn-lg px-5 py-3 rounded-pill fw-bold
-                            shadow") }}
+                            <!-- Global Validation Errors -->
+                            {% if form.errors %}
+                            <div class="alert alert-danger mt-5 border-0 shadow-sm" role="alert">
+                                <div class="d-flex gap-2">
+                                    <i class="fa-solid fa-circle-exclamation mt-1"></i>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Please correct the errors below:</h6>
+                                        <ul class="mb-0 ps-3">
+                                            {% for field, errors in form.errors.items() %}
+                                            {% for error in errors %}
+                                            <li><strong>{{ form[field].label.text }}:</strong> {{ error }}</li>
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="mt-5 text-end">
+                                {{ form.submit_footprint(class="hero-cta-button py-3 px-5 shadow-lg") }}
+                            </div>
                         </div>
-                    </form>
-                </div>
+
+                    </div>
+                </form>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
 </div>
 
 <script>
+    function switchTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.calc-tab-content').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.calc-nav-item').forEach(el => el.classList.remove('active'));
+
+        // Show selected
+        const selectedTab = document.getElementById('tab-' + tabName);
+        if (selectedTab) selectedTab.style.display = 'block';
+
+        // Highlight nav item 
+        const navItems = document.querySelectorAll('.calc-nav-item');
+        let index = 0;
+        if (tabName === 'food') index = 0;
+        if (tabName === 'travel') index = 1;
+        if (tabName === 'home') index = 2;
+        if (tabName === 'lifestyle') index = 3;
+        if (navItems[index]) navItems[index].classList.add('active');
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        // Alignment Logic: force form-groups to fill height and push inputs to bottom
+        const cols = document.querySelectorAll('.calc-tab-content .row > [class*="col-"]');
+        cols.forEach(col => {
+            const formGroup = col.querySelector('.form-group');
+            if (formGroup) {
+                formGroup.classList.add('h-100', 'd-flex', 'flex-column');
+                const wrapper = formGroup.querySelector('.input-icon-wrapper');
+                if (wrapper) wrapper.classList.add('mt-auto');
+            }
+        });
+
+        // Initialize tabs - show first one
+        switchTab('food');
+
+        // Travel mode toggle logic
         var travelModeSelect = document.getElementById('travel_mode');
         var vehicleTypeDiv = document.getElementById('vehicle_type_div');
         var carHoursDiv = document.getElementById('car_hours_div');
