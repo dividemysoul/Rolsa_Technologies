@@ -2110,10 +2110,10 @@ main {
 }
 
 .auth-container {
-    width: 80vw;
-    max-width: 50%;
+    width: 90vw;
+    max-width: 1100px;
     height: 65vh;
-    min-height: 600px;
+    min-height: 650px;
     border-radius: 24px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     display: flex;
