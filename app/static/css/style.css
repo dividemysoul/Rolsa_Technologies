@@ -3299,12 +3299,5 @@ main {
 
 /* Fixed Card Size for Calculator */
 .calc-card {
-    min-width: 900px;
     width: 100%;
-}
-
-@media (max-width: 992px) {
-    .calc-card {
-        min-width: auto;
-    }
 }
