@@ -121,6 +121,12 @@ def energy_use():
         )
         submitted_data = energy_calc.gather_data()
         session['energy_data'] = submitted_data
+        
+        # Save to user profile if logged in
+        if current_user.is_authenticated:
+            current_user.latest_energy_calculation = submitted_data
+            db.session.commit()
+            
         return render_template('energy-use.html', form=form, submitted_data=submitted_data)
     return render_template('energy-use.html', form=form)
 

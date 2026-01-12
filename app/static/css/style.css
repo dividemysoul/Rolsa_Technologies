@@ -3078,3 +3078,44 @@ main {
         font-size: 1.5rem;
     }
 }
+/* =========================================
+   Bootstrap Overrides 
+   ========================================= */
+
+/* Primary Button (Solid) - Matches Brand Primary (Lime) */
+.btn-primary {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #03220e; /* Dark text for contrast on Lime */
+    font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+    background-color: #65a30d !important; /* Darker Lime */
+    border-color: #65a30d !important;
+    color: #ffffff !important; /* White text on darker hover */
+}
+
+/* Outline Primary - Matches Brand Secondary (Dark Green) for readability */
+.btn-outline-primary {
+    color: var(--brand-secondary);
+    border-color: var(--brand-secondary);
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active,
+.btn-outline-primary.active {
+    background-color: var(--brand-secondary) !important;
+    border-color: var(--brand-secondary) !important;
+    color: #ffffff !important;
+}
+
+/* Outline Danger - Keep Red but stylize if needed */
+.btn-outline-danger {
+    font-weight: 600;
+}

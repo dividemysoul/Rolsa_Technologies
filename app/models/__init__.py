@@ -2,15 +2,18 @@ from app import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+import uuid
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    public_id = db.Column(db.String(36), unique=True, index=True, default=lambda: str(uuid.uuid4()))
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(256))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     full_name = db.Column(db.String(100))
     phone_number = db.Column(db.String(20))
     address = db.Column(db.String(200))
+    latest_energy_calculation = db.Column(db.JSON, nullable=True)
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
