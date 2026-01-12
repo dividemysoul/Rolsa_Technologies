@@ -324,285 +324,291 @@
                             </div>
 
                         </div>
-                </div>
 
-                <!-- Home Section -->
-                <div id="tab-home" class="calc-tab-content" style="display: none;">
-                    <div class="calc-divider d-none"></div>
+                        <!-- Home Section -->
+                        <div id="tab-home" class="calc-tab-content" style="display: none;">
+                            <div class="calc-divider d-none"></div>
 
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="bg-info bg-opacity-10 p-2 rounded-3 me-3">
-                            <i class="fas fa-home text-info fs-4"></i>
-                        </div>
-                        <h5 class="fw-bold text-info mb-0">Home & Energy</h5>
-                    </div>
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="bg-info bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="fas fa-home text-info fs-4"></i>
+                                </div>
+                                <h5 class="fw-bold text-info mb-0">Home & Energy</h5>
+                            </div>
 
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="form-group mb-0">
-                                {{ form.house_type.label(class="form-label text-secondary small text-uppercase ls-1
-                                fw-bold") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-building"></i>
-                                    {{ form.house_type(class="form-select custom-input") }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-0">
-                                {{ form.bedrooms.label(class="form-label text-secondary small text-uppercase ls-1
-                                fw-bold") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-bed"></i>
-                                    {{ form.bedrooms(class="form-select custom-input") }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-0">
-                                {{ form.occupants.label(class="form-label text-secondary small text-uppercase ls-1
-                                fw-bold") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-users"></i>
-                                    {{ form.occupants(class="form-select custom-input") }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-0">
-                                {{ form.heating_type.label(class="form-label text-secondary small text-uppercase
-                                ls-1 fw-bold") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-fire"></i>
-                                    {{ form.heating_type(class="form-select custom-input") }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-0">
-                                {{ form.winter_temp.label(class="form-label text-secondary small text-uppercase ls-1
-                                fw-bold") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-thermometer-half"></i>
-                                    {{ form.winter_temp(class="form-select custom-input") }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="p-4 bg-light rounded-4 mb-2">
-                                <div class="row align-items-center g-3">
-                                    <div class="col-md-7">
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-white p-2 rounded-3 shadow-sm me-3">
-                                                <i class="fas fa-leaf text-success"></i>
-                                            </div>
-                                            <div>
-                                                <span class="fw-bold text-dark d-block">{{
-                                                    form.green_tariff.label.text }}</span>
-                                                <span class="small text-secondary">Switching to renewable energy
-                                                    reduces your footprint significantly.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="input-icon-wrapper mb-0">
-                                            <i class="fas fa-plug"></i>
-                                            {{ form.green_tariff(class="form-select custom-input") }}
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.house_type.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-building"></i>
+                                            {{ form.house_type(class="form-select custom-input") }}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="p-4 bg-light rounded-4">
-                                <div class="row align-items-center g-3">
-                                    <div class="col-md-7">
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-white p-2 rounded-3 shadow-sm me-3">
-                                                <i class="fas fa-power-off text-primary"></i>
-                                            </div>
-                                            <div>
-                                                <span class="fw-bold text-dark d-block">{{
-                                                    form.regular_turn_off.label.text }}</span>
-                                                <span class="small text-secondary">Small habits like turning off
-                                                    lights add up to big savings.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="input-icon-wrapper mb-0">
-                                            <i class="fas fa-lightbulb"></i>
-                                            {{ form.regular_turn_off(class="form-select custom-input") }}
+                                <div class="col-md-3">
+                                    <div class="form-group mb-0">
+                                        {{ form.bedrooms.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-bed"></i>
+                                            {{ form.bedrooms(class="form-select custom-input") }}
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="form-group mb-0">
-                                {{ form.efficiency_improvements.label(class="form-label fw-bold mb-3 d-block") }}
-                                <div class="checkbox-grid">
-                                    {% for subfield in form.efficiency_improvements %}
-                                    <div class="form-check">
-                                        {{ subfield(class="form-check-input") }}
-                                        {{ subfield.label(class="form-check-label") }}
+                                <div class="col-md-3">
+                                    <div class="form-group mb-0">
+                                        {{ form.occupants.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-users"></i>
+                                            {{ form.occupants(class="form-select custom-input") }}
+                                        </div>
                                     </div>
-                                    {% endfor %}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.heating_type.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-fire"></i>
+                                            {{ form.heating_type(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.winter_temp.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-thermometer-half"></i>
+                                            {{ form.winter_temp(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="p-4 bg-light rounded-4 mb-2">
+                                        <div class="row align-items-center g-3">
+                                            <div class="col-md-7">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                                                        <i class="fas fa-leaf text-success"></i>
+                                                    </div>
+                                                    <div>
+                                                        <span class="fw-bold text-dark d-block">{{
+                                                            form.green_tariff.label.text }}</span>
+                                                        <span class="small text-secondary">Switching to renewable energy
+                                                            reduces your footprint significantly.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="input-icon-wrapper mb-0">
+                                                    <i class="fas fa-plug"></i>
+                                                    {{ form.green_tariff(class="form-select custom-input") }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="p-4 bg-light rounded-4">
+                                        <div class="row align-items-center g-3">
+                                            <div class="col-md-7">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                                                        <i class="fas fa-power-off text-primary"></i>
+                                                    </div>
+                                                    <div>
+                                                        <span class="fw-bold text-dark d-block">{{
+                                                            form.regular_turn_off.label.text }}</span>
+                                                        <span class="small text-secondary">Small habits like turning off
+                                                            lights add up to big savings.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="input-icon-wrapper mb-0">
+                                                    <i class="fas fa-lightbulb"></i>
+                                                    {{ form.regular_turn_off(class="form-select custom-input") }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mb-0">
+                                        {{ form.efficiency_improvements.label(class="form-label fw-bold mb-3 d-block")
+                                        }}
+                                        <div class="checkbox-grid">
+                                            {% for subfield in form.efficiency_improvements %}
+                                            <div class="form-check">
+                                                {{ subfield(class="form-check-input") }}
+                                                {{ subfield.label(class="form-check-label") }}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
+                        </div>
+
+                        <!-- Lifestyle Section -->
+                        <div id="tab-lifestyle" class="calc-tab-content" style="display: none;">
+                            <div class="calc-divider d-none"></div>
+
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="bg-warning bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="fas fa-shopping-bag text-warning fs-4"></i>
+                                </div>
+                                <h5 class="fw-bold text-warning mb-0">Lifestyle</h5>
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="question-row">
+                                        {{ form.clothes_spend.label(class="question-label") }}
+                                        <div class="question-input">
+                                            <div class="input-icon-wrapper mb-0">
+                                                <i class="fas fa-tshirt"></i>
+                                                {{ form.clothes_spend(class="form-select custom-input") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="question-row">
+                                        {{ form.pet_spend.label(class="question-label") }}
+                                        <div class="question-input">
+                                            <div class="input-icon-wrapper mb-0">
+                                                <i class="fas fa-paw"></i>
+                                                {{ form.pet_spend(class="form-select custom-input") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="question-row">
+                                        {{ form.health_spend.label(class="question-label") }}
+                                        <div class="question-input">
+                                            <div class="input-icon-wrapper mb-0">
+                                                <i class="fas fa-heart"></i>
+                                                {{ form.health_spend(class="form-select custom-input") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="question-row">
+                                        {{ form.contract_spend.label(class="question-label") }}
+                                        <div class="question-input">
+                                            <div class="input-icon-wrapper mb-0">
+                                                <i class="fas fa-file-contract"></i>
+                                                {{ form.contract_spend(class="form-select custom-input") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="question-row">
+                                        {{ form.entertainment_spend.label(class="question-label") }}
+                                        <div class="question-input">
+                                            <div class="input-icon-wrapper mb-0">
+                                                <i class="fas fa-gamepad"></i>
+                                                {{ form.entertainment_spend(class="form-select custom-input") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <div class="form-group mb-0">
+                                        {{ form.new_household_items.label(class="form-label fw-bold mb-3 d-block") }}
+                                        <div class="checkbox-grid">
+                                            {% for subfield in form.new_household_items %}
+                                            <div class="form-check">
+                                                {{ subfield(class="form-check-input") }}
+                                                {{ subfield.label(class="form-check-label") }}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <div class="form-group mb-0">
+                                        {{ form.recycling.label(class="form-label fw-bold mb-3 d-block") }}
+                                        <div class="checkbox-grid">
+                                            {% for subfield in form.recycling %}
+                                            <div class="form-check">
+                                                {{ subfield(class="form-check-input") }}
+                                                {{ subfield.label(class="form-check-label") }}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Personal Section -->
+                        <div id="tab-personal" class="calc-tab-content" style="display: none;">
+                            <div class="calc-divider d-none"></div>
+
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="bg-dark bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="fas fa-user-circle text-dark fs-4"></i>
+                                </div>
+                                <h5 class="fw-bold text-dark mb-0">Personal Information</h5>
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="form-group mb-0">
+                                        {{ form.location.label(class="form-label fw-bold mb-2 text-dark") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-map-marked-alt"></i>
+                                            {{ form.location(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-0">
+                                        {{ form.postcode.label(class="form-label fw-bold mb-2 text-dark") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-mail-bulk"></i>
+                                            {{ form.postcode(class="form-control custom-input", placeholder="e.g. SW1A")
+                                            }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-0">
+                                        {{ form.age.label(class="form-label fw-bold mb-2 text-dark") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-birthday-cake"></i>
+                                            {{ form.age(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 text-center">
+                                {{ form.submit_footprint(class="hero-cta-button shadow-lg px-5 py-3") }}
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-                <!-- Lifestyle Section -->
-                <div id="tab-lifestyle" class="calc-tab-content" style="display: none;">
-                    <div class="calc-divider d-none"></div>
-
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="bg-warning bg-opacity-10 p-2 rounded-3 me-3">
-                            <i class="fas fa-shopping-bag text-warning fs-4"></i>
-                        </div>
-                        <h5 class="fw-bold text-warning mb-0">Lifestyle</h5>
-                    </div>
-
-                    <div class="row g-0">
-                        <div class="col-12">
-                            <div class="question-row">
-                                {{ form.clothes_spend.label(class="question-label") }}
-                                <div class="question-input">
-                                    <div class="input-icon-wrapper mb-0">
-                                        <i class="fas fa-tshirt"></i>
-                                        {{ form.clothes_spend(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="question-row">
-                                {{ form.pet_spend.label(class="question-label") }}
-                                <div class="question-input">
-                                    <div class="input-icon-wrapper mb-0">
-                                        <i class="fas fa-paw"></i>
-                                        {{ form.pet_spend(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="question-row">
-                                {{ form.health_spend.label(class="question-label") }}
-                                <div class="question-input">
-                                    <div class="input-icon-wrapper mb-0">
-                                        <i class="fas fa-heart"></i>
-                                        {{ form.health_spend(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="question-row">
-                                {{ form.contract_spend.label(class="question-label") }}
-                                <div class="question-input">
-                                    <div class="input-icon-wrapper mb-0">
-                                        <i class="fas fa-file-contract"></i>
-                                        {{ form.contract_spend(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="question-row">
-                                {{ form.entertainment_spend.label(class="question-label") }}
-                                <div class="question-input">
-                                    <div class="input-icon-wrapper mb-0">
-                                        <i class="fas fa-gamepad"></i>
-                                        {{ form.entertainment_spend(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 mt-4">
-                            <div class="form-group mb-0">
-                                {{ form.new_household_items.label(class="form-label fw-bold mb-3 d-block") }}
-                                <div class="checkbox-grid">
-                                    {% for subfield in form.new_household_items %}
-                                    <div class="form-check">
-                                        {{ subfield(class="form-check-input") }}
-                                        {{ subfield.label(class="form-check-label") }}
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 mt-4">
-                            <div class="form-group mb-0">
-                                {{ form.recycling.label(class="form-label fw-bold mb-3 d-block") }}
-                                <div class="checkbox-grid">
-                                    {% for subfield in form.recycling %}
-                                    <div class="form-check">
-                                        {{ subfield(class="form-check-input") }}
-                                        {{ subfield.label(class="form-check-label") }}
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Personal Section -->
-                <div id="tab-personal" class="calc-tab-content" style="display: none;">
-                    <div class="calc-divider d-none"></div>
-
-                    <div class="d-flex align-items-center mb-4">
-                        <div class="bg-dark bg-opacity-10 p-2 rounded-3 me-3">
-                            <i class="fas fa-user-circle text-dark fs-4"></i>
-                        </div>
-                        <h5 class="fw-bold text-dark mb-0">Personal Information</h5>
-                    </div>
-
-                    <div class="row g-4">
-                        <div class="col-md-4">
-                            <div class="form-group mb-0">
-                                {{ form.location.label(class="form-label fw-bold mb-2 text-dark") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-map-marked-alt"></i>
-                                    {{ form.location(class="form-select custom-input") }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-0">
-                                {{ form.postcode.label(class="form-label fw-bold mb-2 text-dark") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-mail-bulk"></i>
-                                    {{ form.postcode(class="form-control custom-input", placeholder="e.g. SW1A") }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-0">
-                                {{ form.age.label(class="form-label fw-bold mb-2 text-dark") }}
-                                <div class="input-icon-wrapper">
-                                    <i class="fas fa-birthday-cake"></i>
-                                    {{ form.age(class="form-select custom-input") }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-5 text-center">
-                        {{ form.submit_footprint(class="hero-cta-button shadow-lg px-5 py-3") }}
-                    </div>
-                </div>
-                </form>
             </div>
             {% endif %}
         </div>
