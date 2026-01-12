@@ -215,3 +215,15 @@ def article(slug):
         return redirect(url_for('resources'))
     related = get_related_articles(slug)
     return render_template('article.html', title=article['title'], article=article, related_articles=related)
+
+@app.route('/cookie-policy')
+def cookie_policy():
+    return render_template('cookie_policy.html', title='Cookie Policy')
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy_policy.html', title='Privacy Policy')
+
+@app.route('/terms-of-service')
+def terms_of_service():
+    return render_template('terms_of_service.html', title='Terms of Service')
