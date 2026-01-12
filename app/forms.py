@@ -230,7 +230,7 @@ class CarbonFootprintForm(FlaskForm):
         ('Solar water heater', 'Solar water heater')
     ])
 
-    # Stuff
+    # Lifestyle
     new_household_items = MultiCheckboxField('In the last 12 months, have you bought any of these new household items?', choices=[
         ('TV, laptop or PC', 'TV, laptop or PC'),
         ('Large item of furniture', 'Large item of furniture'),

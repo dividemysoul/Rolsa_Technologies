@@ -53,6 +53,7 @@
                                 <div class="stat-desc">kg CO<sub>2</sub>e</div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
 
                     <div class="calc-divider"></div>
@@ -68,6 +69,7 @@
                                 <span class="flow-value text-dark text-end ms-auto">{{ value }}</span>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
 
                     <div class="d-flex justify-content-center gap-3">
@@ -124,435 +126,488 @@
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
 
+
+                        <!-- Tab Navigation -->
+                        <div class="calc-nav-tabs mb-5">
+                            <div class="calc-nav-item active" onclick="switchTab('food')" id="nav-food">
+                                <i class="fas fa-utensils me-2"></i> Food
+                            </div>
+                            <div class="calc-nav-item" onclick="switchTab('travel')" id="nav-travel">
+                                <i class="fas fa-car me-2"></i> Travel
+                            </div>
+                            <div class="calc-nav-item" onclick="switchTab('home')" id="nav-home">
+                                <i class="fas fa-home me-2"></i> Home
+                            </div>
+                            <div class="calc-nav-item" onclick="switchTab('lifestyle')" id="nav-lifestyle">
+                                <i class="fas fa-shopping-bag me-2"></i> Lifestyle
+                            </div>
+                            <div class="calc-nav-item" onclick="switchTab('personal')" id="nav-personal">
+                                <i class="fas fa-user me-2"></i> Personal
+                            </div>
+                        </div>
+
                         <!-- Food Section -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-success bg-opacity-10 p-2 rounded-3 me-3">
-                                <i class="fas fa-utensils text-success fs-4"></i>
+                        <div id="tab-food" class="calc-tab-content">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="bg-success bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="fas fa-utensils text-success fs-4"></i>
+                                </div>
+                                <h5 class="fw-bold text-success mb-0">Food & Diet</h5>
                             </div>
-                            <h5 class="fw-bold text-success mb-0">Food & Diet</h5>
-                        </div>
 
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.diet.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-leaf"></i>
-                                        {{ form.diet(class="form-select custom-input") }}
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.diet.label(class="form-label fw-bold mb-2 text-dark") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-leaf"></i>
+                                            {{ form.diet(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.food_spend.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-pound-sign"></i>
+                                            {{ form.food_spend(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.food_waste.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-trash-alt"></i>
+                                            {{ form.food_waste(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.local_food.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            {{ form.local_food(class="form-select custom-input") }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.food_spend.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-pound-sign"></i>
-                                        {{ form.food_spend(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.food_waste.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-trash-alt"></i>
-                                        {{ form.food_waste(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.local_food.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        {{ form.local_food(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="calc-divider"></div>
+                        </div>
 
                         <!-- Travel Section -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
-                                <i class="fas fa-car text-primary fs-4"></i>
-                            </div>
-                            <h5 class="fw-bold text-primary mb-0">Travel & Transport</h5>
-                        </div>
+                        <div id="tab-travel" class="calc-tab-content" style="display: none;">
+                            <div class="calc-divider d-none"></div>
 
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.travel_mode.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-route"></i>
-                                        {{ form.travel_mode(id="travel_mode", class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6" id="vehicle_type_div">
-                                <div class="form-group mb-0">
-                                    {{ form.vehicle_type.label(class="form-label text-secondary small text-uppercase
-                                    ls-1 fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-car-side"></i>
-                                        {{ form.vehicle_type(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4" id="car_hours_div">
-                                <div class="form-group mb-0">
-                                    {{ form.car_hours.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-clock"></i>
-                                        {{ form.car_hours(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group mb-0">
-                                    {{ form.train_hours.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-train"></i>
-                                        {{ form.train_hours(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group mb-0">
-                                    {{ form.bus_hours.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-bus"></i>
-                                        {{ form.bus_hours(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Flights Sub-section -->
-                        <div class="mt-5 p-4 bg-light rounded-4">
                             <div class="d-flex align-items-center mb-4">
-                                <div class="bg-secondary bg-opacity-10 p-2 rounded-3 me-3">
-                                    <i class="fas fa-plane text-secondary fs-5"></i>
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="fas fa-car text-primary fs-4"></i>
                                 </div>
-                                <h6 class="fw-bold text-secondary mb-0">Annual Return Flights</h6>
+                                <h5 class="fw-bold text-primary mb-0">Travel & Transport</h5>
                             </div>
+
                             <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        {{ form.travel_mode.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-route"></i>
+                                            {{ form.travel_mode(id="travel_mode", class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="vehicle_type_div">
+                                    <div class="form-group mb-0">
+                                        {{ form.vehicle_type.label(class="form-label text-secondary small text-uppercase
+                                        ls-1 fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-car-side"></i>
+                                            {{ form.vehicle_type(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" id="car_hours_div">
+                                    <div class="form-group mb-0">
+                                        {{ form.car_hours.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
+                                        <div class="input-icon-wrapper">
+                                            <i class="fas fa-clock"></i>
+                                            {{ form.car_hours(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group mb-0">
-                                        {{ form.flight_domestic.label(class="form-label text-secondary small
-                                        text-uppercase ls-1 fw-bold") }}
+                                        {{ form.train_hours.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
                                         <div class="input-icon-wrapper">
-                                            <i class="fas fa-plane-departure"></i>
-                                            {{ form.flight_domestic(class="form-control custom-input", type="number",
-                                            placeholder="0") }}
+                                            <i class="fas fa-train"></i>
+                                            {{ form.train_hours(class="form-select custom-input") }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group mb-0">
-                                        {{ form.flight_europe.label(class="form-label text-secondary small
-                                        text-uppercase ls-1 fw-bold") }}
+                                        {{ form.bus_hours.label(class="form-label text-secondary small text-uppercase
+                                        ls-1
+                                        fw-bold") }}
                                         <div class="input-icon-wrapper">
-                                            <i class="fas fa-globe-europe"></i>
-                                            {{ form.flight_europe(class="form-control custom-input", type="number",
-                                            placeholder="0") }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group mb-0">
-                                        {{ form.flight_outside_europe.label(class="form-label text-secondary small
-                                        text-uppercase ls-1 fw-bold") }}
-                                        <div class="input-icon-wrapper">
-                                            <i class="fas fa-globe"></i>
-                                            {{ form.flight_outside_europe(class="form-control custom-input",
-                                            type="number", placeholder="0") }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group mb-0">
-                                        {{ form.flight_offset.label(class="form-label text-secondary small
-                                        text-uppercase ls-1 fw-bold") }}
-                                        <div class="input-icon-wrapper">
-                                            <i class="fas fa-percentage"></i>
-                                            {{ form.flight_offset(class="form-select custom-input") }}
+                                            <i class="fas fa-bus"></i>
+                                            {{ form.bus_hours(class="form-select custom-input") }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="calc-divider"></div>
-
-                        <!-- Home Section -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-info bg-opacity-10 p-2 rounded-3 me-3">
-                                <i class="fas fa-home text-info fs-4"></i>
-                            </div>
-                            <h5 class="fw-bold text-info mb-0">Home & Energy</h5>
-                        </div>
-
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.house_type.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-building"></i>
-                                        {{ form.house_type(class="form-select custom-input") }}
+                            <!-- Flights Sub-section -->
+                            <div class="mt-5">
+                                <div class="d-flex align-items-center mb-4 pb-2 border-bottom">
+                                    <div class="bg-secondary bg-opacity-10 p-2 rounded-3 me-3">
+                                        <i class="fas fa-plane text-secondary fs-5"></i>
                                     </div>
+                                    <h6 class="fw-bold text-secondary mb-0">Annual Return Flights</h6>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group mb-0">
-                                    {{ form.bedrooms.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-bed"></i>
-                                        {{ form.bedrooms(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group mb-0">
-                                    {{ form.occupants.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-users"></i>
-                                        {{ form.occupants(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.heating_type.label(class="form-label text-secondary small text-uppercase
-                                    ls-1 fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-fire"></i>
-                                        {{ form.heating_type(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.winter_temp.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-thermometer-half"></i>
-                                        {{ form.winter_temp(class="form-select custom-input") }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="p-4 bg-light rounded-4 mb-2">
-                                    <div class="row align-items-center g-3">
-                                        <div class="col-md-7">
-                                            <div class="d-flex align-items-center">
-                                                <div class="bg-white p-2 rounded-3 shadow-sm me-3">
-                                                    <i class="fas fa-leaf text-success"></i>
-                                                </div>
-                                                <div>
-                                                    <span class="fw-bold text-dark d-block">{{
-                                                        form.green_tariff.label.text }}</span>
-                                                    <span class="small text-secondary">Switching to renewable energy
-                                                        reduces your footprint significantly.</span>
-                                                </div>
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-0">
+                                            {{ form.flight_domestic.label(class="form-label fw-bold mb-2 text-dark") }}
+                                            <div class="input-icon-wrapper">
+                                                <i class="fas fa-plane-departure"></i>
+                                                {{ form.flight_domestic(class="form-control custom-input",
+                                                type="number",
+                                                placeholder="0") }}
                                             </div>
                                         </div>
-                                        <div class="col-md-5">
-                                            <div class="input-icon-wrapper mb-0">
-                                                <i class="fas fa-plug"></i>
-                                                {{ form.green_tariff(class="form-select custom-input") }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-0">
+                                            {{ form.flight_europe.label(class="form-label fw-bold mb-2 text-dark") }}
+                                            <div class="input-icon-wrapper">
+                                                <i class="fas fa-globe-europe"></i>
+                                                {{ form.flight_europe(class="form-control custom-input", type="number",
+                                                placeholder="0") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group mb-0">
+                                            {{ form.flight_outside_europe.label(class="form-label fw-bold mb-2
+                                            text-dark") }}
+                                            <div class="input-icon-wrapper">
+                                                <i class="fas fa-globe"></i>
+                                                {{ form.flight_outside_europe(class="form-control custom-input",
+                                                type="number", placeholder="0") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group mb-0">
+                                            {{ form.flight_offset.label(class="form-label fw-bold mb-2 text-dark") }}
+                                            <div class="input-icon-wrapper">
+                                                <i class="fas fa-percentage"></i>
+                                                {{ form.flight_offset(class="form-select custom-input") }}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="p-4 bg-light rounded-4">
-                                    <div class="row align-items-center g-3">
-                                        <div class="col-md-7">
-                                            <div class="d-flex align-items-center">
-                                                <div class="bg-white p-2 rounded-3 shadow-sm me-3">
-                                                    <i class="fas fa-power-off text-primary"></i>
-                                                </div>
-                                                <div>
-                                                    <span class="fw-bold text-dark d-block">{{
-                                                        form.regular_turn_off.label.text }}</span>
-                                                    <span class="small text-secondary">Small habits like turning off
-                                                        lights add up to big savings.</span>
-                                                </div>
+                        </div>
+                </div>
+
+                <!-- Home Section -->
+                <div id="tab-home" class="calc-tab-content" style="display: none;">
+                    <div class="calc-divider d-none"></div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-info bg-opacity-10 p-2 rounded-3 me-3">
+                            <i class="fas fa-home text-info fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold text-info mb-0">Home & Energy</h5>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                {{ form.house_type.label(class="form-label text-secondary small text-uppercase ls-1
+                                fw-bold") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-building"></i>
+                                    {{ form.house_type(class="form-select custom-input") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                {{ form.bedrooms.label(class="form-label text-secondary small text-uppercase ls-1
+                                fw-bold") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-bed"></i>
+                                    {{ form.bedrooms(class="form-select custom-input") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-0">
+                                {{ form.occupants.label(class="form-label text-secondary small text-uppercase ls-1
+                                fw-bold") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-users"></i>
+                                    {{ form.occupants(class="form-select custom-input") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                {{ form.heating_type.label(class="form-label text-secondary small text-uppercase
+                                ls-1 fw-bold") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-fire"></i>
+                                    {{ form.heating_type(class="form-select custom-input") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-0">
+                                {{ form.winter_temp.label(class="form-label text-secondary small text-uppercase ls-1
+                                fw-bold") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-thermometer-half"></i>
+                                    {{ form.winter_temp(class="form-select custom-input") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="p-4 bg-light rounded-4 mb-2">
+                                <div class="row align-items-center g-3">
+                                    <div class="col-md-7">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                                                <i class="fas fa-leaf text-success"></i>
                                             </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="input-icon-wrapper mb-0">
-                                                <i class="fas fa-lightbulb"></i>
-                                                {{ form.regular_turn_off(class="form-select custom-input") }}
+                                            <div>
+                                                <span class="fw-bold text-dark d-block">{{
+                                                    form.green_tariff.label.text }}</span>
+                                                <span class="small text-secondary">Switching to renewable energy
+                                                    reduces your footprint significantly.</span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="form-group mb-0">
-                                    {{ form.efficiency_improvements.label(class="form-label text-secondary small
-                                    text-uppercase ls-1 fw-bold mb-3 d-block") }}
-                                    <div class="checkbox-list">
-                                        {{ form.efficiency_improvements(class="checkbox-list") }}
+                                    <div class="col-md-5">
+                                        <div class="input-icon-wrapper mb-0">
+                                            <i class="fas fa-plug"></i>
+                                            {{ form.green_tariff(class="form-select custom-input") }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="calc-divider"></div>
-
-                        <!-- Lifestyle Section -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-warning bg-opacity-10 p-2 rounded-3 me-3">
-                                <i class="fas fa-shopping-bag text-warning fs-4"></i>
+                        <div class="col-12">
+                            <div class="p-4 bg-light rounded-4">
+                                <div class="row align-items-center g-3">
+                                    <div class="col-md-7">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-white p-2 rounded-3 shadow-sm me-3">
+                                                <i class="fas fa-power-off text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <span class="fw-bold text-dark d-block">{{
+                                                    form.regular_turn_off.label.text }}</span>
+                                                <span class="small text-secondary">Small habits like turning off
+                                                    lights add up to big savings.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="input-icon-wrapper mb-0">
+                                            <i class="fas fa-lightbulb"></i>
+                                            {{ form.regular_turn_off(class="form-select custom-input") }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <h5 class="fw-bold text-warning mb-0">Stuff & Lifestyle</h5>
                         </div>
 
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.clothes_spend.label(class="form-label text-secondary small text-uppercase
-                                    ls-1 fw-bold") }}
-                                    <div class="input-icon-wrapper">
+                        <div class="col-12">
+                            <div class="form-group mb-0">
+                                {{ form.efficiency_improvements.label(class="form-label fw-bold mb-3 d-block") }}
+                                <div class="checkbox-grid">
+                                    {% for subfield in form.efficiency_improvements %}
+                                    <div class="form-check">
+                                        {{ subfield(class="form-check-input") }}
+                                        {{ subfield.label(class="form-check-label") }}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Lifestyle Section -->
+                <div id="tab-lifestyle" class="calc-tab-content" style="display: none;">
+                    <div class="calc-divider d-none"></div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-warning bg-opacity-10 p-2 rounded-3 me-3">
+                            <i class="fas fa-shopping-bag text-warning fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold text-warning mb-0">Lifestyle</h5>
+                    </div>
+
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div class="question-row">
+                                {{ form.clothes_spend.label(class="question-label") }}
+                                <div class="question-input">
+                                    <div class="input-icon-wrapper mb-0">
                                         <i class="fas fa-tshirt"></i>
                                         {{ form.clothes_spend(class="form-select custom-input") }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.pet_spend.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
+                        </div>
+                        <div class="col-12">
+                            <div class="question-row">
+                                {{ form.pet_spend.label(class="question-label") }}
+                                <div class="question-input">
+                                    <div class="input-icon-wrapper mb-0">
                                         <i class="fas fa-paw"></i>
                                         {{ form.pet_spend(class="form-select custom-input") }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.health_spend.label(class="form-label text-secondary small text-uppercase
-                                    ls-1 fw-bold") }}
-                                    <div class="input-icon-wrapper">
+                        </div>
+                        <div class="col-12">
+                            <div class="question-row">
+                                {{ form.health_spend.label(class="question-label") }}
+                                <div class="question-input">
+                                    <div class="input-icon-wrapper mb-0">
                                         <i class="fas fa-heart"></i>
                                         {{ form.health_spend(class="form-select custom-input") }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.contract_spend.label(class="form-label text-secondary small text-uppercase
-                                    ls-1 fw-bold") }}
-                                    <div class="input-icon-wrapper">
+                        </div>
+                        <div class="col-12">
+                            <div class="question-row">
+                                {{ form.contract_spend.label(class="question-label") }}
+                                <div class="question-input">
+                                    <div class="input-icon-wrapper mb-0">
                                         <i class="fas fa-file-contract"></i>
                                         {{ form.contract_spend(class="form-select custom-input") }}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.entertainment_spend.label(class="form-label text-secondary small
-                                    text-uppercase ls-1 fw-bold") }}
-                                    <div class="input-icon-wrapper">
+                        </div>
+                        <div class="col-12">
+                            <div class="question-row">
+                                {{ form.entertainment_spend.label(class="question-label") }}
+                                <div class="question-input">
+                                    <div class="input-icon-wrapper mb-0">
                                         <i class="fas fa-gamepad"></i>
                                         {{ form.entertainment_spend(class="form-select custom-input") }}
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-12">
-                                <div class="form-group mb-0">
-                                    {{ form.new_household_items.label(class="form-label text-secondary small
-                                    text-uppercase ls-1 fw-bold mb-3 d-block") }}
-                                    <div class="checkbox-list">
-                                        {{ form.new_household_items(class="checkbox-list") }}
+                        <div class="col-12 mt-4">
+                            <div class="form-group mb-0">
+                                {{ form.new_household_items.label(class="form-label fw-bold mb-3 d-block") }}
+                                <div class="checkbox-grid">
+                                    {% for subfield in form.new_household_items %}
+                                    <div class="form-check">
+                                        {{ subfield(class="form-check-input") }}
+                                        {{ subfield.label(class="form-check-label") }}
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="form-group mb-0">
-                                    {{ form.recycling.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold mb-3 d-block") }}
-                                    <div class="checkbox-list">
-                                        {{ form.recycling(class="checkbox-list") }}
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
 
-                        <div class="calc-divider"></div>
-
-                        <!-- Personal Section -->
-                        <div class="d-flex align-items-center mb-4">
-                            <div class="bg-dark bg-opacity-10 p-2 rounded-3 me-3">
-                                <i class="fas fa-user-circle text-dark fs-4"></i>
-                            </div>
-                            <h5 class="fw-bold text-dark mb-0">Personal Information</h5>
-                        </div>
-
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.location.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-map-marked-alt"></i>
-                                        {{ form.location(class="form-select custom-input") }}
+                        <div class="col-12 mt-4">
+                            <div class="form-group mb-0">
+                                {{ form.recycling.label(class="form-label fw-bold mb-3 d-block") }}
+                                <div class="checkbox-grid">
+                                    {% for subfield in form.recycling %}
+                                    <div class="form-check">
+                                        {{ subfield(class="form-check-input") }}
+                                        {{ subfield.label(class="form-check-label") }}
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.postcode.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-mail-bulk"></i>
-                                        {{ form.postcode(class="form-control custom-input", placeholder="e.g. SW1A") }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-0">
-                                    {{ form.age.label(class="form-label text-secondary small text-uppercase ls-1
-                                    fw-bold") }}
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-birthday-cake"></i>
-                                        {{ form.age(class="form-select custom-input") }}
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="mt-5 text-center">
-                            {{ form.submit_footprint(class="hero-cta-button shadow-lg px-5 py-3") }}
-                        </div>
-                    </form>
                 </div>
-                {% endif %}
+
+                <!-- Personal Section -->
+                <div id="tab-personal" class="calc-tab-content" style="display: none;">
+                    <div class="calc-divider d-none"></div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-dark bg-opacity-10 p-2 rounded-3 me-3">
+                            <i class="fas fa-user-circle text-dark fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-0">Personal Information</h5>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                {{ form.location.label(class="form-label fw-bold mb-2 text-dark") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                    {{ form.location(class="form-select custom-input") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                {{ form.postcode.label(class="form-label fw-bold mb-2 text-dark") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-mail-bulk"></i>
+                                    {{ form.postcode(class="form-control custom-input", placeholder="e.g. SW1A") }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-0">
+                                {{ form.age.label(class="form-label fw-bold mb-2 text-dark") }}
+                                <div class="input-icon-wrapper">
+                                    <i class="fas fa-birthday-cake"></i>
+                                    {{ form.age(class="form-select custom-input") }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 text-center">
+                        {{ form.submit_footprint(class="hero-cta-button shadow-lg px-5 py-3") }}
+                    </div>
+                </div>
+                </form>
             </div>
+            {% endif %}
         </div>
     </div>
+</div>
 </div>
 
 <script>
@@ -572,6 +627,7 @@
         if (tabName === 'travel') index = 1;
         if (tabName === 'home') index = 2;
         if (tabName === 'lifestyle') index = 3;
+        if (tabName === 'personal') index = 4;
         if (navItems[index]) navItems[index].classList.add('active');
     }
 

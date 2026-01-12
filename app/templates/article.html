@@ -4,7 +4,7 @@
 <!-- Article Hero -->
 <section class="article-hero">
     <div class="container">
-        <a href="{{ url_for('resources') }}" class="back-link">
+        <a href="{{ url_for('index', _anchor='resources') }}" class="back-link">
             <i class="fa-solid fa-arrow-left"></i> Back to Resources
         </a>
         <span class="article-tag-lg">{{ article.category }}</span>
@@ -84,7 +84,7 @@
 <!-- More Articles Section -->
 <section class="container mb-5">
     <div class="text-center">
-        <a href="{{ url_for('resources') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+        <a href="{{ url_for('index', _anchor='resources') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
             <i class="fa-solid fa-book-open me-2"></i> Explore More Resources
         </a>
     </div>

@@ -1,113 +1,74 @@
-{% extends "base.html" %}
+{% extends "auth_layout.html" %}
 
 {% block title %}Create Account | Rolsa Technologies{% endblock %}
 
-{% block content %}
-<!-- Register Hero -->
-<div class="app-hero">
-    <div class="container text-center">
-        <h1 class="display-4 fw-bold mb-3">Create Account</h1>
-        <p class="fs-5 opacity-75">Start your journey to specific energy efficiency</p>
+{% block auth_form %}
+<div class="auth-card">
+    <div class="auth-tabs mb-4">
+        <a href="{{ url_for('login') }}" class="auth-tab">Log In</a>
+        <a href="{{ url_for('register') }}" class="auth-tab active">Sign Up</a>
     </div>
-</div>
 
-<!-- Main Content (Overlapping) -->
-<div class="app-container-overlap pb-5">
-    <div class="d-flex justify-content-center">
-        <div class="col-lg-6 col-md-8">
-            <div class="calc-card">
-                <!-- Auth Tabs -->
-                <div class="d-flex border-bottom">
-                    <a href="{{ url_for('login') }}"
-                        class="flex-fill text-center py-3 text-decoration-none fw-bold text-secondary text-opacity-75">
-                        Log In
-                    </a>
-                    <a href="{{ url_for('register') }}"
-                        class="flex-fill text-center py-3 text-decoration-none fw-bold text-success border-bottom border-3 border-success bg-light">
-                        Sign Up
-                    </a>
-                </div>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show"
+        role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
-                <div class="p-4 p-md-5">
-                    <!-- Flash Messages -->
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show border-0 shadow-sm mb-4"
-                        role="alert">
-                        <i class="fas fa-info-circle me-2"></i> {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+    <div class="mb-4">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                <label class="form-label text-secondary small fw-bold">Email address</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0 text-secondary"><i
+                            class="fa-solid fa-envelope"></i></span>
+                    {{ form.email(class="form-control bg-light border-start-0 ps-0" + (" is-invalid" if
+                    form.email.errors else ""), placeholder="you@example.com") }}
+                    {% for error in form.email.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
-                    {% endif %}
-                    {% endwith %}
-
-                    <form action="" method="post" novalidate>
-                        {{ form.hidden_tag() }}
-
-                        <div class="row g-4 mb-4">
-                            <!-- Email -->
-                            <div class="col-12">
-                                <div class="form-group mb-0">
-                                    <label class="form-label text-secondary small text-uppercase ls-1 fw-bold">Email
-                                        Address</label>
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-envelope"></i>
-                                        {{ form.email(class="form-control custom-input" + (" is-invalid" if
-                                        form.email.errors else ""), placeholder="you@example.com") }}
-                                    </div>
-                                    {% for error in form.email.errors %}
-                                    <div class="invalid-feedback d-block">{{ error }}</div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="col-12">
-                                <div class="form-group mb-0">
-                                    <label
-                                        class="form-label text-secondary small text-uppercase ls-1 fw-bold">Password</label>
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-lock"></i>
-                                        {{ form.password(class="form-control custom-input" + (" is-invalid" if
-                                        form.password.errors else ""), placeholder="Create a password") }}
-                                    </div>
-                                    {% for error in form.password.errors %}
-                                    <div class="invalid-feedback d-block">{{ error }}</div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-
-                            <!-- Confirm Password -->
-                            <div class="col-12">
-                                <div class="form-group mb-0">
-                                    <label class="form-label text-secondary small text-uppercase ls-1 fw-bold">Confirm
-                                        Password</label>
-                                    <div class="input-icon-wrapper">
-                                        <i class="fas fa-check-circle"></i>
-                                        {{ form.confirm_password(class="form-control custom-input" + (" is-invalid" if
-                                        form.confirm_password.errors else ""), placeholder="Confirm your password") }}
-                                    </div>
-                                    {% for error in form.confirm_password.errors %}
-                                    <div class="invalid-feedback d-block">{{ error }}</div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="d-grid gap-3 pt-3">
-                            {{ form.submit(class="hero-cta-button w-100 py-3 shadow-md") }}
-
-                            <p class="text-center text-secondary small mb-0">
-                                Already have an account? <a href="{{ url_for('login') }}"
-                                    class="fw-bold text-success text-decoration-none">Log In</a>
-                            </p>
-                        </div>
-                    </form>
                 </div>
             </div>
-        </div>
+
+            <div class="mb-3">
+                <label class="form-label text-secondary small fw-bold">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0 text-secondary"><i
+                            class="fa-solid fa-lock"></i></span>
+                    {{ form.password(class="form-control bg-light border-start-0 ps-0" + (" is-invalid" if
+                    form.password.errors else ""), placeholder="Create a password") }}
+                    {% for error in form.password.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label text-secondary small fw-bold">Confirm Password</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0 text-secondary"><i
+                            class="fa-solid fa-lock"></i></span>
+                    {{ form.confirm_password(class="form-control bg-light border-start-0 ps-0" + (" is-invalid" if
+                    form.confirm_password.errors else ""), placeholder="Confirm your password") }}
+                    {% for error in form.confirm_password.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                {{ form.submit(class="btn btn-brand-primary btn-lg fw-bold text-white") }}
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

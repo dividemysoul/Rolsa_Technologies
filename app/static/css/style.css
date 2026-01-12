@@ -89,11 +89,64 @@ main {
     color: var(--brand-primary);
 }
 
+/* Navigation Dropdown Enhancements */
 .dropdown-menu {
     border: none;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background: white;
+    min-width: 220px;
+    animation: dropdownFadeIn 0.2s ease-out forwards;
+    transform-origin: top center;
+}
+
+/* Dropdown Items */
+.dropdown-item {
+    padding: 0.75rem 1rem;
     border-radius: 8px;
-    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.dropdown-item:hover {
+    background-color: #f0fdf4;
+    color: var(--brand-secondary);
+    padding-left: 1.25rem;
+}
+
+.dropdown-item:active,
+.dropdown-item.active {
+    background-color: var(--brand-primary);
+    color: var(--brand-secondary);
+}
+
+.dropdown-item i {
+    width: 20px;
+    text-align: center;
+    color: var(--brand-primary);
+    transition: color 0.2s;
+}
+
+.dropdown-item:hover i {
+    color: var(--brand-secondary);
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        margin-bottom: 2rem;
+    }
+
+    to {
+        opacity: 1;
+        margin-bottom: 1rem;
+    }
 }
 
 .contact-btn {
@@ -193,7 +246,6 @@ main {
 }
 
 .hero-cta:hover {
-    transform: translateY(-2px);
     background-color: #a3e635;
 }
 
@@ -422,11 +474,13 @@ main {
     font-size: 1rem;
     font-family: inherit;
     transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-cta-button:hover {
     background-color: #a3e635;
-    transform: translateY(-1px);
 }
 
 /* Modal Styles */
@@ -639,7 +693,6 @@ main {
 .btn-primary-dark:hover {
     background-color: var(--brand-secondary);
     opacity: 0.9;
-    transform: translateY(-1px);
     color: white;
 }
 
@@ -1502,25 +1555,6 @@ main {
     margin-top: 2rem;
 }
 
-.hero-cta-button {
-    background-color: #84cc16;
-    color: #0f172a;
-    font-weight: 700;
-    padding: 0.75rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    font-family: inherit;
-    transition: all 0.2s;
-}
-
-.hero-cta-button:hover {
-    background-color: #a3e635;
-    transform: translateY(-1px);
-}
-
 /* Modal Styles */
 .modal-overlay {
     position: fixed;
@@ -1715,23 +1749,6 @@ main {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
-}
-
-.btn-primary-dark {
-    background-color: #14532d;
-    /* darker green */
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-}
-
-.btn-primary-dark:hover {
-    background-color: #166534;
-    color: white;
 }
 
 .btn-outline-dark {
@@ -2150,9 +2167,9 @@ main {
 }
 
 .auth-container {
-    width: 100%;
-    max-width: 1400px;
-    height: 85vh;
+    width: 80vw;
+    max-width: 50%;
+    height: 65vh;
     min-height: 600px;
     border-radius: 24px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -2251,7 +2268,7 @@ main {
 /* Right Form Side */
 .auth-right {
     flex: 7;
-    background: white;
+    background: rgb(250, 250, 250);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2267,7 +2284,7 @@ main {
     right: -50px;
     width: 300px;
     height: 300px;
-    background: linear-gradient(135deg, rgba(132, 204, 22, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    background: linear-gradient(135deg, rgba(132, 204, 22, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
     border-radius: 50%;
     z-index: 0;
 }
@@ -2340,16 +2357,13 @@ main {
 
 .btn-brand-primary {
     background-color: var(--brand-primary);
-    border-color: var(--brand-primary);
     color: #03220e;
     padding: 0.8rem;
     border-radius: 12px;
 }
 
 .btn-brand-primary:hover {
-    background-color: #a3e635;
-    /* Lighter lime */
-    border-color: #a3e635;
+    background-color: #7bbb13;
     color: #03220e;
 }
 
@@ -2500,10 +2514,11 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    user-select: none;
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-0.5px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
@@ -3078,6 +3093,7 @@ main {
         font-size: 1.5rem;
     }
 }
+
 /* =========================================
    Bootstrap Overrides 
    ========================================= */
@@ -3086,7 +3102,8 @@ main {
 .btn-primary {
     background-color: var(--brand-primary);
     border-color: var(--brand-primary);
-    color: #03220e; /* Dark text for contrast on Lime */
+    color: #03220e;
+    /* Dark text for contrast on Lime */
     font-weight: 600;
 }
 
@@ -3094,9 +3111,11 @@ main {
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active {
-    background-color: #65a30d !important; /* Darker Lime */
+    background-color: #65a30d !important;
+    /* Darker Lime */
     border-color: #65a30d !important;
-    color: #ffffff !important; /* White text on darker hover */
+    color: #ffffff !important;
+    /* White text on darker hover */
 }
 
 /* Outline Primary - Matches Brand Secondary (Dark Green) for readability */
@@ -3118,4 +3137,174 @@ main {
 /* Outline Danger - Keep Red but stylize if needed */
 .btn-outline-danger {
     font-weight: 600;
+}
+
+/* Calculator Tabs */
+.calc-nav-tabs {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    padding-bottom: 2px;
+}
+
+.calc-nav-item {
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    color: #6b7280;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.calc-nav-item:hover {
+    color: #111827;
+    background-color: #f9fafb;
+    border-radius: 8px 8px 0 0;
+}
+
+.calc-nav-item.active {
+    color: #16a34a;
+    border-bottom-color: #16a34a;
+    background-color: transparent;
+}
+
+.calc-nav-item#nav-food.active {
+    color: #16a34a;
+    border-bottom-color: #16a34a;
+}
+
+.calc-nav-item#nav-travel.active {
+    color: #3b82f6;
+    border-bottom-color: #3b82f6;
+}
+
+.calc-nav-item#nav-home.active {
+    color: #06b6d4;
+    border-bottom-color: #06b6d4;
+}
+
+.calc-nav-item#nav-lifestyle.active {
+    color: #f59e0b;
+    border-bottom-color: #f59e0b;
+}
+
+.calc-nav-item#nav-personal.active {
+    color: #111827;
+    border-bottom-color: #111827;
+}
+
+/* Horizontal Questionnaire Row (Lifestyle Tab) */
+.question-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f3f4f6;
+    padding: 1.25rem 0;
+}
+
+.question-row:last-child {
+    border-bottom: none;
+}
+
+.question-label {
+    flex: 1;
+    /* Takes remaining space */
+    padding-right: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0;
+}
+
+.question-input {
+    width: 200px;
+    /* Fixed width for input */
+    flex-shrink: 0;
+}
+
+/* Checkbox Grid (Home Tab) */
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.checkbox-grid .form-check {
+    background: white;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    /* Extra left padding for checkbox */
+    border-radius: 8px;
+    margin-bottom: 0;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.checkbox-grid .form-check:hover {
+    border-color: var(--brand-primary);
+    background: #f0fdf4;
+}
+
+.checkbox-grid .form-check-input {
+    margin-left: -1.75rem;
+    /* Pull checkbox back into padding */
+    margin-top: 0.25rem;
+}
+
+.checkbox-grid .form-check-label {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-primary);
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .question-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .question-label {
+        padding-right: 0;
+        margin-bottom: 0.75rem;
+    }
+
+    .question-input {
+        width: 100%;
+    }
+}
+
+/* Fixed height for calculator tabs to prevent card resizing */
+.calc-tab-content {
+    min-height: 500px;
+}
+
+/* Consistent Tab Content Sizing */
+.calc-tab-content {
+    min-height: 550px;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.calc-tab-content>.row,
+.calc-tab-content>.row.g-0,
+.calc-tab-content>.row.g-4 {
+    flex-grow: 1;
+}
+
+/* Fixed Card Size for Calculator */
+.calc-card {
+    min-width: 900px;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .calc-card {
+        min-width: auto;
+    }
 }

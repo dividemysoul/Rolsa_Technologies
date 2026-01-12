@@ -37,7 +37,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-4 align-items-center">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index', _anchor='solutions') }}">Solutions</a>
                     </li>
@@ -50,8 +50,10 @@
                             Calculate
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="calcDropdown">
-                            <li><a class="dropdown-item" href=" {{ url_for('energy_use')}}">Energy Use</a></li>
-                            <li><a class="dropdown-item" href=" {{ url_for('carbon_footprint')}}">Carbon Footprint</a>
+                            <li><a class="dropdown-item" href="{{ url_for('energy_use')}}"><i class="fas fa-bolt"></i>
+                                    Energy Use</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('carbon_footprint')}}"><i
+                                        class="fas fa-shoe-prints"></i> Carbon Footprint</a>
                             </li>
                         </ul>
                     </li>
